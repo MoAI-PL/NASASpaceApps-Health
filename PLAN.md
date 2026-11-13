@@ -10,7 +10,7 @@ A milestone is done only when all its AC pass. If a milestone overruns its timeb
 
 | Topic | Decision |
 |---|---|
-| Model | ONE unsupervised model: dense autoencoder on 7-day windows of personally normalised features |
+| Model (updated after benchmark, 2026-11-13) | ONE unsupervised model: multivariate personal-drift model — Mahalanobis distance of the weighted 7-day mean of personal z-scores from a Gaussian fitted on 300 healthy astronauts (`src/drift.py`). It won the benchmark (`outputs/results/benchmark.md`) against 9 autoencoders, ensembles, fine-tuning and hybrids. The autoencoder stays available as `detector: autoencoder`. Persistence 3 days, P_yellow 92 tuned on the `bench` split |
 | Anomaly score (updated in M2) | reconstruction error + latent Mahalanobis distance, each normalised by its healthy-training mean (v1 = reconstruction only missed 40 % of S2 on dev; see README → Results) |
 | Explanation (updated in M2) | share of each indicator in the window's weighted squared personal z-score ("what moved"); the model decides whether the combination is anomalous |
 | Why AE | Per-feature reconstruction error gives the explanation the UI needs (body-map colours, "what changed"); learns non-linear correlations between indicators; windows capture trends |
@@ -75,7 +75,11 @@ baseline/
 
 ---
 
-## Status (2026-11-13 evening)
+## Status (2026-11-13, after benchmark)
+
+Benchmark done; detector switched to the personal-drift model; confirmed on dev; **M4 hold-out run once** (S5: detected 100 %, median lead +7.5 d vs B2, +5 d vs B1; false alarms 0.071 per astronaut-week). Remaining: DONKI cache with internet, final UI, pitch.
+
+## Status (2026-11-13 evening, superseded)
 
 M0–M3 done and validated (`pytest -q`: 17 passed); M6 sensor-fault flag done; concept UI in `ui/concept/`.
 Open items: run `python -m src.donki` with internet (DONKI was unreachable from the build sandbox),

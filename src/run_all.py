@@ -3,7 +3,8 @@
 """Run the whole development pipeline in order (never the one-time hold-out test).
 
 Usage:
-    python -m src.run_all              # simulate → train → tune + evaluate dev → export → figures
+    python -m src.run_all              # simulate → fit → tune on bench → confirm on dev → export → figures
+    python -m src.run_all --benchmark  # also rerun the model-selection benchmark
     python -m src.run_all --device cuda
 """
 
@@ -20,17 +21,21 @@ STEPS = [
     ["-m", "src.simulate"],
     ["-m", "src.export", "--sample"],
     ["-m", "src.train"],
-    ["-m", "src.evaluate", "--split", "dev", "--tune"],
+    ["-m", "src.evaluate", "--split", "bench", "--tune"],   # threshold tuned on the selection split only
+    ["-m", "src.evaluate", "--split", "dev"],               # confirmation with frozen thresholds
     ["-m", "src.export", "--crew", "demo"],
     ["-m", "src.figures", "--all"],
 ]
+BENCHMARK = ["-m", "src.benchmark"]
 
 # ===== Main =====
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run the development pipeline.")
     parser.add_argument("--device", default=None, help="Passed to training: auto | cpu | cuda.")
+    parser.add_argument("--benchmark", action="store_true", help="Also rerun the model-selection benchmark (~5 min).")
     args = parser.parse_args()
-    for step in STEPS:
+    steps = STEPS[:4] + ([BENCHMARK] if args.benchmark else []) + STEPS[4:]
+    for step in steps:
         cmd = [sys.executable, *step]
         if step[1] == "src.train" and args.device:
             cmd += ["--device", args.device]

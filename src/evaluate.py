@@ -213,6 +213,7 @@ if __name__ == "__main__":
                        "git_commit": git_commit(),
                        "note": "S5 was never seen during development and was evaluated once."})
         write_json(FINAL_PATH, result)
+        write_json(RESULTS_DIR / "test_metrics.json", result)   # same content, name used by figures
         (RESULTS_DIR / "final_test.md").write_text(markdown_table(result, "Hold-out test (S5)"), encoding="utf-8")
         print(markdown_table(result, "Hold-out test (S5)"))
         sys.exit(0)

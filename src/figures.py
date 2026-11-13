@@ -5,7 +5,8 @@
 Usage:
     python -m src.figures --healthy-check     # M1: plausibility of healthy synthetic astronauts
     python -m src.figures --timeline-demo     # M3: Crew Member Bravo, model vs baselines
-    python -m src.figures --lead-time         # M3: lead time vs B1 / B2 on the dev split
+    python -m src.figures --lead-time         # M3/M4: lead time vs B1 / B2 (dev, and test once it exists)
+    python -m src.figures --benchmark         # model-selection benchmark
     python -m src.figures --all
 """
 
@@ -104,8 +105,13 @@ def timeline_demo(astronaut: str = "A2") -> None:
                    linestyle="-" if i == 0 else (0, (6, 3)), zorder=3 - i)
         ax.text(day + 0.6, 30 - 9 * i, f"{label}\nfirst alarm: day {day}", color=INK, fontsize=13, va="top",
                 bbox={"facecolor": SURFACE, "edgecolor": SERIES[i], "boxstyle": "round,pad=0.3"})
+    pre = [d for d, r, prev in zip(days, records, [None] + records[:-1])
+           if d < start and r["level"] != "green" and (prev is None or prev["level"] == "green")]
+    for d in pre:
+        ax.annotate(f"false alarm\n(day {d})", xy=(d, 97), xytext=(d - 9, 104), fontsize=12, color=INK_2,
+                    arrowprops={"arrowstyle": "-", "color": MUTED})
     ax.set_xlim(1, max(days))
-    ax.set_ylim(0, 110)
+    ax.set_ylim(0, 112)
     ax.set_xlabel("Mission day")
     ax.set_ylabel("Systemic Anomaly Index (SAI, 0–100)")
     m, b1 = first["Model (SAI)"], first["Fixed clinical thresholds"]
@@ -147,14 +153,54 @@ def lead_time(split: str = "dev") -> None:
     ax.set_ylim(-32, max(32, ax.get_ylim()[1]))
     ax.legend(frameon=False, loc="upper right", fontsize=13)
     fa = metrics["false_alarms_per_astronaut_week"]
-    ax.set_title("Model alarms earlier than fixed thresholds; on par with personal single-indicator thresholds",
+    meds = {b: [metrics["scenarios"][s][f"lead_vs_{b}"]["median_days"] for s in scenarios] for b in ["B1", "B2"]}
+    titles = {"dev": "Confirmation split (thresholds frozen)", "test": "Hold-out test (never seen in development)"}
+    lead_b2 = ", ".join(f"{s} {m:+g} d" for s, m in zip(scenarios, meds["B2"]) if m is not None)
+    ax.set_title(f"{titles.get(split, split)}: median lead vs personal thresholds {lead_b2}",
                  loc="left", fontsize=16, color=INK, fontweight="bold", pad=34)
-    ax.text(0, 1.02, f"Development split, 10 astronauts per scenario. False alarms per astronaut-week: "
+    n = metrics["scenarios"][scenarios[0]]["n"]
+    ax.text(0, 1.02, f"{n} astronauts per scenario. False alarms per astronaut-week: "
                      f"model {fa['AE']}, B1 {fa['B1']}, B2 {fa['B2']}.", transform=ax.transAxes,
             color=INK_2, fontsize=13)
     footer(fig)
     fig.tight_layout(rect=(0, 0.03, 1, 1))
     fig.savefig(FIGURES_DIR / f"lead_time_{split}.png")
+    plt.close(fig)
+
+
+def benchmark_chart() -> None:
+    """Early-detection rate at an equal false-alarm budget: best variant of each method family."""
+    rows = read_json(RESULTS_DIR / "benchmark.json")["rows"]
+    families = [
+        ("Fixed clinical thresholds (B1)*", lambda m: m.startswith("B1")),
+        ("Personal single-indicator thresholds (B2)", lambda m: m.startswith("B2")),
+        ("Autoencoder, single model", lambda m: m.startswith("AE w") and "fine-tuning" not in m),
+        ("Autoencoder + personal fine-tuning", lambda m: "fine-tuning" in m),
+        ("Autoencoder ensemble ×5", lambda m: m.startswith("AE ensemble")),
+        ("Multivariate personal-drift model (chosen)", lambda m: m == "Classical Mahalanobis, 7-day mean (drift)"),
+    ]
+    best = []
+    for label, match in families:
+        cand = [r for r in rows if match(r["method"]) and r["budget"] in (0.05, "fixed")]
+        top = max(cand, key=lambda r: r["early_detection"])
+        best.append((label, top["early_detection"], top["false_alarms_per_week"]))
+    fig, ax = plt.subplots(figsize=(16, 9), dpi=100)
+    y = np.arange(len(best))
+    colors = [MUTED] * (len(best) - 1) + [SERIES[0]]
+    ax.barh(y, [b[1] * 100 for b in best], color=colors, height=0.55)
+    for i, (label, early, fa) in enumerate(best):
+        ax.text(early * 100 + 1, i, f"{early:.0%}", va="center", fontsize=15, color=INK, fontweight="bold")
+    ax.set_yticks(y, [b[0] for b in best], fontsize=14)
+    ax.set_xlim(0, 100)
+    ax.set_xlabel("Scenarios detected within 21 days of onset (%), S1–S3 at sizes × 0.5 and × 1.0")
+    ax.grid(axis="y", visible=False)
+    fig.suptitle("Same false-alarm budget: the personal-drift model catches the most changes early",
+                 x=0.01, ha="left", fontsize=18, color=INK, fontweight="bold")
+    fig.text(0.01, 0.905, "Selection split: 120 scenario + 40 healthy astronauts. Every method tuned to ≤ 0.05 false alarms "
+                          "per astronaut-week (*B1 has fixed thresholds: 0.084).", color=INK_2, fontsize=13)
+    footer(fig)
+    fig.tight_layout(rect=(0, 0.03, 1, 0.89))
+    fig.savefig(FIGURES_DIR / "benchmark.png")
     plt.close(fig)
 
 
@@ -164,6 +210,7 @@ if __name__ == "__main__":
     parser.add_argument("--healthy-check", action="store_true")
     parser.add_argument("--timeline-demo", action="store_true")
     parser.add_argument("--lead-time", action="store_true")
+    parser.add_argument("--benchmark", action="store_true")
     parser.add_argument("--all", action="store_true")
     args = parser.parse_args()
     FIGURES_DIR.mkdir(parents=True, exist_ok=True)
@@ -172,5 +219,10 @@ if __name__ == "__main__":
     if args.timeline_demo or args.all:
         timeline_demo()
     if args.lead_time or args.all:
-        lead_time()
+        lead_time("dev")
+        if (RESULTS_DIR / "test_metrics.json").exists():
+            lead_time("test")
+    if args.benchmark or args.all:
+        if (RESULTS_DIR / "benchmark.json").exists():
+            benchmark_chart()
     print(f"Figures written to {FIGURES_DIR}")

@@ -12,7 +12,7 @@
 
 Baseline lets astronauts assess their own health on long missions along two paths:
 
-- **Prevent** — one unsupervised model (a dense autoencoder) learns each astronaut's **personal normal** from daily self-measurements and turns the day into a single **Systemic Anomaly Index (SAI, 0–100)**, with an explanation of which indicators moved and a prompt for the next measurement.
+- **Prevent** — an unsupervised model of the **personal normal** (a multivariate personal-drift model, chosen in a benchmark against autoencoder variants) turns each day's self-measurements into a single **Systemic Anomaly Index (SAI, 0–100)**, with an explanation of which indicators moved and a prompt for the next measurement.
 - **Respond** — fixed critical thresholds and an emergency mode that work **independently of the model**, with an escalation ladder that accounts for the communication delay to Earth.
 
 Every NASA Human Research Program hazard is visible in the product:
@@ -32,11 +32,12 @@ Bone loss cannot be tracked with daily self-measurements and is out of scope (se
 ```bash
 conda env create -f environment.yml && conda activate spaceapps
 python -m src.donki --start 2024-05-01 --days 120   # needs internet once: caches real NASA DONKI SEP events
-python -m src.run_all                               # simulate → train → tune + evaluate dev → export → figures
+python -m src.run_all                               # simulate → fit → tune on bench → confirm on dev → export → figures
+python -m src.run_all --benchmark                   # same, plus the model-selection benchmark (~5 min on CPU)
 pytest -q
 ```
 
-Training takes about 20 s on a laptop CPU. With an NVIDIA GPU: `python -m src.run_all --device cuda` (install the CUDA build of PyTorch first). CPU is the reference for bit-exact reproducibility.
+The production detector fits in seconds on a laptop CPU; the benchmark trains nine autoencoders (about 30 s each on CPU, `--device cuda` in `src.train` for the alternative detector).
 
 UI concept: open `ui/concept/index.html` in a browser (works offline). See `ui/README.md`.
 
@@ -46,13 +47,11 @@ The one-time hold-out test is **not** part of `run_all`: `python -m src.evaluate
 
 1. **Daily check-in** — blood pressure, resting heart rate, fasting glucose, temperature, sleep, mood (1–5), reaction time; exercise minutes as context. The six indicators named in the challenge statement are all included.
 2. **Personal normalisation** — each indicator is converted to a z-score against that astronaut's own calibration period (mission days 1–21). The model therefore sees *deviation from this person's normal*, not absolute values.
-3. **Autoencoder** — a dense autoencoder (63 → 32 → 8 → 32 → 63) reads the last 7 days of 9 features. It is trained once on healthy windows pooled from 60 simulated astronauts; personalisation comes from step 2.
-4. **Anomaly score** — the sum of two terms, each divided by its mean on healthy training windows:
-   - *reconstruction error* — combinations of values the model cannot reproduce;
-   - *latent distance* — Mahalanobis distance of the window's latent code from the healthy latent distribution, which catches large shifts along directions the model reproduces well (sleep, mood and reaction time also move together on healthy days, just never this far).
-5. **SAI** — the percentile of the score among healthy validation windows (0–100).
-6. **Alert levels** — yellow when SAI ≥ P_yellow on 2 consecutive days, orange when SAI ≥ P_orange on 2 consecutive days. P_yellow was tuned **on the development split only**, as the most sensitive value with ≤ 0.5 false alarms per astronaut-week. Red comes only from critical thresholds.
-7. **Explanation** — the share of each indicator in the window's deviation from the personal normal ("what moved"), mapped to body systems and to the hazard strip; prompts ask for a targeted re-measurement.
+3. **Drift summary** — for each day, the last 7 days are summarised as a weighted mean of the personal z-scores (latest day heaviest), one value per feature.
+4. **Personal-drift model (unsupervised)** — a Gaussian model of that 9-dimensional summary is learned from 300 healthy simulated astronauts, with no illness labels. The anomaly score is the squared Mahalanobis distance of today's summary from the healthy model (a Hotelling T²-type statistic): it rises when several indicators drift together, even if each one alone still looks normal.
+5. **SAI** — the percentile of the score among healthy validation days (0–100).
+6. **Alert levels** — yellow when SAI ≥ 92 on 3 consecutive days, orange when SAI ≥ 99 on 3 consecutive days. P_yellow was tuned **on the selection split only**, as the most sensitive value with ≤ 0.05 false alarms per astronaut-week. Red comes only from critical thresholds.
+7. **Explanation** — the score decomposes exactly into one term per indicator (T² = Σ d_f·(Σ⁻¹d)_f); the positive terms give "what moved", mapped to body systems and to the hazard strip; prompts ask for a targeted re-measurement.
 8. **Escalation** — monitor → self-care → crew medical officer (orange, or yellow for 5 days, or 2+ systems) → flight surgeons (red; on Mars transit the onboard protocol comes first and the report is queued for downlink).
 
 Reference methods the model is compared against:
@@ -66,8 +65,8 @@ flowchart LR
   A[Daily check-in<br/>manual input / wearables] --> B[Personal normalisation<br/>z-scores vs days 1–21]
   R[Space weather<br/>NASA DONKI SEP] --> H
   C[Cabin CO₂] --> H
-  B --> D[Autoencoder<br/>7-day windows]
-  D --> E[Score: reconstruction + latent distance]
+  B --> D[7-day drift summary]
+  D --> E[Personal-drift model<br/>Mahalanobis vs healthy]
   E --> F[SAI 0–100 + levels]
   A --> G[Critical thresholds<br/>independent of the model]
   F --> H[Local JSON store<br/>offline-first]
@@ -79,6 +78,8 @@ flowchart LR
 ## 5. Why unsupervised
 
 There is no labelled dataset of astronaut illnesses: crews are tiny, serious events are rare and individual health records are private. A supervised classifier has nothing to learn from. A model of **each person's normal** needs no labels — it only needs healthy days, which every mission produces.
+
+**Why not a deep model?** We benchmarked it (section 7). On daily data with 9 features, a well-specified statistical model of the healthy state beat every autoencoder variant, including ensembles and per-astronaut fine-tuning. It is also tiny (a 9 × 9 matrix), exactly explainable and trivial to run offline on any flight computer. The autoencoder remains in the code (`detector: autoencoder`) for richer, higher-frequency data in future work.
 
 ## 6. Data & sources
 
@@ -95,28 +96,58 @@ There is no labelled dataset of astronaut illnesses: crews are tiny, serious eve
 
 Every configuration value is either sourced or flagged as an assumption: full list in [`outputs/results/config_sources.md`](outputs/results/config_sources.md) (generated by `python -m src.report_sources`). Sourced values: ISS sleep duration (Barger et al. 2014), CO₂ limit (NASA OCHMO / NASA-STD-3001), blood-pressure categories (AHA), hypoglycaemia levels (ADA), Earth–Mars communication delay (NASA ASCEND).
 
-## 7. Results (development split)
+## 7. Results
 
-40 development astronauts (10 per scenario + 10 healthy), the model at P_yellow = 90. *Synthetic data calibrated on published sources — proof of concept, not clinical validation.*
+*Synthetic data calibrated on published sources — proof of concept, not clinical validation.*
 
-| Scenario | Detected: model / B1 / B2 | Median delay after onset (days): model / B1 / B2 | Model lead vs B1 (median, both detected) | Model lead vs B2 (median, both detected) |
+**Protocol.** (1) Model selection on a dedicated selection split (`bench`, new seeds: 30 astronauts per scenario S1–S3 + 40 healthy, scenario sizes × 0.5 and × 1.0), every method tuned to the **same false-alarm budget** (≤ 0.05 per astronaut-week). (2) Confirmation on the original development split with all thresholds frozen. (3) One run on the hold-out scenario S5 (infection onset), never seen during development; configuration frozen in git commit `c8723c2` before the run.
+
+### 7.1 Model-selection benchmark
+
+![Benchmark](outputs/figures/benchmark.png)
+
+| Method family (best variant) | Scenarios detected within 21 days | Detected at all |
+|---|---|---|
+| **Multivariate personal-drift model (chosen)** | **82 %** | **96 %** |
+| Autoencoder ensemble ×5 (300 training astronauts) | 68 % | 87 % |
+| Autoencoder, single model (best architecture: 14-day window) | 65 % | 92 % |
+| Personal single-indicator thresholds (B2) | 64 % | 88 % |
+| Autoencoder + per-astronaut fine-tuning | 48 % | 74 % |
+| Fixed clinical thresholds (B1, own false-alarm rate 0.084) | 39 % | 58 % |
+
+38 configurations in total (architecture, training-set size, score components, smoothing, persistence, ensembles, fine-tuning, hybrids): [`outputs/results/benchmark.md`](outputs/results/benchmark.md). Combining the drift model with the autoencoder ensemble gave no gain (82 %), so the simpler model was chosen. Larger training sets *hurt* single autoencoders (they learn to reconstruct shifts too), and fine-tuning on 15 calibration windows overfits.
+
+### 7.2 Confirmation split (thresholds frozen)
+
+| Scenario | Detected: model / B1 / B2 | Median delay after onset (days): model / B1 / B2 | Model lead vs B1 (median) | Model lead vs B2 (median) |
 |---|---|---|---|---|
-| S1 Cardiovascular | 100% / 60% / 100% | 19 / 29 / 18.5 | +4 d; 4 cases found only by the model | −0.5 d |
-| S2 Isolation & stress | 100% / 90% / 100% | 10.5 / 16 / 13.5 | +1 d; 1 case only by the model | −0.5 d |
-| S3 Metabolic | 100% / 80% / 90% | 11.5 / 18.5 / 15 | +7 d; 2 cases only by the model | +5 d |
+| S1 Cardiovascular | 100 % / 60 % / 100 % | 11 / 29 / 18.5 | +18.5 d; 4 found only by the model | +7.5 d |
+| S2 Isolation & stress | 100 % / 90 % / 100 % | 13 / 16 / 13.5 | −1 d; 1 found only by the model | −1.5 d |
+| S3 Metabolic | 100 % / 80 % / 90 % | 8.5 / 18.5 / 15 | +7 d; 2 found only by the model | +8 d |
 
-False alarms per astronaut-week on healthy days: **model 0.093, B1 0.093, B2 0.031** (one false alarm every ~11 weeks for the model).
+False alarms per astronaut-week: model 0.072 (above the 0.05 tuning budget — small-sample regression), B1 0.093, B2 0.031. At a false-alarm rate matched to B2 (model 0.028 vs B2 0.031), the model detects as many or more scenarios in every cell, and many more of the subtle half-size changes (S1 100 % vs 60 %, S3 80 % vs 60 %). Full tables: [`outputs/results/dev_metrics.md`](outputs/results/dev_metrics.md).
+
+### 7.3 Hold-out test — infection onset (S5), evaluated once
+
+| | Model | Fixed clinical thresholds (B1) | Personal single-indicator thresholds (B2) |
+|---|---|---|---|
+| Detected | **100 %** | 70 % | 100 % |
+| Median delay after onset | **6 days** | 6 days | 14 days |
+| Model lead (median) | – | +5 days (7 detected by both); 3 cases found only by the model | **+7.5 days** (all 10) |
+| False alarms per astronaut-week | 0.071 | 0.044 | 0.016 |
+
+![Hold-out](outputs/figures/lead_time_test.png)
+
+S5 was never seen during development and was evaluated once (`outputs/results/final_test.json`, with timestamp and commit hash).
 
 **What this shows — and what it does not:**
-- At the **same false-alarm rate as fixed clinical thresholds**, the model detects every development scenario and alarms earlier (median +1 to +7 days), finding 7 cases that fixed thresholds miss entirely.
-- Against **personal single-indicator thresholds (B2)** the model is **on par, not better**: at its tuned threshold it detects more of the subtle (half-size) changes (90/80/90 % vs 60/50/60 %) but with 3× the false alarms; at a false-alarm rate matched to B2 (P_yellow = 97) it detects fewer of them. Most of the benefit therefore comes from **personalisation itself**; the model's added value on this data is the single systemic index, the explanation and the latent-distance term — not a detection advantage over B2. The hypothesis "the model beats per-indicator personal thresholds" is **not supported** on the development data.
-- Full tables, sensitivity analysis (scenario size × 0.5 / 1.0 / 1.5) and the false-alarm-matched comparison: [`outputs/results/dev_metrics.md`](outputs/results/dev_metrics.md).
+- The hypothesis is **supported on this synthetic data**: the personal-drift model detects deterioration earlier than both fixed clinical thresholds and per-indicator personal thresholds, including on a scenario type it never saw.
+- The price is a higher false-alarm rate than the reference methods on the confirmation and test splits (about one false alarm per astronaut every 14 weeks); the operating point can be moved along this trade-off with P_yellow.
+- The simulator is linear-Gaussian and the scenarios are gradual mean shifts — conditions that favour a Gaussian drift model. On real crew data with non-linear structure the ranking could change; the benchmark is built to be rerun on such data.
 
-**Development history (kept for transparency).** v1 scored reconstruction error only and detected just 60 % of S2 on dev — the shift moved along a direction the autoencoder had learned as normal. v2 added the latent-distance term (one change, motivated by that diagnosis; scenarios and the hold-out untouched). v1 results: `outputs/results/history/`.
+**Development history (kept for transparency).** v1 autoencoder (reconstruction only) missed 40 % of S2 on dev; v2 added a latent distance; the benchmark then replaced the autoencoder with the drift model. Earlier results: `outputs/results/history/`.
 
-**Hold-out test (S5, infection onset):** not run yet. It is run once with `python -m src.evaluate --split test --final`; S5 was never seen during development.
-
-Figures (1600 × 900, slide-ready): `outputs/figures/timeline_demo.png` (Crew Member Bravo: model alarm on day 60, fixed clinical thresholds on day 76), `outputs/figures/lead_time_dev.png`, `outputs/figures/healthy_check.png`.
+Figures (1600 × 900, slide-ready): `benchmark.png`, `lead_time_test.png`, `lead_time_dev.png`, `timeline_demo.png` (Crew Member Bravo: model alarm on day 58, fixed clinical thresholds on day 76; one false alarm on day 36 is marked), `healthy_check.png`.
 
 ## 8. Earth spin-off
 
@@ -129,6 +160,7 @@ The same offline, personal-baseline monitoring fits isolated crews on Earth: Ant
 - Daily granularity; no continuous wearable streams (HRV, SpO₂, respiratory rate) — possible future work.
 - Bone loss is not covered (not measurable with daily self-measurements).
 - The emergency-mode steps in the concept UI are placeholders until written from cited sources.
+- Model selection used synthetic scenarios designed by the team; the winning model's advantage may partly reflect the linear-Gaussian simulator (see 7.3).
 - Radiation dose values are illustrative; SEP event dates are real only after `src.donki` has been run with internet access.
 
 ## 10. Use of AI
@@ -153,6 +185,7 @@ Data and scientific sources
 - American Diabetes Association — Hypoglycemia (HCP): https://professional.diabetes.org/sites/dpro/files/2025-05/hypoglycemia-hcp-5-27-25.pdf
 
 Software (open-source licenses)
+- Methods: Mahalanobis distance / Hotelling T² statistic (classical multivariate statistics); autoencoders for anomaly detection (benchmarked alternative).
 - Python packages: NumPy (BSD-3-Clause), pandas (BSD-3-Clause), PyTorch (BSD-3-Clause), Matplotlib (Matplotlib license, PSF-based), PyYAML (MIT), Requests (Apache-2.0), jsonschema (MIT), pytest (MIT).
 - Concept UI: React and ReactDOM 18 (MIT, bundled in `ui/concept/vendor/`), Tailwind CSS 3 (MIT, build time), Babel (MIT, build time).
 

@@ -1,0 +1,201 @@
+{
+  "p_yellow": 92.0,
+  "persistence_days": 3,
+  "false_alarms_per_astronaut_week": {
+    "AE": 0.071,
+    "B1": 0.044,
+    "B2": 0.016
+  },
+  "healthy_weeks_observed": 182.3,
+  "scenarios": {
+    "S5": {
+      "n": 10,
+      "detection_rate_AE": 1.0,
+      "median_delay_days_AE": 6.0,
+      "detection_rate_B1": 0.7,
+      "median_delay_days_B1": 6,
+      "detection_rate_B2": 1.0,
+      "median_delay_days_B2": 14.0,
+      "lead_vs_B1": {
+        "both_detected": 7,
+        "median_days": 5,
+        "mean_days": 5.57,
+        "sd_days": 12.83,
+        "only_AE_detected": 3,
+        "only_AE_lead_lower_bound_median": 49,
+        "only_B1_detected": 0,
+        "values": [
+          12,
+          5,
+          6,
+          -8,
+          30,
+          0,
+          -6
+        ]
+      },
+      "lead_vs_B2": {
+        "both_detected": 10,
+        "median_days": 7.5,
+        "mean_days": 12.8,
+        "sd_days": 12.48,
+        "only_AE_detected": 0,
+        "only_AE_lead_lower_bound_median": null,
+        "only_B2_detected": 0,
+        "values": [
+          8,
+          26,
+          12,
+          7,
+          23,
+          2,
+          6,
+          1,
+          4,
+          39
+        ]
+      }
+    }
+  },
+  "per_astronaut": [
+    {
+      "astronaut": "test_3000",
+      "scenario": "S5",
+      "start": 34,
+      "first_AE": 40,
+      "first_B1": 52,
+      "first_B2": 48
+    },
+    {
+      "astronaut": "test_3001",
+      "scenario": "S5",
+      "start": 59,
+      "first_AE": 59,
+      "first_B1": 64,
+      "first_B2": 85
+    },
+    {
+      "astronaut": "test_3002",
+      "scenario": "S5",
+      "start": 73,
+      "first_AE": 79,
+      "first_B1": null,
+      "first_B2": 91
+    },
+    {
+      "astronaut": "test_3003",
+      "scenario": "S5",
+      "start": 49,
+      "first_AE": 56,
+      "first_B1": 62,
+      "first_B2": 63
+    },
+    {
+      "astronaut": "test_3004",
+      "scenario": "S5",
+      "start": 52,
+      "first_AE": 60,
+      "first_B1": 52,
+      "first_B2": 83
+    },
+    {
+      "astronaut": "test_3005",
+      "scenario": "S5",
+      "start": 32,
+      "first_AE": 37,
+      "first_B1": 67,
+      "first_B2": 39
+    },
+    {
+      "astronaut": "test_3006",
+      "scenario": "S5",
+      "start": 68,
+      "first_AE": 72,
+      "first_B1": null,
+      "first_B2": 78
+    },
+    {
+      "astronaut": "test_3007",
+      "scenario": "S5",
+      "start": 74,
+      "first_AE": 80,
+      "first_B1": 80,
+      "first_B2": 81
+    },
+    {
+      "astronaut": "test_3008",
+      "scenario": "S5",
+      "start": 32,
+      "first_AE": 40,
+      "first_B1": 34,
+      "first_B2": 44
+    },
+    {
+      "astronaut": "test_3009",
+      "scenario": "S5",
+      "start": 33,
+      "first_AE": 41,
+      "first_B1": null,
+      "first_B2": 80
+    },
+    {
+      "astronaut": "test_3010",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "test_3011",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "test_3012",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "test_3013",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "test_3014",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "test_3015",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "test_3016",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "test_3017",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "test_3018",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "test_3019",
+      "scenario": "none",
+      "start": -1
+    }
+  ],
+  "model_hash": "93efaf7cc2af",
+  "config_hashes": {
+    "model": "d3ea1e748f00",
+    "sim": "c5ed3d25abf5",
+    "rules": "afcd217c10cd"
+  },
+  "timestamp_utc": "2026-11-13T19:59:18+00:00",
+  "git_commit": "c8723c2c93020e53a5a5eb8dc7005027584a8200",
+  "note": "S5 was never seen during development and was evaluated once."
+}

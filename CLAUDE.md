@@ -11,8 +11,9 @@ missions. Challenge: "Create Health Monitoring Software for Astronauts on Space 
 (NASA Space Apps Challenge 2026, challenge author: Brazilian Space Agency).
 
 Two paths:
-- **Prevent** — one unsupervised model (dense autoencoder) learns each astronaut's personal normal
-  from daily health indicators and flags multivariate drift before any single value crosses a limit.
+- **Prevent** — one unsupervised model (multivariate personal-drift model, `src/drift.py`, chosen by the
+  benchmark over autoencoders) learns each astronaut's personal normal from daily health indicators and
+  flags multivariate drift before any single value crosses a limit.
 - **Respond** — fixed critical thresholds and an emergency mode that work independently of the model.
 
 The main number shown to the crew is the **Systemic Anomaly Index (SAI)**, 0–100. Every NASA HRP
@@ -72,8 +73,10 @@ File header (Python):
 conda env create -f environment.yml && conda activate spaceapps
 python -m src.donki --start 2024-05-01 --days 120          # cache real SEP events (M1)
 python -m src.simulate --config config/simulation.yaml       # synthetic crews (M1)
-python -m src.train --config config/model.yaml               # train the autoencoder (M2)
-python -m src.evaluate --split dev --tune                    # tune P_yellow on dev only + evaluate (M2)
+python -m src.train --config config/model.yaml               # fit the configured detector (M2)
+python -m src.benchmark                                      # model-selection benchmark (bench split)
+python -m src.evaluate --split bench --tune                  # tune P_yellow on the selection split (M2)
+python -m src.evaluate --split dev                           # confirmation with frozen thresholds (M2)
 python -m src.export --sample                                # contract sample for the UI (M0)
 python -m src.export --crew demo                             # JSON for the UI + ui/concept/data.js (M3)
 python -m src.figures --all                                  # slide figures (M1/M3)
