@@ -1,0 +1,5 @@
+# Normalise line endings so Windows runs do not create noise diffs
+* text=auto eol=lf
+*.png binary
+*.pt binary
+*.npy binary

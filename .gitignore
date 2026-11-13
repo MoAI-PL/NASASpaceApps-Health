@@ -20,3 +20,7 @@ Thumbs.db
 # UI build output
 ui/**/node_modules/
 ui/**/dist/
+
+# Archives
+*.tgz
+*.zip

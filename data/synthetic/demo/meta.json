@@ -1,9 +1,19 @@
 {
   "split": "demo",
   "scale": 1.0,
-  "config_hash": "a1576132d46c",
-  "sep_status": "missing",
-  "sep_days": [],
+  "config_hash": "c5ed3d25abf5",
+  "sep_status": "cached",
+  "sep_days": [
+    9,
+    10,
+    11,
+    13,
+    39,
+    43,
+    84,
+    92,
+    97
+  ],
   "astronauts": [
     {
       "astronaut": "A1",

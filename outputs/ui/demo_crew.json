@@ -405,8 +405,8 @@
       "exercise_min": 122.0
     },
     "context": {
-      "radiation_mGy": 0.528,
-      "radiation_cum_mGy": 4.39,
+      "radiation_mGy": 2.528,
+      "radiation_cum_mGy": 6.39,
       "cabin_co2_mmHg": 2.29
     },
     "missing": [
@@ -432,7 +432,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -440,7 +440,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A1",
@@ -460,8 +462,8 @@
       "exercise_min": 117.0
     },
     "context": {
-      "radiation_mGy": 0.534,
-      "radiation_cum_mGy": 4.92,
+      "radiation_mGy": 2.534,
+      "radiation_cum_mGy": 8.93,
       "cabin_co2_mmHg": 2.04
     },
     "missing": [],
@@ -485,7 +487,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -493,7 +495,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A1",
@@ -513,8 +517,8 @@
       "exercise_min": 125.0
     },
     "context": {
-      "radiation_mGy": 0.481,
-      "radiation_cum_mGy": 5.41,
+      "radiation_mGy": 2.481,
+      "radiation_cum_mGy": 11.41,
       "cabin_co2_mmHg": 2.56
     },
     "missing": [],
@@ -538,7 +542,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -546,7 +550,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A1",
@@ -567,7 +573,7 @@
     },
     "context": {
       "radiation_mGy": 0.484,
-      "radiation_cum_mGy": 5.89,
+      "radiation_cum_mGy": 11.89,
       "cabin_co2_mmHg": 2.53
     },
     "missing": [],
@@ -619,8 +625,8 @@
       "exercise_min": 127.0
     },
     "context": {
-      "radiation_mGy": 0.515,
-      "radiation_cum_mGy": 6.4,
+      "radiation_mGy": 2.515,
+      "radiation_cum_mGy": 14.41,
       "cabin_co2_mmHg": 2.32
     },
     "missing": [],
@@ -644,7 +650,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -652,7 +658,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A1",
@@ -673,7 +681,7 @@
     },
     "context": {
       "radiation_mGy": 0.442,
-      "radiation_cum_mGy": 6.85,
+      "radiation_cum_mGy": 14.85,
       "cabin_co2_mmHg": 2.64
     },
     "missing": [],
@@ -726,7 +734,7 @@
     },
     "context": {
       "radiation_mGy": 0.453,
-      "radiation_cum_mGy": 7.3,
+      "radiation_cum_mGy": 15.3,
       "cabin_co2_mmHg": 2.44
     },
     "missing": [
@@ -781,7 +789,7 @@
     },
     "context": {
       "radiation_mGy": 0.493,
-      "radiation_cum_mGy": 7.79,
+      "radiation_cum_mGy": 15.79,
       "cabin_co2_mmHg": 2.04
     },
     "missing": [
@@ -836,7 +844,7 @@
     },
     "context": {
       "radiation_mGy": 0.539,
-      "radiation_cum_mGy": 8.33,
+      "radiation_cum_mGy": 16.33,
       "cabin_co2_mmHg": 2.41
     },
     "missing": [],
@@ -889,7 +897,7 @@
     },
     "context": {
       "radiation_mGy": 0.489,
-      "radiation_cum_mGy": 8.82,
+      "radiation_cum_mGy": 16.82,
       "cabin_co2_mmHg": 2.01
     },
     "missing": [],
@@ -942,7 +950,7 @@
     },
     "context": {
       "radiation_mGy": 0.503,
-      "radiation_cum_mGy": 9.32,
+      "radiation_cum_mGy": 17.32,
       "cabin_co2_mmHg": 2.56
     },
     "missing": [],
@@ -995,7 +1003,7 @@
     },
     "context": {
       "radiation_mGy": 0.528,
-      "radiation_cum_mGy": 9.85,
+      "radiation_cum_mGy": 17.85,
       "cabin_co2_mmHg": 2.29
     },
     "missing": [],
@@ -1048,7 +1056,7 @@
     },
     "context": {
       "radiation_mGy": 0.553,
-      "radiation_cum_mGy": 10.41,
+      "radiation_cum_mGy": 18.41,
       "cabin_co2_mmHg": 2.24
     },
     "missing": [
@@ -1103,7 +1111,7 @@
     },
     "context": {
       "radiation_mGy": 0.486,
-      "radiation_cum_mGy": 10.89,
+      "radiation_cum_mGy": 18.89,
       "cabin_co2_mmHg": 2.1
     },
     "missing": [],
@@ -1156,7 +1164,7 @@
     },
     "context": {
       "radiation_mGy": 0.5,
-      "radiation_cum_mGy": 11.39,
+      "radiation_cum_mGy": 19.39,
       "cabin_co2_mmHg": 2.67
     },
     "missing": [],
@@ -1209,7 +1217,7 @@
     },
     "context": {
       "radiation_mGy": 0.546,
-      "radiation_cum_mGy": 11.94,
+      "radiation_cum_mGy": 19.94,
       "cabin_co2_mmHg": 2.25
     },
     "missing": [],
@@ -1262,7 +1270,7 @@
     },
     "context": {
       "radiation_mGy": 0.462,
-      "radiation_cum_mGy": 12.4,
+      "radiation_cum_mGy": 20.4,
       "cabin_co2_mmHg": 4.17
     },
     "missing": [],
@@ -1317,7 +1325,7 @@
     },
     "context": {
       "radiation_mGy": 0.526,
-      "radiation_cum_mGy": 12.93,
+      "radiation_cum_mGy": 20.93,
       "cabin_co2_mmHg": 4.28
     },
     "missing": [],
@@ -1372,7 +1380,7 @@
     },
     "context": {
       "radiation_mGy": 0.475,
-      "radiation_cum_mGy": 13.4,
+      "radiation_cum_mGy": 21.4,
       "cabin_co2_mmHg": 2.46
     },
     "missing": [],
@@ -1425,7 +1433,7 @@
     },
     "context": {
       "radiation_mGy": 0.503,
-      "radiation_cum_mGy": 13.9,
+      "radiation_cum_mGy": 21.9,
       "cabin_co2_mmHg": 2.41
     },
     "missing": [
@@ -1480,7 +1488,7 @@
     },
     "context": {
       "radiation_mGy": 0.494,
-      "radiation_cum_mGy": 14.4,
+      "radiation_cum_mGy": 22.4,
       "cabin_co2_mmHg": 2.42
     },
     "missing": [
@@ -1535,7 +1543,7 @@
     },
     "context": {
       "radiation_mGy": 0.476,
-      "radiation_cum_mGy": 14.87,
+      "radiation_cum_mGy": 22.87,
       "cabin_co2_mmHg": 2.43
     },
     "missing": [],
@@ -1588,7 +1596,7 @@
     },
     "context": {
       "radiation_mGy": 0.475,
-      "radiation_cum_mGy": 15.35,
+      "radiation_cum_mGy": 23.35,
       "cabin_co2_mmHg": 2.94
     },
     "missing": [
@@ -1643,7 +1651,7 @@
     },
     "context": {
       "radiation_mGy": 0.507,
-      "radiation_cum_mGy": 15.86,
+      "radiation_cum_mGy": 23.86,
       "cabin_co2_mmHg": 2.18
     },
     "missing": [],
@@ -1696,7 +1704,7 @@
     },
     "context": {
       "radiation_mGy": 0.525,
-      "radiation_cum_mGy": 16.38,
+      "radiation_cum_mGy": 24.38,
       "cabin_co2_mmHg": 2.15
     },
     "missing": [],
@@ -1749,7 +1757,7 @@
     },
     "context": {
       "radiation_mGy": 0.497,
-      "radiation_cum_mGy": 16.88,
+      "radiation_cum_mGy": 24.88,
       "cabin_co2_mmHg": 2.06
     },
     "missing": [],
@@ -1802,7 +1810,7 @@
     },
     "context": {
       "radiation_mGy": 0.502,
-      "radiation_cum_mGy": 17.38,
+      "radiation_cum_mGy": 25.38,
       "cabin_co2_mmHg": 2.48
     },
     "missing": [],
@@ -1855,7 +1863,7 @@
     },
     "context": {
       "radiation_mGy": 0.514,
-      "radiation_cum_mGy": 17.89,
+      "radiation_cum_mGy": 25.89,
       "cabin_co2_mmHg": 2.64
     },
     "missing": [],
@@ -1908,7 +1916,7 @@
     },
     "context": {
       "radiation_mGy": 0.476,
-      "radiation_cum_mGy": 18.37,
+      "radiation_cum_mGy": 26.37,
       "cabin_co2_mmHg": 2.27
     },
     "missing": [],
@@ -1961,7 +1969,7 @@
     },
     "context": {
       "radiation_mGy": 0.518,
-      "radiation_cum_mGy": 18.89,
+      "radiation_cum_mGy": 26.89,
       "cabin_co2_mmHg": 2.05
     },
     "missing": [],
@@ -2013,8 +2021,8 @@
       "exercise_min": 105.0
     },
     "context": {
-      "radiation_mGy": 0.52,
-      "radiation_cum_mGy": 19.41,
+      "radiation_mGy": 2.52,
+      "radiation_cum_mGy": 29.41,
       "cabin_co2_mmHg": 2.05
     },
     "missing": [],
@@ -2038,7 +2046,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -2046,7 +2054,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A1",
@@ -2067,7 +2077,7 @@
     },
     "context": {
       "radiation_mGy": 0.565,
-      "radiation_cum_mGy": 19.97,
+      "radiation_cum_mGy": 29.97,
       "cabin_co2_mmHg": 2.5
     },
     "missing": [],
@@ -2120,7 +2130,7 @@
     },
     "context": {
       "radiation_mGy": 0.491,
-      "radiation_cum_mGy": 20.46,
+      "radiation_cum_mGy": 30.46,
       "cabin_co2_mmHg": 2.52
     },
     "missing": [],
@@ -2173,7 +2183,7 @@
     },
     "context": {
       "radiation_mGy": 0.489,
-      "radiation_cum_mGy": 20.95,
+      "radiation_cum_mGy": 30.95,
       "cabin_co2_mmHg": 2.46
     },
     "missing": [],
@@ -2225,8 +2235,8 @@
       "exercise_min": 129.0
     },
     "context": {
-      "radiation_mGy": 0.519,
-      "radiation_cum_mGy": 21.47,
+      "radiation_mGy": 2.519,
+      "radiation_cum_mGy": 33.47,
       "cabin_co2_mmHg": 2.1
     },
     "missing": [
@@ -2253,7 +2263,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -2261,7 +2271,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A1",
@@ -2282,7 +2294,7 @@
     },
     "context": {
       "radiation_mGy": 0.52,
-      "radiation_cum_mGy": 21.99,
+      "radiation_cum_mGy": 33.99,
       "cabin_co2_mmHg": 2.37
     },
     "missing": [],
@@ -2335,7 +2347,7 @@
     },
     "context": {
       "radiation_mGy": 0.487,
-      "radiation_cum_mGy": 22.48,
+      "radiation_cum_mGy": 34.48,
       "cabin_co2_mmHg": 2.34
     },
     "missing": [],
@@ -2388,7 +2400,7 @@
     },
     "context": {
       "radiation_mGy": 0.49,
-      "radiation_cum_mGy": 22.97,
+      "radiation_cum_mGy": 34.97,
       "cabin_co2_mmHg": 2.37
     },
     "missing": [],
@@ -2441,7 +2453,7 @@
     },
     "context": {
       "radiation_mGy": 0.514,
-      "radiation_cum_mGy": 23.48,
+      "radiation_cum_mGy": 35.48,
       "cabin_co2_mmHg": 2.56
     },
     "missing": [],
@@ -2494,7 +2506,7 @@
     },
     "context": {
       "radiation_mGy": 0.479,
-      "radiation_cum_mGy": 23.96,
+      "radiation_cum_mGy": 35.96,
       "cabin_co2_mmHg": 2.37
     },
     "missing": [],
@@ -2547,7 +2559,7 @@
     },
     "context": {
       "radiation_mGy": 0.49,
-      "radiation_cum_mGy": 24.45,
+      "radiation_cum_mGy": 36.45,
       "cabin_co2_mmHg": 2.5
     },
     "missing": [],
@@ -2600,7 +2612,7 @@
     },
     "context": {
       "radiation_mGy": 0.502,
-      "radiation_cum_mGy": 24.95,
+      "radiation_cum_mGy": 36.95,
       "cabin_co2_mmHg": 2.32
     },
     "missing": [
@@ -2655,7 +2667,7 @@
     },
     "context": {
       "radiation_mGy": 0.525,
-      "radiation_cum_mGy": 25.48,
+      "radiation_cum_mGy": 37.48,
       "cabin_co2_mmHg": 2.39
     },
     "missing": [
@@ -2710,7 +2722,7 @@
     },
     "context": {
       "radiation_mGy": 0.485,
-      "radiation_cum_mGy": 25.96,
+      "radiation_cum_mGy": 37.96,
       "cabin_co2_mmHg": 2.49
     },
     "missing": [
@@ -2765,7 +2777,7 @@
     },
     "context": {
       "radiation_mGy": 0.454,
-      "radiation_cum_mGy": 26.42,
+      "radiation_cum_mGy": 38.42,
       "cabin_co2_mmHg": 1.86
     },
     "missing": [],
@@ -2818,7 +2830,7 @@
     },
     "context": {
       "radiation_mGy": 0.452,
-      "radiation_cum_mGy": 26.87,
+      "radiation_cum_mGy": 38.87,
       "cabin_co2_mmHg": 2.2
     },
     "missing": [
@@ -2874,7 +2886,7 @@
     },
     "context": {
       "radiation_mGy": 0.469,
-      "radiation_cum_mGy": 27.34,
+      "radiation_cum_mGy": 39.34,
       "cabin_co2_mmHg": 2.16
     },
     "missing": [],
@@ -2927,7 +2939,7 @@
     },
     "context": {
       "radiation_mGy": 0.467,
-      "radiation_cum_mGy": 27.8,
+      "radiation_cum_mGy": 39.81,
       "cabin_co2_mmHg": 2.11
     },
     "missing": [
@@ -2982,7 +2994,7 @@
     },
     "context": {
       "radiation_mGy": 0.496,
-      "radiation_cum_mGy": 28.3,
+      "radiation_cum_mGy": 40.3,
       "cabin_co2_mmHg": 2.22
     },
     "missing": [
@@ -3038,7 +3050,7 @@
     },
     "context": {
       "radiation_mGy": 0.47,
-      "radiation_cum_mGy": 28.77,
+      "radiation_cum_mGy": 40.77,
       "cabin_co2_mmHg": 2.75
     },
     "missing": [],
@@ -3091,7 +3103,7 @@
     },
     "context": {
       "radiation_mGy": 0.482,
-      "radiation_cum_mGy": 29.25,
+      "radiation_cum_mGy": 41.25,
       "cabin_co2_mmHg": 2.04
     },
     "missing": [],
@@ -3144,7 +3156,7 @@
     },
     "context": {
       "radiation_mGy": 0.481,
-      "radiation_cum_mGy": 29.73,
+      "radiation_cum_mGy": 41.73,
       "cabin_co2_mmHg": 2.59
     },
     "missing": [],
@@ -3197,7 +3209,7 @@
     },
     "context": {
       "radiation_mGy": 0.489,
-      "radiation_cum_mGy": 30.22,
+      "radiation_cum_mGy": 42.22,
       "cabin_co2_mmHg": 1.8
     },
     "missing": [],
@@ -3250,7 +3262,7 @@
     },
     "context": {
       "radiation_mGy": 0.533,
-      "radiation_cum_mGy": 30.76,
+      "radiation_cum_mGy": 42.76,
       "cabin_co2_mmHg": 2.2
     },
     "missing": [],
@@ -3303,7 +3315,7 @@
     },
     "context": {
       "radiation_mGy": 0.517,
-      "radiation_cum_mGy": 31.27,
+      "radiation_cum_mGy": 43.27,
       "cabin_co2_mmHg": 2.35
     },
     "missing": [],
@@ -3356,7 +3368,7 @@
     },
     "context": {
       "radiation_mGy": 0.5,
-      "radiation_cum_mGy": 31.77,
+      "radiation_cum_mGy": 43.77,
       "cabin_co2_mmHg": 2.48
     },
     "missing": [],
@@ -3409,7 +3421,7 @@
     },
     "context": {
       "radiation_mGy": 0.488,
-      "radiation_cum_mGy": 32.26,
+      "radiation_cum_mGy": 44.26,
       "cabin_co2_mmHg": 2.51
     },
     "missing": [
@@ -3464,7 +3476,7 @@
     },
     "context": {
       "radiation_mGy": 0.489,
-      "radiation_cum_mGy": 32.75,
+      "radiation_cum_mGy": 44.75,
       "cabin_co2_mmHg": 2.54
     },
     "missing": [
@@ -3520,7 +3532,7 @@
     },
     "context": {
       "radiation_mGy": 0.508,
-      "radiation_cum_mGy": 33.26,
+      "radiation_cum_mGy": 45.26,
       "cabin_co2_mmHg": 2.2
     },
     "missing": [
@@ -3575,7 +3587,7 @@
     },
     "context": {
       "radiation_mGy": 0.515,
-      "radiation_cum_mGy": 33.77,
+      "radiation_cum_mGy": 45.77,
       "cabin_co2_mmHg": 2.16
     },
     "missing": [
@@ -3630,7 +3642,7 @@
     },
     "context": {
       "radiation_mGy": 0.477,
-      "radiation_cum_mGy": 34.25,
+      "radiation_cum_mGy": 46.25,
       "cabin_co2_mmHg": 2.56
     },
     "missing": [
@@ -3685,7 +3697,7 @@
     },
     "context": {
       "radiation_mGy": 0.501,
-      "radiation_cum_mGy": 34.75,
+      "radiation_cum_mGy": 46.75,
       "cabin_co2_mmHg": 2.24
     },
     "missing": [
@@ -3740,7 +3752,7 @@
     },
     "context": {
       "radiation_mGy": 0.449,
-      "radiation_cum_mGy": 35.2,
+      "radiation_cum_mGy": 47.2,
       "cabin_co2_mmHg": 1.92
     },
     "missing": [],
@@ -3793,7 +3805,7 @@
     },
     "context": {
       "radiation_mGy": 0.505,
-      "radiation_cum_mGy": 35.7,
+      "radiation_cum_mGy": 47.71,
       "cabin_co2_mmHg": 1.96
     },
     "missing": [],
@@ -3846,7 +3858,7 @@
     },
     "context": {
       "radiation_mGy": 0.519,
-      "radiation_cum_mGy": 36.22,
+      "radiation_cum_mGy": 48.22,
       "cabin_co2_mmHg": 2.02
     },
     "missing": [
@@ -3901,7 +3913,7 @@
     },
     "context": {
       "radiation_mGy": 0.493,
-      "radiation_cum_mGy": 36.72,
+      "radiation_cum_mGy": 48.72,
       "cabin_co2_mmHg": 2.45
     },
     "missing": [],
@@ -3954,7 +3966,7 @@
     },
     "context": {
       "radiation_mGy": 0.545,
-      "radiation_cum_mGy": 37.26,
+      "radiation_cum_mGy": 49.26,
       "cabin_co2_mmHg": 4.24
     },
     "missing": [
@@ -4011,7 +4023,7 @@
     },
     "context": {
       "radiation_mGy": 0.478,
-      "radiation_cum_mGy": 37.74,
+      "radiation_cum_mGy": 49.74,
       "cabin_co2_mmHg": 2.51
     },
     "missing": [],
@@ -4064,7 +4076,7 @@
     },
     "context": {
       "radiation_mGy": 0.505,
-      "radiation_cum_mGy": 38.24,
+      "radiation_cum_mGy": 50.25,
       "cabin_co2_mmHg": 2.17
     },
     "missing": [],
@@ -4117,7 +4129,7 @@
     },
     "context": {
       "radiation_mGy": 0.499,
-      "radiation_cum_mGy": 38.74,
+      "radiation_cum_mGy": 50.74,
       "cabin_co2_mmHg": 2.35
     },
     "missing": [
@@ -4173,7 +4185,7 @@
     },
     "context": {
       "radiation_mGy": 0.497,
-      "radiation_cum_mGy": 39.24,
+      "radiation_cum_mGy": 51.24,
       "cabin_co2_mmHg": 2.49
     },
     "missing": [
@@ -4228,7 +4240,7 @@
     },
     "context": {
       "radiation_mGy": 0.497,
-      "radiation_cum_mGy": 39.74,
+      "radiation_cum_mGy": 51.74,
       "cabin_co2_mmHg": 2.21
     },
     "missing": [
@@ -4283,7 +4295,7 @@
     },
     "context": {
       "radiation_mGy": 0.503,
-      "radiation_cum_mGy": 40.24,
+      "radiation_cum_mGy": 52.24,
       "cabin_co2_mmHg": 2.44
     },
     "missing": [],
@@ -4336,7 +4348,7 @@
     },
     "context": {
       "radiation_mGy": 0.521,
-      "radiation_cum_mGy": 40.76,
+      "radiation_cum_mGy": 52.76,
       "cabin_co2_mmHg": 2.1
     },
     "missing": [
@@ -4391,7 +4403,7 @@
     },
     "context": {
       "radiation_mGy": 0.534,
-      "radiation_cum_mGy": 41.3,
+      "radiation_cum_mGy": 53.3,
       "cabin_co2_mmHg": 2.19
     },
     "missing": [
@@ -4445,8 +4457,8 @@
       "exercise_min": 12.0
     },
     "context": {
-      "radiation_mGy": 0.5,
-      "radiation_cum_mGy": 41.8,
+      "radiation_mGy": 2.5,
+      "radiation_cum_mGy": 55.8,
       "cabin_co2_mmHg": 2.19
     },
     "missing": [],
@@ -4470,7 +4482,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -4478,7 +4490,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A1",
@@ -4499,7 +4513,7 @@
     },
     "context": {
       "radiation_mGy": 0.52,
-      "radiation_cum_mGy": 42.32,
+      "radiation_cum_mGy": 56.32,
       "cabin_co2_mmHg": 1.94
     },
     "missing": [],
@@ -4552,7 +4566,7 @@
     },
     "context": {
       "radiation_mGy": 0.482,
-      "radiation_cum_mGy": 42.8,
+      "radiation_cum_mGy": 56.8,
       "cabin_co2_mmHg": 2.45
     },
     "missing": [],
@@ -4605,7 +4619,7 @@
     },
     "context": {
       "radiation_mGy": 0.519,
-      "radiation_cum_mGy": 43.32,
+      "radiation_cum_mGy": 57.32,
       "cabin_co2_mmHg": 2.16
     },
     "missing": [],
@@ -4658,7 +4672,7 @@
     },
     "context": {
       "radiation_mGy": 0.481,
-      "radiation_cum_mGy": 43.8,
+      "radiation_cum_mGy": 57.8,
       "cabin_co2_mmHg": 2.3
     },
     "missing": [],
@@ -4711,7 +4725,7 @@
     },
     "context": {
       "radiation_mGy": 0.527,
-      "radiation_cum_mGy": 44.32,
+      "radiation_cum_mGy": 58.33,
       "cabin_co2_mmHg": 2.44
     },
     "missing": [],
@@ -4764,7 +4778,7 @@
     },
     "context": {
       "radiation_mGy": 0.555,
-      "radiation_cum_mGy": 44.88,
+      "radiation_cum_mGy": 58.88,
       "cabin_co2_mmHg": 2.43
     },
     "missing": [],
@@ -4817,7 +4831,7 @@
     },
     "context": {
       "radiation_mGy": 0.497,
-      "radiation_cum_mGy": 45.38,
+      "radiation_cum_mGy": 59.38,
       "cabin_co2_mmHg": 2.5
     },
     "missing": [],
@@ -4869,8 +4883,8 @@
       "exercise_min": 122.0
     },
     "context": {
-      "radiation_mGy": 0.445,
-      "radiation_cum_mGy": 45.82,
+      "radiation_mGy": 2.445,
+      "radiation_cum_mGy": 61.82,
       "cabin_co2_mmHg": 2.27
     },
     "missing": [
@@ -4896,7 +4910,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -4904,7 +4918,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A1",
@@ -4925,7 +4941,7 @@
     },
     "context": {
       "radiation_mGy": 0.486,
-      "radiation_cum_mGy": 46.31,
+      "radiation_cum_mGy": 62.31,
       "cabin_co2_mmHg": 2.17
     },
     "missing": [],
@@ -4978,7 +4994,7 @@
     },
     "context": {
       "radiation_mGy": 0.531,
-      "radiation_cum_mGy": 46.84,
+      "radiation_cum_mGy": 62.84,
       "cabin_co2_mmHg": 2.28
     },
     "missing": [],
@@ -5031,7 +5047,7 @@
     },
     "context": {
       "radiation_mGy": 0.514,
-      "radiation_cum_mGy": 47.35,
+      "radiation_cum_mGy": 63.35,
       "cabin_co2_mmHg": 1.79
     },
     "missing": [],
@@ -5084,7 +5100,7 @@
     },
     "context": {
       "radiation_mGy": 0.506,
-      "radiation_cum_mGy": 47.86,
+      "radiation_cum_mGy": 63.86,
       "cabin_co2_mmHg": 1.87
     },
     "missing": [],
@@ -5136,8 +5152,8 @@
       "exercise_min": 108.0
     },
     "context": {
-      "radiation_mGy": 0.525,
-      "radiation_cum_mGy": 48.38,
+      "radiation_mGy": 2.525,
+      "radiation_cum_mGy": 66.38,
       "cabin_co2_mmHg": 1.9
     },
     "missing": [],
@@ -5161,7 +5177,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -5169,7 +5185,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A1",
@@ -5190,7 +5208,7 @@
     },
     "context": {
       "radiation_mGy": 0.512,
-      "radiation_cum_mGy": 48.9,
+      "radiation_cum_mGy": 66.9,
       "cabin_co2_mmHg": 2.0
     },
     "missing": [
@@ -5245,7 +5263,7 @@
     },
     "context": {
       "radiation_mGy": 0.53,
-      "radiation_cum_mGy": 49.43,
+      "radiation_cum_mGy": 67.43,
       "cabin_co2_mmHg": 2.42
     },
     "missing": [],
@@ -5298,7 +5316,7 @@
     },
     "context": {
       "radiation_mGy": 0.523,
-      "radiation_cum_mGy": 49.95,
+      "radiation_cum_mGy": 67.95,
       "cabin_co2_mmHg": 2.03
     },
     "missing": [
@@ -5353,7 +5371,7 @@
     },
     "context": {
       "radiation_mGy": 0.538,
-      "radiation_cum_mGy": 50.49,
+      "radiation_cum_mGy": 68.49,
       "cabin_co2_mmHg": 2.19
     },
     "missing": [
@@ -5409,7 +5427,7 @@
     },
     "context": {
       "radiation_mGy": 0.509,
-      "radiation_cum_mGy": 51.0,
+      "radiation_cum_mGy": 69.0,
       "cabin_co2_mmHg": 2.69
     },
     "missing": [],
@@ -5462,7 +5480,7 @@
     },
     "context": {
       "radiation_mGy": 0.523,
-      "radiation_cum_mGy": 51.52,
+      "radiation_cum_mGy": 69.52,
       "cabin_co2_mmHg": 2.19
     },
     "missing": [
@@ -5517,7 +5535,7 @@
     },
     "context": {
       "radiation_mGy": 0.492,
-      "radiation_cum_mGy": 52.01,
+      "radiation_cum_mGy": 70.01,
       "cabin_co2_mmHg": 2.52
     },
     "missing": [],
@@ -5570,7 +5588,7 @@
     },
     "context": {
       "radiation_mGy": 0.485,
-      "radiation_cum_mGy": 52.5,
+      "radiation_cum_mGy": 70.5,
       "cabin_co2_mmHg": 2.02
     },
     "missing": [],
@@ -5623,7 +5641,7 @@
     },
     "context": {
       "radiation_mGy": 0.543,
-      "radiation_cum_mGy": 53.04,
+      "radiation_cum_mGy": 71.04,
       "cabin_co2_mmHg": 2.24
     },
     "missing": [],
@@ -5676,7 +5694,7 @@
     },
     "context": {
       "radiation_mGy": 0.505,
-      "radiation_cum_mGy": 53.54,
+      "radiation_cum_mGy": 71.54,
       "cabin_co2_mmHg": 2.01
     },
     "missing": [
@@ -5731,7 +5749,7 @@
     },
     "context": {
       "radiation_mGy": 0.52,
-      "radiation_cum_mGy": 54.06,
+      "radiation_cum_mGy": 72.06,
       "cabin_co2_mmHg": 2.2
     },
     "missing": [],
@@ -5784,7 +5802,7 @@
     },
     "context": {
       "radiation_mGy": 0.503,
-      "radiation_cum_mGy": 54.57,
+      "radiation_cum_mGy": 72.57,
       "cabin_co2_mmHg": 2.55
     },
     "missing": [],
@@ -5837,7 +5855,7 @@
     },
     "context": {
       "radiation_mGy": 0.485,
-      "radiation_cum_mGy": 55.05,
+      "radiation_cum_mGy": 73.05,
       "cabin_co2_mmHg": 1.78
     },
     "missing": [],
@@ -5890,7 +5908,7 @@
     },
     "context": {
       "radiation_mGy": 0.5,
-      "radiation_cum_mGy": 55.55,
+      "radiation_cum_mGy": 73.55,
       "cabin_co2_mmHg": 2.43
     },
     "missing": [
@@ -5946,7 +5964,7 @@
     },
     "context": {
       "radiation_mGy": 0.536,
-      "radiation_cum_mGy": 56.09,
+      "radiation_cum_mGy": 74.09,
       "cabin_co2_mmHg": 2.37
     },
     "missing": [
@@ -6001,7 +6019,7 @@
     },
     "context": {
       "radiation_mGy": 0.514,
-      "radiation_cum_mGy": 56.6,
+      "radiation_cum_mGy": 74.6,
       "cabin_co2_mmHg": 2.12
     },
     "missing": [
@@ -6056,7 +6074,7 @@
     },
     "context": {
       "radiation_mGy": 0.457,
-      "radiation_cum_mGy": 57.06,
+      "radiation_cum_mGy": 75.06,
       "cabin_co2_mmHg": 1.87
     },
     "missing": [],
@@ -6109,7 +6127,7 @@
     },
     "context": {
       "radiation_mGy": 0.495,
-      "radiation_cum_mGy": 57.55,
+      "radiation_cum_mGy": 75.55,
       "cabin_co2_mmHg": 2.32
     },
     "missing": [],
@@ -6162,7 +6180,7 @@
     },
     "context": {
       "radiation_mGy": 0.545,
-      "radiation_cum_mGy": 58.1,
+      "radiation_cum_mGy": 76.1,
       "cabin_co2_mmHg": 2.14
     },
     "missing": [],
@@ -6215,7 +6233,7 @@
     },
     "context": {
       "radiation_mGy": 0.495,
-      "radiation_cum_mGy": 58.59,
+      "radiation_cum_mGy": 76.59,
       "cabin_co2_mmHg": 2.37
     },
     "missing": [],
@@ -6268,7 +6286,7 @@
     },
     "context": {
       "radiation_mGy": 0.455,
-      "radiation_cum_mGy": 59.05,
+      "radiation_cum_mGy": 77.05,
       "cabin_co2_mmHg": 2.31
     },
     "missing": [],
@@ -6321,7 +6339,7 @@
     },
     "context": {
       "radiation_mGy": 0.547,
-      "radiation_cum_mGy": 59.6,
+      "radiation_cum_mGy": 77.6,
       "cabin_co2_mmHg": 2.78
     },
     "missing": [
@@ -6379,7 +6397,7 @@
     },
     "context": {
       "radiation_mGy": 0.517,
-      "radiation_cum_mGy": 60.11,
+      "radiation_cum_mGy": 78.11,
       "cabin_co2_mmHg": 2.23
     },
     "missing": [],
@@ -6822,8 +6840,8 @@
       "exercise_min": 115.0
     },
     "context": {
-      "radiation_mGy": 0.482,
-      "radiation_cum_mGy": 4.39,
+      "radiation_mGy": 2.482,
+      "radiation_cum_mGy": 6.39,
       "cabin_co2_mmHg": 2.29
     },
     "missing": [],
@@ -6847,7 +6865,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -6855,7 +6873,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A2",
@@ -6875,8 +6895,8 @@
       "exercise_min": 113.0
     },
     "context": {
-      "radiation_mGy": 0.489,
-      "radiation_cum_mGy": 4.88,
+      "radiation_mGy": 2.489,
+      "radiation_cum_mGy": 8.88,
       "cabin_co2_mmHg": 2.04
     },
     "missing": [],
@@ -6900,7 +6920,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -6908,7 +6928,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A2",
@@ -6928,8 +6950,8 @@
       "exercise_min": 115.0
     },
     "context": {
-      "radiation_mGy": 0.487,
-      "radiation_cum_mGy": 5.37,
+      "radiation_mGy": 2.487,
+      "radiation_cum_mGy": 11.37,
       "cabin_co2_mmHg": 2.56
     },
     "missing": [
@@ -6955,7 +6977,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -6963,7 +6985,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A2",
@@ -6984,7 +7008,7 @@
     },
     "context": {
       "radiation_mGy": 0.484,
-      "radiation_cum_mGy": 5.85,
+      "radiation_cum_mGy": 11.85,
       "cabin_co2_mmHg": 2.53
     },
     "missing": [],
@@ -7036,8 +7060,8 @@
       "exercise_min": 68.0
     },
     "context": {
-      "radiation_mGy": 0.507,
-      "radiation_cum_mGy": 6.36,
+      "radiation_mGy": 2.507,
+      "radiation_cum_mGy": 14.36,
       "cabin_co2_mmHg": 2.32
     },
     "missing": [
@@ -7065,7 +7089,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -7073,7 +7097,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A2",
@@ -7094,7 +7120,7 @@
     },
     "context": {
       "radiation_mGy": 0.507,
-      "radiation_cum_mGy": 6.87,
+      "radiation_cum_mGy": 14.87,
       "cabin_co2_mmHg": 2.64
     },
     "missing": [],
@@ -7147,7 +7173,7 @@
     },
     "context": {
       "radiation_mGy": 0.538,
-      "radiation_cum_mGy": 7.4,
+      "radiation_cum_mGy": 15.41,
       "cabin_co2_mmHg": 2.44
     },
     "missing": [
@@ -7203,7 +7229,7 @@
     },
     "context": {
       "radiation_mGy": 0.512,
-      "radiation_cum_mGy": 7.92,
+      "radiation_cum_mGy": 15.92,
       "cabin_co2_mmHg": 2.04
     },
     "missing": [],
@@ -7256,7 +7282,7 @@
     },
     "context": {
       "radiation_mGy": 0.496,
-      "radiation_cum_mGy": 8.41,
+      "radiation_cum_mGy": 16.41,
       "cabin_co2_mmHg": 2.41
     },
     "missing": [],
@@ -7309,7 +7335,7 @@
     },
     "context": {
       "radiation_mGy": 0.465,
-      "radiation_cum_mGy": 8.88,
+      "radiation_cum_mGy": 16.88,
       "cabin_co2_mmHg": 2.01
     },
     "missing": [],
@@ -7362,7 +7388,7 @@
     },
     "context": {
       "radiation_mGy": 0.527,
-      "radiation_cum_mGy": 9.4,
+      "radiation_cum_mGy": 17.41,
       "cabin_co2_mmHg": 2.56
     },
     "missing": [],
@@ -7415,7 +7441,7 @@
     },
     "context": {
       "radiation_mGy": 0.49,
-      "radiation_cum_mGy": 9.89,
+      "radiation_cum_mGy": 17.89,
       "cabin_co2_mmHg": 2.29
     },
     "missing": [],
@@ -7468,7 +7494,7 @@
     },
     "context": {
       "radiation_mGy": 0.5,
-      "radiation_cum_mGy": 10.39,
+      "radiation_cum_mGy": 18.39,
       "cabin_co2_mmHg": 2.24
     },
     "missing": [],
@@ -7521,7 +7547,7 @@
     },
     "context": {
       "radiation_mGy": 0.563,
-      "radiation_cum_mGy": 10.96,
+      "radiation_cum_mGy": 18.96,
       "cabin_co2_mmHg": 2.1
     },
     "missing": [
@@ -7576,7 +7602,7 @@
     },
     "context": {
       "radiation_mGy": 0.49,
-      "radiation_cum_mGy": 11.45,
+      "radiation_cum_mGy": 19.45,
       "cabin_co2_mmHg": 2.67
     },
     "missing": [],
@@ -7629,7 +7655,7 @@
     },
     "context": {
       "radiation_mGy": 0.514,
-      "radiation_cum_mGy": 11.96,
+      "radiation_cum_mGy": 19.96,
       "cabin_co2_mmHg": 2.25
     },
     "missing": [],
@@ -7682,7 +7708,7 @@
     },
     "context": {
       "radiation_mGy": 0.493,
-      "radiation_cum_mGy": 12.46,
+      "radiation_cum_mGy": 20.45,
       "cabin_co2_mmHg": 4.17
     },
     "missing": [
@@ -7740,7 +7766,7 @@
     },
     "context": {
       "radiation_mGy": 0.525,
-      "radiation_cum_mGy": 12.98,
+      "radiation_cum_mGy": 20.98,
       "cabin_co2_mmHg": 4.28
     },
     "missing": [],
@@ -7795,7 +7821,7 @@
     },
     "context": {
       "radiation_mGy": 0.516,
-      "radiation_cum_mGy": 13.5,
+      "radiation_cum_mGy": 21.5,
       "cabin_co2_mmHg": 2.46
     },
     "missing": [],
@@ -7848,7 +7874,7 @@
     },
     "context": {
       "radiation_mGy": 0.526,
-      "radiation_cum_mGy": 14.02,
+      "radiation_cum_mGy": 22.02,
       "cabin_co2_mmHg": 2.41
     },
     "missing": [
@@ -7903,7 +7929,7 @@
     },
     "context": {
       "radiation_mGy": 0.471,
-      "radiation_cum_mGy": 14.49,
+      "radiation_cum_mGy": 22.49,
       "cabin_co2_mmHg": 2.42
     },
     "missing": [
@@ -7958,7 +7984,7 @@
     },
     "context": {
       "radiation_mGy": 0.512,
-      "radiation_cum_mGy": 15.01,
+      "radiation_cum_mGy": 23.0,
       "cabin_co2_mmHg": 2.43
     },
     "missing": [],
@@ -8011,7 +8037,7 @@
     },
     "context": {
       "radiation_mGy": 0.506,
-      "radiation_cum_mGy": 15.51,
+      "radiation_cum_mGy": 23.51,
       "cabin_co2_mmHg": 2.94
     },
     "missing": [
@@ -8066,7 +8092,7 @@
     },
     "context": {
       "radiation_mGy": 0.512,
-      "radiation_cum_mGy": 16.02,
+      "radiation_cum_mGy": 24.02,
       "cabin_co2_mmHg": 2.18
     },
     "missing": [],
@@ -8119,7 +8145,7 @@
     },
     "context": {
       "radiation_mGy": 0.46,
-      "radiation_cum_mGy": 16.48,
+      "radiation_cum_mGy": 24.48,
       "cabin_co2_mmHg": 2.15
     },
     "missing": [],
@@ -8172,7 +8198,7 @@
     },
     "context": {
       "radiation_mGy": 0.504,
-      "radiation_cum_mGy": 16.99,
+      "radiation_cum_mGy": 24.99,
       "cabin_co2_mmHg": 2.06
     },
     "missing": [],
@@ -8225,7 +8251,7 @@
     },
     "context": {
       "radiation_mGy": 0.507,
-      "radiation_cum_mGy": 17.49,
+      "radiation_cum_mGy": 25.49,
       "cabin_co2_mmHg": 2.48
     },
     "missing": [],
@@ -8278,7 +8304,7 @@
     },
     "context": {
       "radiation_mGy": 0.52,
-      "radiation_cum_mGy": 18.01,
+      "radiation_cum_mGy": 26.01,
       "cabin_co2_mmHg": 2.64
     },
     "missing": [],
@@ -8333,7 +8359,7 @@
     },
     "context": {
       "radiation_mGy": 0.525,
-      "radiation_cum_mGy": 18.54,
+      "radiation_cum_mGy": 26.54,
       "cabin_co2_mmHg": 2.27
     },
     "missing": [
@@ -8388,7 +8414,7 @@
     },
     "context": {
       "radiation_mGy": 0.474,
-      "radiation_cum_mGy": 19.01,
+      "radiation_cum_mGy": 27.01,
       "cabin_co2_mmHg": 2.05
     },
     "missing": [],
@@ -8440,8 +8466,8 @@
       "exercise_min": 94.0
     },
     "context": {
-      "radiation_mGy": 0.461,
-      "radiation_cum_mGy": 19.47,
+      "radiation_mGy": 2.461,
+      "radiation_cum_mGy": 29.47,
       "cabin_co2_mmHg": 2.05
     },
     "missing": [
@@ -8467,7 +8493,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -8475,7 +8501,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A2",
@@ -8496,7 +8524,7 @@
     },
     "context": {
       "radiation_mGy": 0.546,
-      "radiation_cum_mGy": 20.02,
+      "radiation_cum_mGy": 30.02,
       "cabin_co2_mmHg": 2.5
     },
     "missing": [
@@ -8552,7 +8580,7 @@
     },
     "context": {
       "radiation_mGy": 0.483,
-      "radiation_cum_mGy": 20.5,
+      "radiation_cum_mGy": 30.5,
       "cabin_co2_mmHg": 2.52
     },
     "missing": [],
@@ -8605,7 +8633,7 @@
     },
     "context": {
       "radiation_mGy": 0.533,
-      "radiation_cum_mGy": 21.04,
+      "radiation_cum_mGy": 31.04,
       "cabin_co2_mmHg": 2.46
     },
     "missing": [],
@@ -8657,8 +8685,8 @@
       "exercise_min": 126.0
     },
     "context": {
-      "radiation_mGy": 0.537,
-      "radiation_cum_mGy": 21.57,
+      "radiation_mGy": 2.537,
+      "radiation_cum_mGy": 33.57,
       "cabin_co2_mmHg": 2.1
     },
     "missing": [
@@ -8684,7 +8712,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -8692,7 +8720,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A2",
@@ -8713,7 +8743,7 @@
     },
     "context": {
       "radiation_mGy": 0.522,
-      "radiation_cum_mGy": 22.09,
+      "radiation_cum_mGy": 34.09,
       "cabin_co2_mmHg": 2.37
     },
     "missing": [
@@ -8768,7 +8798,7 @@
     },
     "context": {
       "radiation_mGy": 0.53,
-      "radiation_cum_mGy": 22.62,
+      "radiation_cum_mGy": 34.62,
       "cabin_co2_mmHg": 2.34
     },
     "missing": [
@@ -8823,7 +8853,7 @@
     },
     "context": {
       "radiation_mGy": 0.493,
-      "radiation_cum_mGy": 23.12,
+      "radiation_cum_mGy": 35.12,
       "cabin_co2_mmHg": 2.37
     },
     "missing": [
@@ -8878,7 +8908,7 @@
     },
     "context": {
       "radiation_mGy": 0.503,
-      "radiation_cum_mGy": 23.62,
+      "radiation_cum_mGy": 35.62,
       "cabin_co2_mmHg": 2.56
     },
     "missing": [],
@@ -8931,7 +8961,7 @@
     },
     "context": {
       "radiation_mGy": 0.52,
-      "radiation_cum_mGy": 24.14,
+      "radiation_cum_mGy": 36.14,
       "cabin_co2_mmHg": 2.37
     },
     "missing": [
@@ -8986,7 +9016,7 @@
     },
     "context": {
       "radiation_mGy": 0.486,
-      "radiation_cum_mGy": 24.63,
+      "radiation_cum_mGy": 36.63,
       "cabin_co2_mmHg": 2.5
     },
     "missing": [],
@@ -9039,7 +9069,7 @@
     },
     "context": {
       "radiation_mGy": 0.482,
-      "radiation_cum_mGy": 25.11,
+      "radiation_cum_mGy": 37.11,
       "cabin_co2_mmHg": 2.32
     },
     "missing": [],
@@ -9092,7 +9122,7 @@
     },
     "context": {
       "radiation_mGy": 0.49,
-      "radiation_cum_mGy": 25.6,
+      "radiation_cum_mGy": 37.6,
       "cabin_co2_mmHg": 2.39
     },
     "missing": [
@@ -9147,7 +9177,7 @@
     },
     "context": {
       "radiation_mGy": 0.454,
-      "radiation_cum_mGy": 26.05,
+      "radiation_cum_mGy": 38.05,
       "cabin_co2_mmHg": 2.49
     },
     "missing": [
@@ -9202,7 +9232,7 @@
     },
     "context": {
       "radiation_mGy": 0.516,
-      "radiation_cum_mGy": 26.57,
+      "radiation_cum_mGy": 38.57,
       "cabin_co2_mmHg": 1.86
     },
     "missing": [],
@@ -9255,7 +9285,7 @@
     },
     "context": {
       "radiation_mGy": 0.498,
-      "radiation_cum_mGy": 27.07,
+      "radiation_cum_mGy": 39.07,
       "cabin_co2_mmHg": 2.2
     },
     "missing": [],
@@ -9308,7 +9338,7 @@
     },
     "context": {
       "radiation_mGy": 0.538,
-      "radiation_cum_mGy": 27.6,
+      "radiation_cum_mGy": 39.6,
       "cabin_co2_mmHg": 2.16
     },
     "missing": [],
@@ -9361,7 +9391,7 @@
     },
     "context": {
       "radiation_mGy": 0.511,
-      "radiation_cum_mGy": 28.12,
+      "radiation_cum_mGy": 40.12,
       "cabin_co2_mmHg": 2.11
     },
     "missing": [],
@@ -9414,7 +9444,7 @@
     },
     "context": {
       "radiation_mGy": 0.543,
-      "radiation_cum_mGy": 28.66,
+      "radiation_cum_mGy": 40.66,
       "cabin_co2_mmHg": 2.22
     },
     "missing": [],
@@ -9467,7 +9497,7 @@
     },
     "context": {
       "radiation_mGy": 0.525,
-      "radiation_cum_mGy": 29.18,
+      "radiation_cum_mGy": 41.18,
       "cabin_co2_mmHg": 2.75
     },
     "missing": [
@@ -9524,7 +9554,7 @@
     },
     "context": {
       "radiation_mGy": 0.513,
-      "radiation_cum_mGy": 29.7,
+      "radiation_cum_mGy": 41.7,
       "cabin_co2_mmHg": 2.04
     },
     "missing": [],
@@ -9579,7 +9609,7 @@
     },
     "context": {
       "radiation_mGy": 0.531,
-      "radiation_cum_mGy": 30.23,
+      "radiation_cum_mGy": 42.23,
       "cabin_co2_mmHg": 2.59
     },
     "missing": [],
@@ -9634,7 +9664,7 @@
     },
     "context": {
       "radiation_mGy": 0.467,
-      "radiation_cum_mGy": 30.69,
+      "radiation_cum_mGy": 42.69,
       "cabin_co2_mmHg": 1.8
     },
     "missing": [],
@@ -9689,7 +9719,7 @@
     },
     "context": {
       "radiation_mGy": 0.526,
-      "radiation_cum_mGy": 31.22,
+      "radiation_cum_mGy": 43.22,
       "cabin_co2_mmHg": 2.2
     },
     "missing": [
@@ -9747,7 +9777,7 @@
     },
     "context": {
       "radiation_mGy": 0.499,
-      "radiation_cum_mGy": 31.72,
+      "radiation_cum_mGy": 43.72,
       "cabin_co2_mmHg": 2.35
     },
     "missing": [
@@ -9804,7 +9834,7 @@
     },
     "context": {
       "radiation_mGy": 0.471,
-      "radiation_cum_mGy": 32.19,
+      "radiation_cum_mGy": 44.19,
       "cabin_co2_mmHg": 2.48
     },
     "missing": [],
@@ -9859,7 +9889,7 @@
     },
     "context": {
       "radiation_mGy": 0.471,
-      "radiation_cum_mGy": 32.66,
+      "radiation_cum_mGy": 44.66,
       "cabin_co2_mmHg": 2.51
     },
     "missing": [],
@@ -9914,7 +9944,7 @@
     },
     "context": {
       "radiation_mGy": 0.521,
-      "radiation_cum_mGy": 33.18,
+      "radiation_cum_mGy": 45.18,
       "cabin_co2_mmHg": 2.54
     },
     "missing": [],
@@ -9969,7 +9999,7 @@
     },
     "context": {
       "radiation_mGy": 0.506,
-      "radiation_cum_mGy": 33.69,
+      "radiation_cum_mGy": 45.69,
       "cabin_co2_mmHg": 2.2
     },
     "missing": [],
@@ -10024,7 +10054,7 @@
     },
     "context": {
       "radiation_mGy": 0.489,
-      "radiation_cum_mGy": 34.18,
+      "radiation_cum_mGy": 46.18,
       "cabin_co2_mmHg": 2.16
     },
     "missing": [],
@@ -10079,7 +10109,7 @@
     },
     "context": {
       "radiation_mGy": 0.445,
-      "radiation_cum_mGy": 34.62,
+      "radiation_cum_mGy": 46.62,
       "cabin_co2_mmHg": 2.56
     },
     "missing": [],
@@ -10134,7 +10164,7 @@
     },
     "context": {
       "radiation_mGy": 0.498,
-      "radiation_cum_mGy": 35.12,
+      "radiation_cum_mGy": 47.12,
       "cabin_co2_mmHg": 2.24
     },
     "missing": [],
@@ -10189,7 +10219,7 @@
     },
     "context": {
       "radiation_mGy": 0.513,
-      "radiation_cum_mGy": 35.63,
+      "radiation_cum_mGy": 47.63,
       "cabin_co2_mmHg": 1.92
     },
     "missing": [],
@@ -10244,7 +10274,7 @@
     },
     "context": {
       "radiation_mGy": 0.473,
-      "radiation_cum_mGy": 36.11,
+      "radiation_cum_mGy": 48.11,
       "cabin_co2_mmHg": 1.96
     },
     "missing": [],
@@ -10299,7 +10329,7 @@
     },
     "context": {
       "radiation_mGy": 0.485,
-      "radiation_cum_mGy": 36.59,
+      "radiation_cum_mGy": 48.59,
       "cabin_co2_mmHg": 2.02
     },
     "missing": [],
@@ -10354,7 +10384,7 @@
     },
     "context": {
       "radiation_mGy": 0.475,
-      "radiation_cum_mGy": 37.07,
+      "radiation_cum_mGy": 49.07,
       "cabin_co2_mmHg": 2.45
     },
     "missing": [],
@@ -10409,7 +10439,7 @@
     },
     "context": {
       "radiation_mGy": 0.527,
-      "radiation_cum_mGy": 37.59,
+      "radiation_cum_mGy": 49.59,
       "cabin_co2_mmHg": 4.24
     },
     "missing": [
@@ -10468,7 +10498,7 @@
     },
     "context": {
       "radiation_mGy": 0.5,
-      "radiation_cum_mGy": 38.09,
+      "radiation_cum_mGy": 50.09,
       "cabin_co2_mmHg": 2.51
     },
     "missing": [],
@@ -10523,7 +10553,7 @@
     },
     "context": {
       "radiation_mGy": 0.489,
-      "radiation_cum_mGy": 38.58,
+      "radiation_cum_mGy": 50.58,
       "cabin_co2_mmHg": 2.17
     },
     "missing": [],
@@ -10578,7 +10608,7 @@
     },
     "context": {
       "radiation_mGy": 0.471,
-      "radiation_cum_mGy": 39.05,
+      "radiation_cum_mGy": 51.05,
       "cabin_co2_mmHg": 2.35
     },
     "missing": [
@@ -10635,7 +10665,7 @@
     },
     "context": {
       "radiation_mGy": 0.546,
-      "radiation_cum_mGy": 39.6,
+      "radiation_cum_mGy": 51.6,
       "cabin_co2_mmHg": 2.49
     },
     "missing": [
@@ -10692,7 +10722,7 @@
     },
     "context": {
       "radiation_mGy": 0.483,
-      "radiation_cum_mGy": 40.08,
+      "radiation_cum_mGy": 52.08,
       "cabin_co2_mmHg": 2.21
     },
     "missing": [
@@ -10749,7 +10779,7 @@
     },
     "context": {
       "radiation_mGy": 0.521,
-      "radiation_cum_mGy": 40.6,
+      "radiation_cum_mGy": 52.6,
       "cabin_co2_mmHg": 2.44
     },
     "missing": [],
@@ -10804,7 +10834,7 @@
     },
     "context": {
       "radiation_mGy": 0.524,
-      "radiation_cum_mGy": 41.13,
+      "radiation_cum_mGy": 53.13,
       "cabin_co2_mmHg": 2.1
     },
     "missing": [],
@@ -10859,7 +10889,7 @@
     },
     "context": {
       "radiation_mGy": 0.492,
-      "radiation_cum_mGy": 41.62,
+      "radiation_cum_mGy": 53.62,
       "cabin_co2_mmHg": 2.19
     },
     "missing": [
@@ -10915,8 +10945,8 @@
       "exercise_min": 3.0
     },
     "context": {
-      "radiation_mGy": 0.515,
-      "radiation_cum_mGy": 42.13,
+      "radiation_mGy": 2.515,
+      "radiation_cum_mGy": 56.13,
       "cabin_co2_mmHg": 2.19
     },
     "missing": [
@@ -10942,7 +10972,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "orange",
@@ -10952,7 +10982,9 @@
       "repeat_bp_hr_rest"
     ],
     "escalation": "crew_medical_officer",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A2",
@@ -10973,7 +11005,7 @@
     },
     "context": {
       "radiation_mGy": 0.499,
-      "radiation_cum_mGy": 42.63,
+      "radiation_cum_mGy": 56.63,
       "cabin_co2_mmHg": 1.94
     },
     "missing": [
@@ -11030,7 +11062,7 @@
     },
     "context": {
       "radiation_mGy": 0.477,
-      "radiation_cum_mGy": 43.11,
+      "radiation_cum_mGy": 57.11,
       "cabin_co2_mmHg": 2.45
     },
     "missing": [],
@@ -11085,7 +11117,7 @@
     },
     "context": {
       "radiation_mGy": 0.48,
-      "radiation_cum_mGy": 43.59,
+      "radiation_cum_mGy": 57.59,
       "cabin_co2_mmHg": 2.16
     },
     "missing": [],
@@ -11140,7 +11172,7 @@
     },
     "context": {
       "radiation_mGy": 0.497,
-      "radiation_cum_mGy": 44.09,
+      "radiation_cum_mGy": 58.09,
       "cabin_co2_mmHg": 2.3
     },
     "missing": [
@@ -11197,7 +11229,7 @@
     },
     "context": {
       "radiation_mGy": 0.53,
-      "radiation_cum_mGy": 44.62,
+      "radiation_cum_mGy": 58.62,
       "cabin_co2_mmHg": 2.44
     },
     "missing": [
@@ -11254,7 +11286,7 @@
     },
     "context": {
       "radiation_mGy": 0.491,
-      "radiation_cum_mGy": 45.11,
+      "radiation_cum_mGy": 59.11,
       "cabin_co2_mmHg": 2.43
     },
     "missing": [],
@@ -11309,7 +11341,7 @@
     },
     "context": {
       "radiation_mGy": 0.503,
-      "radiation_cum_mGy": 45.61,
+      "radiation_cum_mGy": 59.61,
       "cabin_co2_mmHg": 2.5
     },
     "missing": [],
@@ -11363,8 +11395,8 @@
       "exercise_min": 69.0
     },
     "context": {
-      "radiation_mGy": 0.523,
-      "radiation_cum_mGy": 46.13,
+      "radiation_mGy": 2.523,
+      "radiation_cum_mGy": 62.13,
       "cabin_co2_mmHg": 2.27
     },
     "missing": [
@@ -11390,7 +11422,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "orange",
@@ -11400,7 +11432,9 @@
       "repeat_bp_hr_rest"
     ],
     "escalation": "crew_medical_officer",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A2",
@@ -11421,7 +11455,7 @@
     },
     "context": {
       "radiation_mGy": 0.527,
-      "radiation_cum_mGy": 46.66,
+      "radiation_cum_mGy": 62.66,
       "cabin_co2_mmHg": 2.17
     },
     "missing": [],
@@ -11476,7 +11510,7 @@
     },
     "context": {
       "radiation_mGy": 0.47,
-      "radiation_cum_mGy": 47.13,
+      "radiation_cum_mGy": 63.13,
       "cabin_co2_mmHg": 2.28
     },
     "missing": [
@@ -11533,7 +11567,7 @@
     },
     "context": {
       "radiation_mGy": 0.567,
-      "radiation_cum_mGy": 47.7,
+      "radiation_cum_mGy": 63.7,
       "cabin_co2_mmHg": 1.79
     },
     "missing": [],
@@ -11588,7 +11622,7 @@
     },
     "context": {
       "radiation_mGy": 0.525,
-      "radiation_cum_mGy": 48.22,
+      "radiation_cum_mGy": 64.22,
       "cabin_co2_mmHg": 1.87
     },
     "missing": [],
@@ -11642,8 +11676,8 @@
       "exercise_min": 42.0
     },
     "context": {
-      "radiation_mGy": 0.492,
-      "radiation_cum_mGy": 48.72,
+      "radiation_mGy": 2.492,
+      "radiation_cum_mGy": 66.72,
       "cabin_co2_mmHg": 1.9
     },
     "missing": [
@@ -11670,7 +11704,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "orange",
@@ -11680,7 +11714,9 @@
       "repeat_bp_hr_rest"
     ],
     "escalation": "crew_medical_officer",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A2",
@@ -11701,7 +11737,7 @@
     },
     "context": {
       "radiation_mGy": 0.51,
-      "radiation_cum_mGy": 49.23,
+      "radiation_cum_mGy": 67.23,
       "cabin_co2_mmHg": 2.0
     },
     "missing": [],
@@ -11756,7 +11792,7 @@
     },
     "context": {
       "radiation_mGy": 0.534,
-      "radiation_cum_mGy": 49.76,
+      "radiation_cum_mGy": 67.76,
       "cabin_co2_mmHg": 2.42
     },
     "missing": [],
@@ -11811,7 +11847,7 @@
     },
     "context": {
       "radiation_mGy": 0.482,
-      "radiation_cum_mGy": 50.24,
+      "radiation_cum_mGy": 68.24,
       "cabin_co2_mmHg": 2.03
     },
     "missing": [
@@ -11869,7 +11905,7 @@
     },
     "context": {
       "radiation_mGy": 0.494,
-      "radiation_cum_mGy": 50.74,
+      "radiation_cum_mGy": 68.74,
       "cabin_co2_mmHg": 2.19
     },
     "missing": [
@@ -11926,7 +11962,7 @@
     },
     "context": {
       "radiation_mGy": 0.486,
-      "radiation_cum_mGy": 51.22,
+      "radiation_cum_mGy": 69.22,
       "cabin_co2_mmHg": 2.69
     },
     "missing": [
@@ -11983,7 +12019,7 @@
     },
     "context": {
       "radiation_mGy": 0.465,
-      "radiation_cum_mGy": 51.69,
+      "radiation_cum_mGy": 69.69,
       "cabin_co2_mmHg": 2.19
     },
     "missing": [],
@@ -12038,7 +12074,7 @@
     },
     "context": {
       "radiation_mGy": 0.491,
-      "radiation_cum_mGy": 52.18,
+      "radiation_cum_mGy": 70.18,
       "cabin_co2_mmHg": 2.52
     },
     "missing": [],
@@ -12093,7 +12129,7 @@
     },
     "context": {
       "radiation_mGy": 0.495,
-      "radiation_cum_mGy": 52.67,
+      "radiation_cum_mGy": 70.67,
       "cabin_co2_mmHg": 2.02
     },
     "missing": [],
@@ -12148,7 +12184,7 @@
     },
     "context": {
       "radiation_mGy": 0.47,
-      "radiation_cum_mGy": 53.14,
+      "radiation_cum_mGy": 71.14,
       "cabin_co2_mmHg": 2.24
     },
     "missing": [
@@ -12205,7 +12241,7 @@
     },
     "context": {
       "radiation_mGy": 0.498,
-      "radiation_cum_mGy": 53.64,
+      "radiation_cum_mGy": 71.64,
       "cabin_co2_mmHg": 2.01
     },
     "missing": [],
@@ -12260,7 +12296,7 @@
     },
     "context": {
       "radiation_mGy": 0.502,
-      "radiation_cum_mGy": 54.14,
+      "radiation_cum_mGy": 72.14,
       "cabin_co2_mmHg": 2.2
     },
     "missing": [],
@@ -12315,7 +12351,7 @@
     },
     "context": {
       "radiation_mGy": 0.492,
-      "radiation_cum_mGy": 54.63,
+      "radiation_cum_mGy": 72.64,
       "cabin_co2_mmHg": 2.55
     },
     "missing": [
@@ -12372,7 +12408,7 @@
     },
     "context": {
       "radiation_mGy": 0.516,
-      "radiation_cum_mGy": 55.15,
+      "radiation_cum_mGy": 73.15,
       "cabin_co2_mmHg": 1.78
     },
     "missing": [],
@@ -12427,7 +12463,7 @@
     },
     "context": {
       "radiation_mGy": 0.471,
-      "radiation_cum_mGy": 55.62,
+      "radiation_cum_mGy": 73.62,
       "cabin_co2_mmHg": 2.43
     },
     "missing": [],
@@ -12482,7 +12518,7 @@
     },
     "context": {
       "radiation_mGy": 0.513,
-      "radiation_cum_mGy": 56.13,
+      "radiation_cum_mGy": 74.14,
       "cabin_co2_mmHg": 2.37
     },
     "missing": [],
@@ -12537,7 +12573,7 @@
     },
     "context": {
       "radiation_mGy": 0.415,
-      "radiation_cum_mGy": 56.55,
+      "radiation_cum_mGy": 74.55,
       "cabin_co2_mmHg": 2.12
     },
     "missing": [],
@@ -12592,7 +12628,7 @@
     },
     "context": {
       "radiation_mGy": 0.555,
-      "radiation_cum_mGy": 57.1,
+      "radiation_cum_mGy": 75.11,
       "cabin_co2_mmHg": 1.87
     },
     "missing": [],
@@ -12647,7 +12683,7 @@
     },
     "context": {
       "radiation_mGy": 0.5,
-      "radiation_cum_mGy": 57.6,
+      "radiation_cum_mGy": 75.61,
       "cabin_co2_mmHg": 2.32
     },
     "missing": [],
@@ -12702,7 +12738,7 @@
     },
     "context": {
       "radiation_mGy": 0.487,
-      "radiation_cum_mGy": 58.09,
+      "radiation_cum_mGy": 76.09,
       "cabin_co2_mmHg": 2.14
     },
     "missing": [
@@ -12760,7 +12796,7 @@
     },
     "context": {
       "radiation_mGy": 0.515,
-      "radiation_cum_mGy": 58.61,
+      "radiation_cum_mGy": 76.61,
       "cabin_co2_mmHg": 2.37
     },
     "missing": [],
@@ -12815,7 +12851,7 @@
     },
     "context": {
       "radiation_mGy": 0.496,
-      "radiation_cum_mGy": 59.1,
+      "radiation_cum_mGy": 77.1,
       "cabin_co2_mmHg": 2.31
     },
     "missing": [],
@@ -12870,7 +12906,7 @@
     },
     "context": {
       "radiation_mGy": 0.494,
-      "radiation_cum_mGy": 59.6,
+      "radiation_cum_mGy": 77.6,
       "cabin_co2_mmHg": 2.78
     },
     "missing": [],
@@ -12925,7 +12961,7 @@
     },
     "context": {
       "radiation_mGy": 0.499,
-      "radiation_cum_mGy": 60.1,
+      "radiation_cum_mGy": 78.1,
       "cabin_co2_mmHg": 2.23
     },
     "missing": [],
@@ -13369,8 +13405,8 @@
       "exercise_min": 190.0
     },
     "context": {
-      "radiation_mGy": 0.493,
-      "radiation_cum_mGy": 4.57,
+      "radiation_mGy": 2.493,
+      "radiation_cum_mGy": 6.57,
       "cabin_co2_mmHg": 2.29
     },
     "missing": [],
@@ -13394,7 +13430,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -13402,7 +13438,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A3",
@@ -13422,8 +13460,8 @@
       "exercise_min": 154.0
     },
     "context": {
-      "radiation_mGy": 0.433,
-      "radiation_cum_mGy": 5.0,
+      "radiation_mGy": 2.433,
+      "radiation_cum_mGy": 9.0,
       "cabin_co2_mmHg": 2.04
     },
     "missing": [],
@@ -13447,7 +13485,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -13455,7 +13493,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A3",
@@ -13475,8 +13515,8 @@
       "exercise_min": 130.0
     },
     "context": {
-      "radiation_mGy": 0.508,
-      "radiation_cum_mGy": 5.51,
+      "radiation_mGy": 2.508,
+      "radiation_cum_mGy": 11.51,
       "cabin_co2_mmHg": 2.56
     },
     "missing": [],
@@ -13500,7 +13540,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -13508,7 +13548,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A3",
@@ -13529,7 +13571,7 @@
     },
     "context": {
       "radiation_mGy": 0.486,
-      "radiation_cum_mGy": 5.99,
+      "radiation_cum_mGy": 11.99,
       "cabin_co2_mmHg": 2.53
     },
     "missing": [],
@@ -13581,8 +13623,8 @@
       "exercise_min": 94.0
     },
     "context": {
-      "radiation_mGy": 0.434,
-      "radiation_cum_mGy": 6.43,
+      "radiation_mGy": 2.434,
+      "radiation_cum_mGy": 14.43,
       "cabin_co2_mmHg": 2.32
     },
     "missing": [],
@@ -13606,7 +13648,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -13614,7 +13656,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A3",
@@ -13635,7 +13679,7 @@
     },
     "context": {
       "radiation_mGy": 0.492,
-      "radiation_cum_mGy": 6.92,
+      "radiation_cum_mGy": 14.92,
       "cabin_co2_mmHg": 2.64
     },
     "missing": [],
@@ -13688,7 +13732,7 @@
     },
     "context": {
       "radiation_mGy": 0.492,
-      "radiation_cum_mGy": 7.41,
+      "radiation_cum_mGy": 15.41,
       "cabin_co2_mmHg": 2.44
     },
     "missing": [
@@ -13744,7 +13788,7 @@
     },
     "context": {
       "radiation_mGy": 0.497,
-      "radiation_cum_mGy": 7.91,
+      "radiation_cum_mGy": 15.91,
       "cabin_co2_mmHg": 2.04
     },
     "missing": [
@@ -13799,7 +13843,7 @@
     },
     "context": {
       "radiation_mGy": 0.511,
-      "radiation_cum_mGy": 8.42,
+      "radiation_cum_mGy": 16.42,
       "cabin_co2_mmHg": 2.41
     },
     "missing": [
@@ -13855,7 +13899,7 @@
     },
     "context": {
       "radiation_mGy": 0.491,
-      "radiation_cum_mGy": 8.91,
+      "radiation_cum_mGy": 16.91,
       "cabin_co2_mmHg": 2.01
     },
     "missing": [
@@ -13910,7 +13954,7 @@
     },
     "context": {
       "radiation_mGy": 0.501,
-      "radiation_cum_mGy": 9.41,
+      "radiation_cum_mGy": 17.41,
       "cabin_co2_mmHg": 2.56
     },
     "missing": [],
@@ -13963,7 +14007,7 @@
     },
     "context": {
       "radiation_mGy": 0.477,
-      "radiation_cum_mGy": 9.89,
+      "radiation_cum_mGy": 17.89,
       "cabin_co2_mmHg": 2.29
     },
     "missing": [],
@@ -14016,7 +14060,7 @@
     },
     "context": {
       "radiation_mGy": 0.47,
-      "radiation_cum_mGy": 10.36,
+      "radiation_cum_mGy": 18.36,
       "cabin_co2_mmHg": 2.24
     },
     "missing": [],
@@ -14069,7 +14113,7 @@
     },
     "context": {
       "radiation_mGy": 0.5,
-      "radiation_cum_mGy": 10.86,
+      "radiation_cum_mGy": 18.86,
       "cabin_co2_mmHg": 2.1
     },
     "missing": [],
@@ -14122,7 +14166,7 @@
     },
     "context": {
       "radiation_mGy": 0.486,
-      "radiation_cum_mGy": 11.35,
+      "radiation_cum_mGy": 19.35,
       "cabin_co2_mmHg": 2.67
     },
     "missing": [],
@@ -14175,7 +14219,7 @@
     },
     "context": {
       "radiation_mGy": 0.484,
-      "radiation_cum_mGy": 11.83,
+      "radiation_cum_mGy": 19.83,
       "cabin_co2_mmHg": 2.25
     },
     "missing": [
@@ -14230,7 +14274,7 @@
     },
     "context": {
       "radiation_mGy": 0.476,
-      "radiation_cum_mGy": 12.3,
+      "radiation_cum_mGy": 20.3,
       "cabin_co2_mmHg": 4.17
     },
     "missing": [],
@@ -14285,7 +14329,7 @@
     },
     "context": {
       "radiation_mGy": 0.498,
-      "radiation_cum_mGy": 12.8,
+      "radiation_cum_mGy": 20.8,
       "cabin_co2_mmHg": 4.28
     },
     "missing": [],
@@ -14340,7 +14384,7 @@
     },
     "context": {
       "radiation_mGy": 0.463,
-      "radiation_cum_mGy": 13.27,
+      "radiation_cum_mGy": 21.27,
       "cabin_co2_mmHg": 2.46
     },
     "missing": [],
@@ -14393,7 +14437,7 @@
     },
     "context": {
       "radiation_mGy": 0.48,
-      "radiation_cum_mGy": 13.75,
+      "radiation_cum_mGy": 21.75,
       "cabin_co2_mmHg": 2.41
     },
     "missing": [],
@@ -14446,7 +14490,7 @@
     },
     "context": {
       "radiation_mGy": 0.476,
-      "radiation_cum_mGy": 14.22,
+      "radiation_cum_mGy": 22.22,
       "cabin_co2_mmHg": 2.42
     },
     "missing": [],
@@ -14499,7 +14543,7 @@
     },
     "context": {
       "radiation_mGy": 0.536,
-      "radiation_cum_mGy": 14.76,
+      "radiation_cum_mGy": 22.76,
       "cabin_co2_mmHg": 2.43
     },
     "missing": [],
@@ -14552,7 +14596,7 @@
     },
     "context": {
       "radiation_mGy": 0.51,
-      "radiation_cum_mGy": 15.27,
+      "radiation_cum_mGy": 23.27,
       "cabin_co2_mmHg": 2.94
     },
     "missing": [],
@@ -14605,7 +14649,7 @@
     },
     "context": {
       "radiation_mGy": 0.502,
-      "radiation_cum_mGy": 15.77,
+      "radiation_cum_mGy": 23.77,
       "cabin_co2_mmHg": 2.18
     },
     "missing": [
@@ -14661,7 +14705,7 @@
     },
     "context": {
       "radiation_mGy": 0.542,
-      "radiation_cum_mGy": 16.31,
+      "radiation_cum_mGy": 24.31,
       "cabin_co2_mmHg": 2.15
     },
     "missing": [
@@ -14717,7 +14761,7 @@
     },
     "context": {
       "radiation_mGy": 0.463,
-      "radiation_cum_mGy": 16.77,
+      "radiation_cum_mGy": 24.78,
       "cabin_co2_mmHg": 2.06
     },
     "missing": [],
@@ -14770,7 +14814,7 @@
     },
     "context": {
       "radiation_mGy": 0.509,
-      "radiation_cum_mGy": 17.28,
+      "radiation_cum_mGy": 25.28,
       "cabin_co2_mmHg": 2.48
     },
     "missing": [],
@@ -14823,7 +14867,7 @@
     },
     "context": {
       "radiation_mGy": 0.528,
-      "radiation_cum_mGy": 17.81,
+      "radiation_cum_mGy": 25.81,
       "cabin_co2_mmHg": 2.64
     },
     "missing": [],
@@ -14876,7 +14920,7 @@
     },
     "context": {
       "radiation_mGy": 0.495,
-      "radiation_cum_mGy": 18.31,
+      "radiation_cum_mGy": 26.31,
       "cabin_co2_mmHg": 2.27
     },
     "missing": [],
@@ -14929,7 +14973,7 @@
     },
     "context": {
       "radiation_mGy": 0.488,
-      "radiation_cum_mGy": 18.79,
+      "radiation_cum_mGy": 26.8,
       "cabin_co2_mmHg": 2.05
     },
     "missing": [
@@ -14983,8 +15027,8 @@
       "exercise_min": 125.0
     },
     "context": {
-      "radiation_mGy": 0.489,
-      "radiation_cum_mGy": 19.28,
+      "radiation_mGy": 2.489,
+      "radiation_cum_mGy": 29.28,
       "cabin_co2_mmHg": 2.05
     },
     "missing": [
@@ -15010,7 +15054,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -15018,7 +15062,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A3",
@@ -15039,7 +15085,7 @@
     },
     "context": {
       "radiation_mGy": 0.507,
-      "radiation_cum_mGy": 19.79,
+      "radiation_cum_mGy": 29.79,
       "cabin_co2_mmHg": 2.5
     },
     "missing": [],
@@ -15092,7 +15138,7 @@
     },
     "context": {
       "radiation_mGy": 0.505,
-      "radiation_cum_mGy": 20.3,
+      "radiation_cum_mGy": 30.3,
       "cabin_co2_mmHg": 2.52
     },
     "missing": [],
@@ -15145,7 +15191,7 @@
     },
     "context": {
       "radiation_mGy": 0.489,
-      "radiation_cum_mGy": 20.79,
+      "radiation_cum_mGy": 30.79,
       "cabin_co2_mmHg": 2.46
     },
     "missing": [
@@ -15199,8 +15245,8 @@
       "exercise_min": 158.0
     },
     "context": {
-      "radiation_mGy": 0.528,
-      "radiation_cum_mGy": 21.31,
+      "radiation_mGy": 2.528,
+      "radiation_cum_mGy": 33.31,
       "cabin_co2_mmHg": 2.1
     },
     "missing": [],
@@ -15224,7 +15270,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -15232,7 +15278,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A3",
@@ -15253,7 +15301,7 @@
     },
     "context": {
       "radiation_mGy": 0.529,
-      "radiation_cum_mGy": 21.84,
+      "radiation_cum_mGy": 33.84,
       "cabin_co2_mmHg": 2.37
     },
     "missing": [],
@@ -15306,7 +15354,7 @@
     },
     "context": {
       "radiation_mGy": 0.516,
-      "radiation_cum_mGy": 22.36,
+      "radiation_cum_mGy": 34.36,
       "cabin_co2_mmHg": 2.34
     },
     "missing": [
@@ -15361,7 +15409,7 @@
     },
     "context": {
       "radiation_mGy": 0.454,
-      "radiation_cum_mGy": 22.81,
+      "radiation_cum_mGy": 34.81,
       "cabin_co2_mmHg": 2.37
     },
     "missing": [],
@@ -15414,7 +15462,7 @@
     },
     "context": {
       "radiation_mGy": 0.501,
-      "radiation_cum_mGy": 23.31,
+      "radiation_cum_mGy": 35.31,
       "cabin_co2_mmHg": 2.56
     },
     "missing": [],
@@ -15467,7 +15515,7 @@
     },
     "context": {
       "radiation_mGy": 0.495,
-      "radiation_cum_mGy": 23.81,
+      "radiation_cum_mGy": 35.81,
       "cabin_co2_mmHg": 2.37
     },
     "missing": [
@@ -15522,7 +15570,7 @@
     },
     "context": {
       "radiation_mGy": 0.469,
-      "radiation_cum_mGy": 24.28,
+      "radiation_cum_mGy": 36.28,
       "cabin_co2_mmHg": 2.5
     },
     "missing": [
@@ -15577,7 +15625,7 @@
     },
     "context": {
       "radiation_mGy": 0.51,
-      "radiation_cum_mGy": 24.79,
+      "radiation_cum_mGy": 36.79,
       "cabin_co2_mmHg": 2.32
     },
     "missing": [
@@ -15632,7 +15680,7 @@
     },
     "context": {
       "radiation_mGy": 0.471,
-      "radiation_cum_mGy": 25.26,
+      "radiation_cum_mGy": 37.26,
       "cabin_co2_mmHg": 2.39
     },
     "missing": [
@@ -15687,7 +15735,7 @@
     },
     "context": {
       "radiation_mGy": 0.519,
-      "radiation_cum_mGy": 25.78,
+      "radiation_cum_mGy": 37.78,
       "cabin_co2_mmHg": 2.49
     },
     "missing": [],
@@ -15740,7 +15788,7 @@
     },
     "context": {
       "radiation_mGy": 0.523,
-      "radiation_cum_mGy": 26.3,
+      "radiation_cum_mGy": 38.3,
       "cabin_co2_mmHg": 1.86
     },
     "missing": [],
@@ -15793,7 +15841,7 @@
     },
     "context": {
       "radiation_mGy": 0.496,
-      "radiation_cum_mGy": 26.8,
+      "radiation_cum_mGy": 38.8,
       "cabin_co2_mmHg": 2.2
     },
     "missing": [
@@ -15848,7 +15896,7 @@
     },
     "context": {
       "radiation_mGy": 0.539,
-      "radiation_cum_mGy": 27.34,
+      "radiation_cum_mGy": 39.34,
       "cabin_co2_mmHg": 2.16
     },
     "missing": [],
@@ -15901,7 +15949,7 @@
     },
     "context": {
       "radiation_mGy": 0.469,
-      "radiation_cum_mGy": 27.8,
+      "radiation_cum_mGy": 39.8,
       "cabin_co2_mmHg": 2.11
     },
     "missing": [],
@@ -15954,7 +16002,7 @@
     },
     "context": {
       "radiation_mGy": 0.54,
-      "radiation_cum_mGy": 28.34,
+      "radiation_cum_mGy": 40.34,
       "cabin_co2_mmHg": 2.22
     },
     "missing": [],
@@ -16007,7 +16055,7 @@
     },
     "context": {
       "radiation_mGy": 0.505,
-      "radiation_cum_mGy": 28.85,
+      "radiation_cum_mGy": 40.85,
       "cabin_co2_mmHg": 2.75
     },
     "missing": [],
@@ -16060,7 +16108,7 @@
     },
     "context": {
       "radiation_mGy": 0.495,
-      "radiation_cum_mGy": 29.34,
+      "radiation_cum_mGy": 41.34,
       "cabin_co2_mmHg": 2.04
     },
     "missing": [],
@@ -16113,7 +16161,7 @@
     },
     "context": {
       "radiation_mGy": 0.494,
-      "radiation_cum_mGy": 29.84,
+      "radiation_cum_mGy": 41.84,
       "cabin_co2_mmHg": 2.59
     },
     "missing": [
@@ -16168,7 +16216,7 @@
     },
     "context": {
       "radiation_mGy": 0.54,
-      "radiation_cum_mGy": 30.38,
+      "radiation_cum_mGy": 42.38,
       "cabin_co2_mmHg": 1.8
     },
     "missing": [],
@@ -16221,7 +16269,7 @@
     },
     "context": {
       "radiation_mGy": 0.501,
-      "radiation_cum_mGy": 30.88,
+      "radiation_cum_mGy": 42.88,
       "cabin_co2_mmHg": 2.2
     },
     "missing": [],
@@ -16274,7 +16322,7 @@
     },
     "context": {
       "radiation_mGy": 0.492,
-      "radiation_cum_mGy": 31.37,
+      "radiation_cum_mGy": 43.37,
       "cabin_co2_mmHg": 2.35
     },
     "missing": [],
@@ -16327,7 +16375,7 @@
     },
     "context": {
       "radiation_mGy": 0.557,
-      "radiation_cum_mGy": 31.93,
+      "radiation_cum_mGy": 43.93,
       "cabin_co2_mmHg": 2.48
     },
     "missing": [],
@@ -16380,7 +16428,7 @@
     },
     "context": {
       "radiation_mGy": 0.504,
-      "radiation_cum_mGy": 32.43,
+      "radiation_cum_mGy": 44.43,
       "cabin_co2_mmHg": 2.51
     },
     "missing": [],
@@ -16433,7 +16481,7 @@
     },
     "context": {
       "radiation_mGy": 0.557,
-      "radiation_cum_mGy": 32.99,
+      "radiation_cum_mGy": 44.99,
       "cabin_co2_mmHg": 2.54
     },
     "missing": [],
@@ -16486,7 +16534,7 @@
     },
     "context": {
       "radiation_mGy": 0.496,
-      "radiation_cum_mGy": 33.49,
+      "radiation_cum_mGy": 45.49,
       "cabin_co2_mmHg": 2.2
     },
     "missing": [],
@@ -16539,7 +16587,7 @@
     },
     "context": {
       "radiation_mGy": 0.513,
-      "radiation_cum_mGy": 34.0,
+      "radiation_cum_mGy": 46.0,
       "cabin_co2_mmHg": 2.16
     },
     "missing": [
@@ -16594,7 +16642,7 @@
     },
     "context": {
       "radiation_mGy": 0.476,
-      "radiation_cum_mGy": 34.47,
+      "radiation_cum_mGy": 46.47,
       "cabin_co2_mmHg": 2.56
     },
     "missing": [],
@@ -16647,7 +16695,7 @@
     },
     "context": {
       "radiation_mGy": 0.48,
-      "radiation_cum_mGy": 34.95,
+      "radiation_cum_mGy": 46.95,
       "cabin_co2_mmHg": 2.24
     },
     "missing": [],
@@ -16700,7 +16748,7 @@
     },
     "context": {
       "radiation_mGy": 0.496,
-      "radiation_cum_mGy": 35.45,
+      "radiation_cum_mGy": 47.45,
       "cabin_co2_mmHg": 1.92
     },
     "missing": [],
@@ -16753,7 +16801,7 @@
     },
     "context": {
       "radiation_mGy": 0.46,
-      "radiation_cum_mGy": 35.91,
+      "radiation_cum_mGy": 47.91,
       "cabin_co2_mmHg": 1.96
     },
     "missing": [],
@@ -16806,7 +16854,7 @@
     },
     "context": {
       "radiation_mGy": 0.486,
-      "radiation_cum_mGy": 36.4,
+      "radiation_cum_mGy": 48.4,
       "cabin_co2_mmHg": 2.02
     },
     "missing": [],
@@ -16859,7 +16907,7 @@
     },
     "context": {
       "radiation_mGy": 0.475,
-      "radiation_cum_mGy": 36.87,
+      "radiation_cum_mGy": 48.87,
       "cabin_co2_mmHg": 2.45
     },
     "missing": [],
@@ -16912,7 +16960,7 @@
     },
     "context": {
       "radiation_mGy": 0.487,
-      "radiation_cum_mGy": 37.36,
+      "radiation_cum_mGy": 49.36,
       "cabin_co2_mmHg": 4.24
     },
     "missing": [
@@ -16969,7 +17017,7 @@
     },
     "context": {
       "radiation_mGy": 0.525,
-      "radiation_cum_mGy": 37.88,
+      "radiation_cum_mGy": 49.88,
       "cabin_co2_mmHg": 2.51
     },
     "missing": [],
@@ -17022,7 +17070,7 @@
     },
     "context": {
       "radiation_mGy": 0.494,
-      "radiation_cum_mGy": 38.38,
+      "radiation_cum_mGy": 50.38,
       "cabin_co2_mmHg": 2.17
     },
     "missing": [],
@@ -17075,7 +17123,7 @@
     },
     "context": {
       "radiation_mGy": 0.49,
-      "radiation_cum_mGy": 38.87,
+      "radiation_cum_mGy": 50.87,
       "cabin_co2_mmHg": 2.35
     },
     "missing": [],
@@ -17128,7 +17176,7 @@
     },
     "context": {
       "radiation_mGy": 0.476,
-      "radiation_cum_mGy": 39.34,
+      "radiation_cum_mGy": 51.34,
       "cabin_co2_mmHg": 2.49
     },
     "missing": [
@@ -17183,7 +17231,7 @@
     },
     "context": {
       "radiation_mGy": 0.511,
-      "radiation_cum_mGy": 39.85,
+      "radiation_cum_mGy": 51.85,
       "cabin_co2_mmHg": 2.21
     },
     "missing": [
@@ -17238,7 +17286,7 @@
     },
     "context": {
       "radiation_mGy": 0.505,
-      "radiation_cum_mGy": 40.36,
+      "radiation_cum_mGy": 52.36,
       "cabin_co2_mmHg": 2.44
     },
     "missing": [],
@@ -17291,7 +17339,7 @@
     },
     "context": {
       "radiation_mGy": 0.536,
-      "radiation_cum_mGy": 40.9,
+      "radiation_cum_mGy": 52.9,
       "cabin_co2_mmHg": 2.1
     },
     "missing": [
@@ -17346,7 +17394,7 @@
     },
     "context": {
       "radiation_mGy": 0.51,
-      "radiation_cum_mGy": 41.41,
+      "radiation_cum_mGy": 53.41,
       "cabin_co2_mmHg": 2.19
     },
     "missing": [],
@@ -17398,8 +17446,8 @@
       "exercise_min": 1.0
     },
     "context": {
-      "radiation_mGy": 0.522,
-      "radiation_cum_mGy": 41.93,
+      "radiation_mGy": 2.522,
+      "radiation_cum_mGy": 55.93,
       "cabin_co2_mmHg": 2.19
     },
     "missing": [],
@@ -17423,7 +17471,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -17431,7 +17479,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A3",
@@ -17452,7 +17502,7 @@
     },
     "context": {
       "radiation_mGy": 0.507,
-      "radiation_cum_mGy": 42.43,
+      "radiation_cum_mGy": 56.43,
       "cabin_co2_mmHg": 1.94
     },
     "missing": [],
@@ -17507,7 +17557,7 @@
     },
     "context": {
       "radiation_mGy": 0.538,
-      "radiation_cum_mGy": 42.97,
+      "radiation_cum_mGy": 56.97,
       "cabin_co2_mmHg": 2.45
     },
     "missing": [
@@ -17564,7 +17614,7 @@
     },
     "context": {
       "radiation_mGy": 0.464,
-      "radiation_cum_mGy": 43.44,
+      "radiation_cum_mGy": 57.44,
       "cabin_co2_mmHg": 2.16
     },
     "missing": [
@@ -17621,7 +17671,7 @@
     },
     "context": {
       "radiation_mGy": 0.51,
-      "radiation_cum_mGy": 43.95,
+      "radiation_cum_mGy": 57.95,
       "cabin_co2_mmHg": 2.3
     },
     "missing": [],
@@ -17676,7 +17726,7 @@
     },
     "context": {
       "radiation_mGy": 0.475,
-      "radiation_cum_mGy": 44.42,
+      "radiation_cum_mGy": 58.42,
       "cabin_co2_mmHg": 2.44
     },
     "missing": [],
@@ -17731,7 +17781,7 @@
     },
     "context": {
       "radiation_mGy": 0.461,
-      "radiation_cum_mGy": 44.88,
+      "radiation_cum_mGy": 58.88,
       "cabin_co2_mmHg": 2.43
     },
     "missing": [
@@ -17786,7 +17836,7 @@
     },
     "context": {
       "radiation_mGy": 0.496,
-      "radiation_cum_mGy": 45.38,
+      "radiation_cum_mGy": 59.38,
       "cabin_co2_mmHg": 2.5
     },
     "missing": [],
@@ -17838,8 +17888,8 @@
       "exercise_min": 143.0
     },
     "context": {
-      "radiation_mGy": 0.475,
-      "radiation_cum_mGy": 45.85,
+      "radiation_mGy": 2.475,
+      "radiation_cum_mGy": 61.85,
       "cabin_co2_mmHg": 2.27
     },
     "missing": [
@@ -17865,7 +17915,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -17873,7 +17923,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A3",
@@ -17894,7 +17946,7 @@
     },
     "context": {
       "radiation_mGy": 0.52,
-      "radiation_cum_mGy": 46.37,
+      "radiation_cum_mGy": 62.37,
       "cabin_co2_mmHg": 2.17
     },
     "missing": [],
@@ -17947,7 +17999,7 @@
     },
     "context": {
       "radiation_mGy": 0.504,
-      "radiation_cum_mGy": 46.88,
+      "radiation_cum_mGy": 62.88,
       "cabin_co2_mmHg": 2.28
     },
     "missing": [],
@@ -18000,7 +18052,7 @@
     },
     "context": {
       "radiation_mGy": 0.48,
-      "radiation_cum_mGy": 47.36,
+      "radiation_cum_mGy": 63.36,
       "cabin_co2_mmHg": 1.79
     },
     "missing": [],
@@ -18053,7 +18105,7 @@
     },
     "context": {
       "radiation_mGy": 0.481,
-      "radiation_cum_mGy": 47.84,
+      "radiation_cum_mGy": 63.84,
       "cabin_co2_mmHg": 1.87
     },
     "missing": [],
@@ -18105,8 +18157,8 @@
       "exercise_min": 90.0
     },
     "context": {
-      "radiation_mGy": 0.518,
-      "radiation_cum_mGy": 48.36,
+      "radiation_mGy": 2.518,
+      "radiation_cum_mGy": 66.36,
       "cabin_co2_mmHg": 1.9
     },
     "missing": [],
@@ -18130,7 +18182,7 @@
       "immune_temp": "green"
     },
     "hazards": {
-      "radiation": "green",
+      "radiation": "yellow",
       "isolation": "green",
       "distance": "info",
       "gravity": "green",
@@ -18138,7 +18190,9 @@
     },
     "prompts": [],
     "escalation": "monitor",
-    "events": []
+    "events": [
+      "sep_event"
+    ]
   },
   {
     "astronaut": "A3",
@@ -18159,7 +18213,7 @@
     },
     "context": {
       "radiation_mGy": 0.502,
-      "radiation_cum_mGy": 48.86,
+      "radiation_cum_mGy": 66.86,
       "cabin_co2_mmHg": 2.0
     },
     "missing": [],
@@ -18212,7 +18266,7 @@
     },
     "context": {
       "radiation_mGy": 0.53,
-      "radiation_cum_mGy": 49.39,
+      "radiation_cum_mGy": 67.39,
       "cabin_co2_mmHg": 2.42
     },
     "missing": [
@@ -18267,7 +18321,7 @@
     },
     "context": {
       "radiation_mGy": 0.482,
-      "radiation_cum_mGy": 49.87,
+      "radiation_cum_mGy": 67.87,
       "cabin_co2_mmHg": 2.03
     },
     "missing": [],
@@ -18320,7 +18374,7 @@
     },
     "context": {
       "radiation_mGy": 0.557,
-      "radiation_cum_mGy": 50.43,
+      "radiation_cum_mGy": 68.43,
       "cabin_co2_mmHg": 2.19
     },
     "missing": [],
@@ -18373,7 +18427,7 @@
     },
     "context": {
       "radiation_mGy": 0.482,
-      "radiation_cum_mGy": 50.91,
+      "radiation_cum_mGy": 68.91,
       "cabin_co2_mmHg": 2.69
     },
     "missing": [],
@@ -18426,7 +18480,7 @@
     },
     "context": {
       "radiation_mGy": 0.445,
-      "radiation_cum_mGy": 51.35,
+      "radiation_cum_mGy": 69.35,
       "cabin_co2_mmHg": 2.19
     },
     "missing": [],
@@ -18479,7 +18533,7 @@
     },
     "context": {
       "radiation_mGy": 0.503,
-      "radiation_cum_mGy": 51.86,
+      "radiation_cum_mGy": 69.86,
       "cabin_co2_mmHg": 2.52
     },
     "missing": [],
@@ -18535,7 +18589,7 @@
     },
     "context": {
       "radiation_mGy": 0.541,
-      "radiation_cum_mGy": 52.4,
+      "radiation_cum_mGy": 70.4,
       "cabin_co2_mmHg": 2.02
     },
     "missing": [],
@@ -18591,7 +18645,7 @@
     },
     "context": {
       "radiation_mGy": 0.481,
-      "radiation_cum_mGy": 52.88,
+      "radiation_cum_mGy": 70.88,
       "cabin_co2_mmHg": 2.24
     },
     "missing": [],
@@ -18646,7 +18700,7 @@
     },
     "context": {
       "radiation_mGy": 0.466,
-      "radiation_cum_mGy": 53.35,
+      "radiation_cum_mGy": 71.34,
       "cabin_co2_mmHg": 2.01
     },
     "missing": [],
@@ -18701,7 +18755,7 @@
     },
     "context": {
       "radiation_mGy": 0.443,
-      "radiation_cum_mGy": 53.79,
+      "radiation_cum_mGy": 71.79,
       "cabin_co2_mmHg": 2.2
     },
     "missing": [],
@@ -18754,7 +18808,7 @@
     },
     "context": {
       "radiation_mGy": 0.47,
-      "radiation_cum_mGy": 54.26,
+      "radiation_cum_mGy": 72.26,
       "cabin_co2_mmHg": 2.55
     },
     "missing": [
@@ -18809,7 +18863,7 @@
     },
     "context": {
       "radiation_mGy": 0.493,
-      "radiation_cum_mGy": 54.75,
+      "radiation_cum_mGy": 72.75,
       "cabin_co2_mmHg": 1.78
     },
     "missing": [
@@ -18864,7 +18918,7 @@
     },
     "context": {
       "radiation_mGy": 0.499,
-      "radiation_cum_mGy": 55.25,
+      "radiation_cum_mGy": 73.25,
       "cabin_co2_mmHg": 2.43
     },
     "missing": [],
@@ -18917,7 +18971,7 @@
     },
     "context": {
       "radiation_mGy": 0.507,
-      "radiation_cum_mGy": 55.76,
+      "radiation_cum_mGy": 73.76,
       "cabin_co2_mmHg": 2.37
     },
     "missing": [],
@@ -18972,7 +19026,7 @@
     },
     "context": {
       "radiation_mGy": 0.534,
-      "radiation_cum_mGy": 56.29,
+      "radiation_cum_mGy": 74.29,
       "cabin_co2_mmHg": 2.12
     },
     "missing": [
@@ -19029,7 +19083,7 @@
     },
     "context": {
       "radiation_mGy": 0.475,
-      "radiation_cum_mGy": 56.77,
+      "radiation_cum_mGy": 74.77,
       "cabin_co2_mmHg": 1.87
     },
     "missing": [
@@ -19086,7 +19140,7 @@
     },
     "context": {
       "radiation_mGy": 0.519,
-      "radiation_cum_mGy": 57.29,
+      "radiation_cum_mGy": 75.28,
       "cabin_co2_mmHg": 2.32
     },
     "missing": [],
@@ -19141,7 +19195,7 @@
     },
     "context": {
       "radiation_mGy": 0.496,
-      "radiation_cum_mGy": 57.78,
+      "radiation_cum_mGy": 75.78,
       "cabin_co2_mmHg": 2.14
     },
     "missing": [
@@ -19199,7 +19253,7 @@
     },
     "context": {
       "radiation_mGy": 0.537,
-      "radiation_cum_mGy": 58.32,
+      "radiation_cum_mGy": 76.32,
       "cabin_co2_mmHg": 2.37
     },
     "missing": [],
@@ -19254,7 +19308,7 @@
     },
     "context": {
       "radiation_mGy": 0.507,
-      "radiation_cum_mGy": 58.83,
+      "radiation_cum_mGy": 76.82,
       "cabin_co2_mmHg": 2.31
     },
     "missing": [],
@@ -19309,7 +19363,7 @@
     },
     "context": {
       "radiation_mGy": 0.509,
-      "radiation_cum_mGy": 59.33,
+      "radiation_cum_mGy": 77.33,
       "cabin_co2_mmHg": 2.78
     },
     "missing": [],
@@ -19364,7 +19418,7 @@
     },
     "context": {
       "radiation_mGy": 0.508,
-      "radiation_cum_mGy": 59.84,
+      "radiation_cum_mGy": 77.84,
       "cabin_co2_mmHg": 2.23
     },
     "missing": [],

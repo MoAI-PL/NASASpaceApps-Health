@@ -303,7 +303,17 @@
   "cabin_co2_limit_mmHg": 3.0,
   "space_weather": {
     "source": "NASA DONKI SEP events",
-    "status": "missing",
-    "event_days": []
+    "status": "cached",
+    "event_days": [
+      9,
+      10,
+      11,
+      13,
+      39,
+      43,
+      84,
+      92,
+      97
+    ]
   }
 }

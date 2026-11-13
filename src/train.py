@@ -18,11 +18,9 @@ import random
 import time
 
 import numpy as np
-import torch
 
 from src.common import (CONFIG_DIR, MODELS_DIR, RESULTS_DIR, config_hash, load_yaml, val, write_json)
 from src.features import crew_windows
-from src.model import Autoencoder, masked_mse, pick_device, save_model
 from src.drift import drift_scores, fit_drift, window_summary
 from src.scoring import combined_score, day_weights, latent_calibration, latent_codes, raw_components
 from src.simulate import load_split
@@ -31,6 +29,8 @@ from src.simulate import load_split
 # ===== Reproducibility =====
 def set_seed(seed: int) -> None:
     """Seed every random generator used during training."""
+    import torch
+
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -48,8 +48,11 @@ def stack(windows: list, min_day: int = 0) -> tuple[np.ndarray, np.ndarray]:
 
 
 def train_autoencoder(x_tr: np.ndarray, m_tr: np.ndarray, x_va: np.ndarray, m_va: np.ndarray,
-                      model_cfg: dict, device: torch.device) -> tuple[Autoencoder, list[dict]]:
-    """Mini-batch Adam training with early stopping on the validation loss."""
+                      model_cfg: dict, device) -> tuple:
+    """Mini-batch Adam training with early stopping on the validation loss (needs PyTorch)."""
+    import torch
+
+    from src.model import Autoencoder, masked_mse
     arch, tr = model_cfg["architecture"], model_cfg["training"]
     set_seed(int(tr["seed"]))
     model = Autoencoder(x_tr.shape[1], arch["hidden"], arch["bottleneck"], arch["dropout"]).to(device)
@@ -99,7 +102,6 @@ if __name__ == "__main__":
     sim_cfg = load_yaml(args.sim_config)
     window = int(model_cfg["window_days"])
     calib = int(val(sim_cfg["mission"]["calibration_days"]))
-    device = pick_device(args.device or model_cfg["training"].get("device", "auto"))
     MODELS_DIR.mkdir(parents=True, exist_ok=True)
 
     if model_cfg.get("detector") == "drift":
@@ -119,6 +121,11 @@ if __name__ == "__main__":
         print(f"Fitted drift detector on {len(x_tr)} healthy windows ({drift_cfg['train_split']}); "
               f"reference = {len(ref_scores)} validation windows.")
         raise SystemExit(0)
+
+    # ----- Alternative detector: autoencoder (PyTorch) -----
+    from src.model import pick_device, save_model
+
+    device = pick_device(args.device or model_cfg["training"].get("device", "auto"))
 
     train_w = crew_windows(load_split("train"), sim_cfg, window)
     val_w = crew_windows(load_split("val"), sim_cfg, window)

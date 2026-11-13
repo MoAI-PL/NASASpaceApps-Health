@@ -19,15 +19,17 @@ The SAI is the percentile of that score among healthy validation windows.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 import numpy as np
-import torch
 
 from src.baselines import persistent
 from src.common import AE_FEATURES, INDICATORS, MODELS_DIR, SYSTEM_OF, SYSTEMS, read_json
 from src.drift import drift_terms, window_summary
 from src.features import AstronautWindows
-from src.model import Autoencoder, load_model
+
+if TYPE_CHECKING:   # torch is only needed for the alternative autoencoder detector
+    from src.model import Autoencoder
 
 
 # ===== Scorer =====
@@ -48,6 +50,8 @@ def load_scorer(model_cfg: dict) -> Scorer:
     reference = np.load(MODELS_DIR / "reference_scores.npy")
     if kind == "drift":
         return Scorer(None, model_cfg, read_json(MODELS_DIR / "drift_model.json"), reference, "drift")
+    from src.model import load_model
+
     model, _ = load_model(MODELS_DIR / "ae.pt")
     return Scorer(model, model_cfg, read_json(MODELS_DIR / "score_calibration.json"), reference, "autoencoder")
 
@@ -61,6 +65,8 @@ def day_weights(model_cfg: dict) -> np.ndarray:
 # ===== Score components =====
 def reconstruction_errors(model: Autoencoder, x: np.ndarray, m: np.ndarray, weights: np.ndarray) -> np.ndarray:
     """Weighted per-feature squared reconstruction error, shape (N, 9); missing cells count 0."""
+    import torch
+
     model.eval()
     with torch.no_grad():
         recon = model(torch.from_numpy(x.astype(np.float32))).numpy()
@@ -70,6 +76,8 @@ def reconstruction_errors(model: Autoencoder, x: np.ndarray, m: np.ndarray, weig
 
 def latent_codes(model: Autoencoder, x: np.ndarray) -> np.ndarray:
     """Bottleneck codes of the windows, shape (N, bottleneck)."""
+    import torch
+
     model.eval()
     with torch.no_grad():
         return model.encode(torch.from_numpy(x.astype(np.float32))).numpy()
