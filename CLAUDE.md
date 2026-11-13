@@ -80,6 +80,8 @@ python -m src.evaluate --split dev                           # confirmation with
 python -m src.export --sample                                # contract sample for the UI (M0)
 python -m src.export --crew demo                             # JSON for the UI + ui/concept/data.js (M3)
 python -m src.figures --all                                  # slide figures (M1/M3)
+cd ui/app && npm install && npm run dev                      # UI app dev server (reads outputs/ui/)
+cd ui/app && npm run build                                   # UI app static build → ui/app/dist/
 python -m src.report_sources > outputs/results/config_sources.md   # sourced vs assumption table
 python -m src.run_all [--device cuda]                        # all of the above in order (no hold-out)
 python -m src.evaluate --split test --final                  # ONE-TIME hold-out test (M4)

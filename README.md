@@ -39,7 +39,7 @@ pytest -q
 
 The production detector fits in seconds on a laptop CPU; the benchmark trains nine autoencoders (about 30 s each on CPU, `--device cuda` in `src.train` for the alternative detector).
 
-UI concept: open `ui/concept/index.html` in a browser (works offline). See `ui/README.md`.
+UI app (in progress): `cd ui/app && npm install && npm run dev`, or `npm run build` for a self-contained static site in `ui/app/dist/`. UI concept: open `ui/concept/index.html` in a browser (works offline). See `ui/README.md`.
 
 The one-time hold-out test is **not** part of `run_all`: `python -m src.evaluate --split test --final` (run once, after freezing `config/model.yaml` and `config/rules.yaml`).
 
@@ -188,6 +188,7 @@ Software (open-source licenses)
 - Methods: Mahalanobis distance / Hotelling T² statistic (classical multivariate statistics); autoencoders for anomaly detection (benchmarked alternative).
 - Python packages: NumPy (BSD-3-Clause), pandas (BSD-3-Clause), PyTorch (BSD-3-Clause), Matplotlib (Matplotlib license, PSF-based), PyYAML (MIT), Requests (Apache-2.0), jsonschema (MIT), pytest (MIT).
 - Concept UI: React and ReactDOM 18 (MIT, bundled in `ui/concept/vendor/`), Tailwind CSS 3 (MIT, build time), Babel (MIT, build time).
+- UI app (`ui/app/`): React and ReactDOM 18 (MIT, bundled into the build), Vite 6 (MIT, build time), @vitejs/plugin-react (MIT, build time), Tailwind CSS 4 and @tailwindcss/vite (MIT, build time). No web fonts, icons or images from third parties: system fonts and our own SVG.
 
 ## 12. License and disclaimer
 

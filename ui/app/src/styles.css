@@ -1,0 +1,58 @@
+/* Baseline — NASA Space Apps Challenge 2026
+   AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0 */
+
+@import "tailwindcss";
+
+/* ===== Design tokens =====
+   One place for every colour. Tailwind turns --color-x into classes (bg-x, text-x, border-x);
+   SVGs use var(--color-x) directly. Status colours are never used alone: always with shape + word. */
+@theme {
+  --color-bg: #0d0d0d;
+  --color-panel: #1a1a19;
+  --color-panel-2: #232321;
+  --color-line: #383835;
+  --color-ink: #f0efec;
+  --color-ink-2: #c3c2b7;
+  --color-muted: #898781;
+
+  --color-good: #0ca30c;
+  --color-warning: #fab219;
+  --color-serious: #ec835a;
+  --color-critical: #d03b3b;
+
+  --color-model: #3987e5;
+  --color-b1: #d95926;
+  --color-b2: #199e70;
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ===== Base ===== */
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* ===== Shared building blocks ===== */
+@utility panel {
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+}
+
+/* Large tap targets for gloves and microgravity (PLAN.md UI brief: >= 64 px). */
+@utility tap {
+  min-height: 64px;
+  min-width: 64px;
+}
+
+input[type="range"] {
+  accent-color: var(--color-model);
+  height: 40px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-model);
+  outline-offset: 2px;
+}

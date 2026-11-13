@@ -1,0 +1,23 @@
+{
+  "name": "baseline-ui",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Baseline — offline-first crew health UI (NASA Space Apps Challenge 2026)",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.1.8",
+    "@vitejs/plugin-react": "4.5.1",
+    "tailwindcss": "4.1.8",
+    "vite": "6.3.5"
+  }
+}
