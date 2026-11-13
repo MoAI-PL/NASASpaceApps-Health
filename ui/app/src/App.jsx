@@ -1,0 +1,104 @@
+// Baseline — NASA Space Apps Challenge 2026
+// AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
+//
+// App shell: header, demo mission-day control, screen navigation, always-visible Emergency
+// button and disclaimer. Screens live in src/screens/, crew-facing text in src/content/texts.js.
+
+import { useMemo, useState } from "react";
+import { META, recordsFor } from "./data.js";
+import { StatusIcon } from "./components/icons.jsx";
+import Today from "./screens/Today.jsx";
+import CheckIn from "./screens/CheckIn.jsx";
+import Body from "./screens/Body.jsx";
+import Trends from "./screens/Trends.jsx";
+import EarthLink from "./screens/EarthLink.jsx";
+import Emergency from "./screens/Emergency.jsx";
+import Settings from "./screens/Settings.jsx";
+
+// ===== Screens (order = navigation order) =====
+const SCREENS = [
+  { id: "today", label: "Today" },
+  { id: "checkin", label: "Check-in" },
+  { id: "body", label: "Body" },
+  { id: "trends", label: "Trends" },
+  { id: "earth", label: "Earth link" },
+  { id: "settings", label: "Settings" },
+];
+
+// ===== Per-viewer settings remembered on this device (optional; app works without) =====
+function usePersisted(key, fallback, valid) {
+  const [value, setValue] = useState(() => {
+    try {
+      const v = localStorage.getItem(`baseline.${key}`);
+      return v != null && valid(v) ? v : fallback;
+    } catch { return fallback; }
+  });
+  const set = (v) => {
+    setValue(v);
+    try { localStorage.setItem(`baseline.${key}`, v); } catch { /* storage unavailable: keep in memory */ }
+  };
+  return [value, set];
+}
+
+// ===== App =====
+export default function App() {
+  const [astronaut, setAstronaut] = usePersisted("astronaut", "A2", (v) => META.crew.some((c) => c.id === v));
+  const [env, setEnv] = usePersisted("env", META.default_environment, (v) => v in META.environments);
+  const [day, setDay] = useState(70); // demo story: Crew Member Bravo, days 45 → 80
+  const [screen, setScreen] = useState("today");
+  const [system, setSystem] = useState("heart");
+  const [emergency, setEmergency] = useState(false);
+  const [queued, setQueued] = useState([]);
+
+  const records = useMemo(() => recordsFor(astronaut), [astronaut]);
+  const record = records.find((r) => r.day === day) ?? records[records.length - 1];
+  const crewName = META.crew.find((c) => c.id === astronaut)?.display_name;
+  const openSystem = (id) => { setSystem(id); setScreen("body"); };
+
+  return (
+    <div className="max-w-7xl mx-auto p-4 md:p-6">
+      <header className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4">
+        <h1 className="text-3xl font-bold">Baseline</h1>
+        <span className="text-lg text-ink-2">{crewName} · {META.environments[env].name}</span>
+      </header>
+
+      {/* Demo control: scrub through the precomputed 120-day mission. */}
+      <div className="panel p-4 mb-4 flex flex-wrap items-center gap-4">
+        <label htmlFor="day" className="text-lg whitespace-nowrap">
+          Mission day <span className="font-bold text-2xl">{record.day}</span>
+          <span className="text-muted text-sm ml-2">demo</span>
+        </label>
+        <input id="day" type="range" min="1" max={META.mission.days} value={day}
+               onChange={(e) => setDay(+e.target.value)} className="flex-1 min-w-48" />
+      </div>
+
+      <nav className="flex flex-wrap gap-2 mb-4" aria-label="Screens">
+        {SCREENS.map((s) => (
+          <button key={s.id} type="button" onClick={() => setScreen(s.id)} aria-current={s.id === screen ? "page" : undefined}
+                  className={`tap px-5 rounded-xl text-lg ${s.id === screen ? "bg-line font-semibold" : "bg-panel"}`}>
+            {s.label}
+          </button>
+        ))}
+      </nav>
+
+      <main>
+        {screen === "today" && <Today record={record} records={records} env={env} onOpenSystem={openSystem} />}
+        {screen === "checkin" && <CheckIn record={record} />}
+        {screen === "body" && <Body record={record} records={records} system={system} onSelect={setSystem} />}
+        {screen === "trends" && <Trends records={records} day={record.day} astronaut={astronaut} />}
+        {screen === "earth" && (
+          <EarthLink astronaut={astronaut} day={record.day} env={env} queued={queued}
+                     onQueue={() => setQueued([...queued, { astronaut, day: record.day }])} />
+        )}
+        {screen === "settings" && <Settings astronaut={astronaut} onAstronaut={setAstronaut} env={env} onEnv={setEnv} />}
+      </main>
+
+      <button type="button" onClick={() => setEmergency(true)}
+              className="fixed bottom-6 right-6 tap px-8 rounded-2xl text-xl font-bold text-white shadow-lg flex items-center gap-3 bg-critical">
+        <StatusIcon status="red" size={30} /> Emergency
+      </button>
+      <footer className="mt-8 mb-28 text-sm text-muted">{META.disclaimer}</footer>
+      {emergency && <Emergency env={env} onClose={() => setEmergency(false)} />}
+    </div>
+  );
+}
