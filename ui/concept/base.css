@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+    :root {
+      --bg: #0d0d0d; --panel: #1a1a19; --panel-2: #232321; --line: #383835;
+      --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+      --good: #0ca30c; --warning: #fab219; --serious: #ec835a; --critical: #d03b3b;
+      --model: #3987e5; --b1: #d95926; --b2: #199e70;
+    }
+    body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; }
+    .tap { min-height: 64px; min-width: 64px; }
+    input[type=range] { accent-color: var(--model); height: 40px; }
+    :focus-visible { outline: 3px solid var(--model); outline-offset: 2px; }
+  

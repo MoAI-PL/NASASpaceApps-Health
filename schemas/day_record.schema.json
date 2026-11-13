@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/baseline-spaceapps/schemas/day_record.schema.json",
+  "title": "Baseline day record",
+  "description": "One record per crew member per mission day. Contract between the ML pipeline and the UI (see PLAN.md, M0).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["astronaut", "display_name", "day", "date", "env", "values", "context", "missing",
+               "calibrating", "sai", "level", "rule_alert", "univariate_alert", "critical",
+               "contributions", "systems", "hazards", "prompts", "escalation", "events"],
+  "$defs": {
+    "status": {"enum": ["green", "yellow", "orange", "red"]},
+    "num_or_null": {"type": ["number", "null"]}
+  },
+  "properties": {
+    "astronaut": {"type": "string", "pattern": "^[A-Za-z0-9_]+$"},
+    "display_name": {"type": "string"},
+    "day": {"type": "integer", "minimum": 1},
+    "date": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+    "env": {"enum": ["iss", "lunar_base", "mars_transit"]},
+    "values": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sys", "dia", "hr", "glucose", "temp", "sleep_h", "mood", "reaction_ms", "exercise_min"],
+      "properties": {
+        "sys": {"$ref": "#/$defs/num_or_null"},
+        "dia": {"$ref": "#/$defs/num_or_null"},
+        "hr": {"$ref": "#/$defs/num_or_null"},
+        "glucose": {"$ref": "#/$defs/num_or_null"},
+        "temp": {"$ref": "#/$defs/num_or_null"},
+        "sleep_h": {"$ref": "#/$defs/num_or_null"},
+        "mood": {"$ref": "#/$defs/num_or_null"},
+        "reaction_ms": {"$ref": "#/$defs/num_or_null"},
+        "exercise_min": {"$ref": "#/$defs/num_or_null"}
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["radiation_mGy", "radiation_cum_mGy", "cabin_co2_mmHg"],
+      "properties": {
+        "radiation_mGy": {"type": "number", "minimum": 0},
+        "radiation_cum_mGy": {"type": "number", "minimum": 0},
+        "cabin_co2_mmHg": {"type": "number", "minimum": 0}
+      }
+    },
+    "missing": {"type": "array", "items": {"type": "string"}},
+    "calibrating": {"type": "boolean", "description": "True during the personal-baseline calibration period (days 1-21)."},
+    "sai": {"type": ["integer", "null"], "minimum": 0, "maximum": 100,
+            "description": "Systemic Anomaly Index. Null on days 1-6, before the first full 7-day window."},
+    "level": {"$ref": "#/$defs/status"},
+    "rule_alert": {"type": "boolean", "description": "Baseline B1: fixed clinical thresholds (persistence applied)."},
+    "univariate_alert": {"type": "boolean", "description": "Baseline B2: any single indicator beyond 3 personal sd (persistence applied)."},
+    "critical": {"type": "boolean", "description": "A critical (red) safety-net threshold is exceeded today."},
+    "contributions": {
+      "type": "object",
+      "description": "Share of today's anomaly score per feature (top features plus 'other'); empty when sai is null.",
+      "additionalProperties": {"type": "number", "minimum": 0, "maximum": 1}
+    },
+    "systems": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["heart", "metabolism", "mind_sleep", "immune_temp"],
+      "properties": {
+        "heart": {"$ref": "#/$defs/status"},
+        "metabolism": {"$ref": "#/$defs/status"},
+        "mind_sleep": {"$ref": "#/$defs/status"},
+        "immune_temp": {"$ref": "#/$defs/status"}
+      }
+    },
+    "hazards": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["radiation", "isolation", "distance", "gravity", "closed_environment"],
+      "properties": {
+        "radiation": {"$ref": "#/$defs/status"},
+        "isolation": {"$ref": "#/$defs/status"},
+        "distance": {"const": "info"},
+        "gravity": {"$ref": "#/$defs/status"},
+        "closed_environment": {"$ref": "#/$defs/status"}
+      }
+    },
+    "prompts": {"type": "array", "items": {"enum": ["repeat_bp_hr_rest", "repeat_glucose_fasting",
+                                                     "reaction_test_mood_checkin", "repeat_temperature_evening"]}},
+    "escalation": {"enum": ["monitor", "self_care", "crew_medical_officer", "flight_surgeon"]},
+    "events": {"type": "array", "items": {"enum": ["sep_event", "co2_high", "possible_sensor_fault"]}}
+  }
+}

@@ -1,0 +1,17 @@
+name: spaceapps
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy
+  - pandas
+  - matplotlib
+  - pyyaml
+  - requests
+  - jsonschema>=4.18
+  - pytest
+  - pip
+  - pip:
+      # CPU build by default. For an NVIDIA GPU (e.g. RTX 4090), replace the line below with the
+      # CUDA wheel from https://pytorch.org/get-started/locally/ — the model is tiny, so CPU is enough.
+      - torch

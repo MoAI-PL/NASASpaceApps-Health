@@ -1,0 +1,31 @@
+{
+  "astronaut": "A3",
+  "display_name": "Crew Member Charlie",
+  "day": 108,
+  "date": "2024-08-16",
+  "env": "mars_transit",
+  "status": "queued_for_downlink",
+  "level": "yellow",
+  "escalation": "crew_medical_officer",
+  "sai_last_7_days": [
+    84,
+    96,
+    95,
+    96,
+    95,
+    90,
+    91
+  ],
+  "top_contributions": {
+    "reaction_ms": 0.3,
+    "sleep_h": 0.21,
+    "mood": 0.21,
+    "temp": 0.08,
+    "other": 0.2
+  },
+  "open_prompts": [
+    "reaction_test_mood_checkin"
+  ],
+  "events": [],
+  "note": "Synthetic demonstration data. Not medical advice."
+}

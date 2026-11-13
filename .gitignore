@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Generated synthetic data (regenerate with `python -m src.simulate`); keep the demo crew
+data/synthetic/**
+!data/synthetic/demo/
+!data/synthetic/demo/**
+
+# Trained weights are reproducible from the seed
+outputs/models/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# UI build output
+ui/**/node_modules/
+ui/**/dist/

@@ -1,0 +1,537 @@
+{
+  "p_yellow": 90.0,
+  "persistence_days": 2,
+  "false_alarms_per_astronaut_week": {
+    "AE": 0.131,
+    "B1": 0.093,
+    "B2": 0.031
+  },
+  "healthy_weeks_observed": 290.3,
+  "scenarios": {
+    "S1": {
+      "n": 10,
+      "detection_rate_AE": 1.0,
+      "median_delay_days_AE": 15.5,
+      "detection_rate_B1": 0.6,
+      "median_delay_days_B1": 29.0,
+      "detection_rate_B2": 1.0,
+      "median_delay_days_B2": 18.5,
+      "lead_vs_B1": {
+        "both_detected": 6,
+        "median_days": 13.5,
+        "mean_days": 7.5,
+        "sd_days": 15.16,
+        "only_AE_detected": 4,
+        "only_AE_lead_lower_bound_median": 37.0,
+        "only_B1_detected": 0,
+        "values": [
+          18,
+          18,
+          -7,
+          22,
+          -15,
+          9
+        ]
+      },
+      "lead_vs_B2": {
+        "both_detected": 10,
+        "median_days": 2.5,
+        "mean_days": 3.9,
+        "sd_days": 8.2,
+        "only_AE_detected": 0,
+        "only_AE_lead_lower_bound_median": null,
+        "only_B2_detected": 0,
+        "values": [
+          10,
+          8,
+          2,
+          0,
+          1,
+          17,
+          11,
+          0,
+          3,
+          -13
+        ]
+      }
+    },
+    "S2": {
+      "n": 10,
+      "detection_rate_AE": 0.6,
+      "median_delay_days_AE": 5.5,
+      "detection_rate_B1": 0.9,
+      "median_delay_days_B1": 16,
+      "detection_rate_B2": 1.0,
+      "median_delay_days_B2": 13.5,
+      "lead_vs_B1": {
+        "both_detected": 6,
+        "median_days": 10.0,
+        "mean_days": 11.83,
+        "sd_days": 12.38,
+        "only_AE_detected": 0,
+        "only_AE_lead_lower_bound_median": null,
+        "only_B1_detected": 3,
+        "values": [
+          3,
+          16,
+          -2,
+          19,
+          4,
+          31
+        ]
+      },
+      "lead_vs_B2": {
+        "both_detected": 6,
+        "median_days": 1.5,
+        "mean_days": 3.5,
+        "sd_days": 5.96,
+        "only_AE_detected": 0,
+        "only_AE_lead_lower_bound_median": null,
+        "only_B2_detected": 4,
+        "values": [
+          0,
+          15,
+          -1,
+          0,
+          3,
+          4
+        ]
+      }
+    },
+    "S3": {
+      "n": 10,
+      "detection_rate_AE": 1.0,
+      "median_delay_days_AE": 13.0,
+      "detection_rate_B1": 0.8,
+      "median_delay_days_B1": 18.5,
+      "detection_rate_B2": 0.9,
+      "median_delay_days_B2": 15,
+      "lead_vs_B1": {
+        "both_detected": 8,
+        "median_days": 6.0,
+        "mean_days": 11.25,
+        "sd_days": 22.3,
+        "only_AE_detected": 2,
+        "only_AE_lead_lower_bound_median": 72.0,
+        "only_B1_detected": 0,
+        "values": [
+          12,
+          -10,
+          -10,
+          4,
+          46,
+          8,
+          44,
+          -4
+        ]
+      },
+      "lead_vs_B2": {
+        "both_detected": 9,
+        "median_days": 5,
+        "mean_days": 9.33,
+        "sd_days": 11.68,
+        "only_AE_detected": 1,
+        "only_AE_lead_lower_bound_median": 73,
+        "only_B2_detected": 0,
+        "values": [
+          14,
+          5,
+          4,
+          3,
+          6,
+          0,
+          37,
+          15,
+          0
+        ]
+      }
+    }
+  },
+  "per_astronaut": [
+    {
+      "astronaut": "dev_2000",
+      "scenario": "S1",
+      "start": 50,
+      "first_AE": 69,
+      "first_B1": 87,
+      "first_B2": 79
+    },
+    {
+      "astronaut": "dev_2001",
+      "scenario": "S1",
+      "start": 73,
+      "first_AE": 84,
+      "first_B1": 102,
+      "first_B2": 92
+    },
+    {
+      "astronaut": "dev_2002",
+      "scenario": "S1",
+      "start": 30,
+      "first_AE": 45,
+      "first_B1": null,
+      "first_B2": 47
+    },
+    {
+      "astronaut": "dev_2003",
+      "scenario": "S1",
+      "start": 79,
+      "first_AE": 94,
+      "first_B1": null,
+      "first_B2": 94
+    },
+    {
+      "astronaut": "dev_2004",
+      "scenario": "S1",
+      "start": 61,
+      "first_AE": 77,
+      "first_B1": 70,
+      "first_B2": 78
+    },
+    {
+      "astronaut": "dev_2005",
+      "scenario": "S1",
+      "start": 57,
+      "first_AE": 64,
+      "first_B1": 86,
+      "first_B2": 81
+    },
+    {
+      "astronaut": "dev_2006",
+      "scenario": "S1",
+      "start": 66,
+      "first_AE": 77,
+      "first_B1": null,
+      "first_B2": 88
+    },
+    {
+      "astronaut": "dev_2007",
+      "scenario": "S1",
+      "start": 40,
+      "first_AE": 58,
+      "first_B1": 43,
+      "first_B2": 58
+    },
+    {
+      "astronaut": "dev_2008",
+      "scenario": "S1",
+      "start": 74,
+      "first_AE": 91,
+      "first_B1": null,
+      "first_B2": 94
+    },
+    {
+      "astronaut": "dev_2009",
+      "scenario": "S1",
+      "start": 52,
+      "first_AE": 74,
+      "first_B1": 83,
+      "first_B2": 61
+    },
+    {
+      "astronaut": "dev_2010",
+      "scenario": "S2",
+      "start": 77,
+      "first_AE": null,
+      "first_B1": null,
+      "first_B2": 85
+    },
+    {
+      "astronaut": "dev_2011",
+      "scenario": "S2",
+      "start": 39,
+      "first_AE": null,
+      "first_B1": 50,
+      "first_B2": 74
+    },
+    {
+      "astronaut": "dev_2012",
+      "scenario": "S2",
+      "start": 56,
+      "first_AE": 70,
+      "first_B1": 73,
+      "first_B2": 70
+    },
+    {
+      "astronaut": "dev_2013",
+      "scenario": "S2",
+      "start": 61,
+      "first_AE": 61,
+      "first_B1": 77,
+      "first_B2": 76
+    },
+    {
+      "astronaut": "dev_2014",
+      "scenario": "S2",
+      "start": 46,
+      "first_AE": 60,
+      "first_B1": 58,
+      "first_B2": 59
+    },
+    {
+      "astronaut": "dev_2015",
+      "scenario": "S2",
+      "start": 66,
+      "first_AE": 71,
+      "first_B1": 90,
+      "first_B2": 71
+    },
+    {
+      "astronaut": "dev_2016",
+      "scenario": "S2",
+      "start": 61,
+      "first_AE": 67,
+      "first_B1": 71,
+      "first_B2": 70
+    },
+    {
+      "astronaut": "dev_2017",
+      "scenario": "S2",
+      "start": 48,
+      "first_AE": null,
+      "first_B1": 70,
+      "first_B2": 72
+    },
+    {
+      "astronaut": "dev_2018",
+      "scenario": "S2",
+      "start": 71,
+      "first_AE": 71,
+      "first_B1": 102,
+      "first_B2": 75
+    },
+    {
+      "astronaut": "dev_2019",
+      "scenario": "S2",
+      "start": 44,
+      "first_AE": null,
+      "first_B1": 55,
+      "first_B2": 58
+    },
+    {
+      "astronaut": "dev_2020",
+      "scenario": "S3",
+      "start": 50,
+      "first_AE": 50,
+      "first_B1": 62,
+      "first_B2": 64
+    },
+    {
+      "astronaut": "dev_2021",
+      "scenario": "S3",
+      "start": 73,
+      "first_AE": 87,
+      "first_B1": 77,
+      "first_B2": 92
+    },
+    {
+      "astronaut": "dev_2022",
+      "scenario": "S3",
+      "start": 80,
+      "first_AE": 90,
+      "first_B1": 80,
+      "first_B2": 94
+    },
+    {
+      "astronaut": "dev_2023",
+      "scenario": "S3",
+      "start": 76,
+      "first_AE": 88,
+      "first_B1": 92,
+      "first_B2": 91
+    },
+    {
+      "astronaut": "dev_2024",
+      "scenario": "S3",
+      "start": 55,
+      "first_AE": 63,
+      "first_B1": 109,
+      "first_B2": 69
+    },
+    {
+      "astronaut": "dev_2025",
+      "scenario": "S3",
+      "start": 41,
+      "first_AE": 56,
+      "first_B1": 64,
+      "first_B2": 56
+    },
+    {
+      "astronaut": "dev_2026",
+      "scenario": "S3",
+      "start": 61,
+      "first_AE": 67,
+      "first_B1": 111,
+      "first_B2": 104
+    },
+    {
+      "astronaut": "dev_2027",
+      "scenario": "S3",
+      "start": 45,
+      "first_AE": 70,
+      "first_B1": 66,
+      "first_B2": 85
+    },
+    {
+      "astronaut": "dev_2028",
+      "scenario": "S3",
+      "start": 34,
+      "first_AE": 48,
+      "first_B1": null,
+      "first_B2": null
+    },
+    {
+      "astronaut": "dev_2029",
+      "scenario": "S3",
+      "start": 36,
+      "first_AE": 50,
+      "first_B1": null,
+      "first_B2": 50
+    },
+    {
+      "astronaut": "dev_2030",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "dev_2031",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "dev_2032",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "dev_2033",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "dev_2034",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "dev_2035",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "dev_2036",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "dev_2037",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "dev_2038",
+      "scenario": "none",
+      "start": -1
+    },
+    {
+      "astronaut": "dev_2039",
+      "scenario": "none",
+      "start": -1
+    }
+  ],
+  "model_hash": "7b84df52fd9d",
+  "config_hashes": {
+    "model": "9f8706f2339b",
+    "sim": "a1576132d46c",
+    "rules": "bfc553cc437b"
+  },
+  "sensitivity": {
+    "0.5": {
+      "S1": {
+        "detection_rate": {
+          "AE": 1.0,
+          "B1": 0.3,
+          "B2": 0.6
+        },
+        "median_lead_vs_B1": 7,
+        "median_lead_vs_B2": 8.5
+      },
+      "S2": {
+        "detection_rate": {
+          "AE": 0.7,
+          "B1": 0.5,
+          "B2": 0.5
+        },
+        "median_lead_vs_B1": 15,
+        "median_lead_vs_B2": 40
+      },
+      "S3": {
+        "detection_rate": {
+          "AE": 0.9,
+          "B1": 0.4,
+          "B2": 0.6
+        },
+        "median_lead_vs_B1": -7.0,
+        "median_lead_vs_B2": 2.5
+      }
+    },
+    "1.0": {
+      "S1": {
+        "detection_rate": {
+          "AE": 1.0,
+          "B1": 0.6,
+          "B2": 1.0
+        },
+        "median_lead_vs_B1": 13.5,
+        "median_lead_vs_B2": 2.5
+      },
+      "S2": {
+        "detection_rate": {
+          "AE": 0.6,
+          "B1": 0.9,
+          "B2": 1.0
+        },
+        "median_lead_vs_B1": 10.0,
+        "median_lead_vs_B2": 1.5
+      },
+      "S3": {
+        "detection_rate": {
+          "AE": 1.0,
+          "B1": 0.8,
+          "B2": 0.9
+        },
+        "median_lead_vs_B1": 6.0,
+        "median_lead_vs_B2": 5
+      }
+    },
+    "1.5": {
+      "S1": {
+        "detection_rate": {
+          "AE": 1.0,
+          "B1": 0.7,
+          "B2": 1.0
+        },
+        "median_lead_vs_B1": 9,
+        "median_lead_vs_B2": 5.5
+      },
+      "S2": {
+        "detection_rate": {
+          "AE": 0.7,
+          "B1": 0.9,
+          "B2": 1.0
+        },
+        "median_lead_vs_B1": 5,
+        "median_lead_vs_B2": -1
+      },
+      "S3": {
+        "detection_rate": {
+          "AE": 1.0,
+          "B1": 0.9,
+          "B2": 1.0
+        },
+        "median_lead_vs_B1": 8,
+        "median_lead_vs_B2": 2.5
+      }
+    }
+  }
+}

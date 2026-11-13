@@ -1,0 +1,5 @@
+{
+  "detector": "drift",
+  "train_windows": 34200,
+  "reference_windows": 990
+}

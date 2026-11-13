@@ -1,0 +1,309 @@
+{
+  "product": "Baseline",
+  "sample": false,
+  "disclaimer": "Prototype — synthetic data — not medical advice. Synthetic data calibrated on published sources — proof of concept, not clinical validation.",
+  "mission": {
+    "start_date": "2024-05-01",
+    "days": 120,
+    "calibration_days": 21
+  },
+  "index": {
+    "name": "Systemic Anomaly Index",
+    "short": "SAI",
+    "range": [
+      0,
+      100
+    ],
+    "p_yellow": 92,
+    "p_orange": 99,
+    "persistence_days": 3
+  },
+  "features": {
+    "sys": {
+      "name": "Systolic blood pressure",
+      "unit": "mmHg",
+      "system": "heart"
+    },
+    "dia": {
+      "name": "Diastolic blood pressure",
+      "unit": "mmHg",
+      "system": "heart"
+    },
+    "hr": {
+      "name": "Resting heart rate",
+      "unit": "bpm",
+      "system": "heart"
+    },
+    "glucose": {
+      "name": "Fasting blood glucose",
+      "unit": "mg/dL",
+      "system": "metabolism"
+    },
+    "temp": {
+      "name": "Body temperature",
+      "unit": "°C",
+      "system": "immune_temp"
+    },
+    "sleep_h": {
+      "name": "Sleep",
+      "unit": "h",
+      "system": "mind_sleep"
+    },
+    "mood": {
+      "name": "Mood",
+      "unit": "1–5",
+      "system": "mind_sleep"
+    },
+    "reaction_ms": {
+      "name": "Reaction time",
+      "unit": "ms",
+      "system": "mind_sleep"
+    },
+    "exercise_min": {
+      "name": "Exercise",
+      "unit": "min",
+      "system": null
+    }
+  },
+  "systems": {
+    "heart": {
+      "name": "Heart & circulation",
+      "features": [
+        "sys",
+        "dia",
+        "hr"
+      ],
+      "hazard": "gravity"
+    },
+    "metabolism": {
+      "name": "Metabolism",
+      "features": [
+        "glucose"
+      ],
+      "hazard": null
+    },
+    "mind_sleep": {
+      "name": "Mind & sleep",
+      "features": [
+        "sleep_h",
+        "mood",
+        "reaction_ms"
+      ],
+      "hazard": "isolation"
+    },
+    "immune_temp": {
+      "name": "Immune & temperature",
+      "features": [
+        "temp"
+      ],
+      "hazard": "closed_environment"
+    }
+  },
+  "hazards": {
+    "radiation": {
+      "name": "Space radiation",
+      "source": "https://www.nasa.gov/hrp/hazards/"
+    },
+    "isolation": {
+      "name": "Isolation & confinement",
+      "source": "https://www.nasa.gov/hrp/hazards/"
+    },
+    "distance": {
+      "name": "Distance from Earth",
+      "source": "https://www.nasa.gov/hrp/hazards/"
+    },
+    "gravity": {
+      "name": "Gravity fields",
+      "source": "https://www.nasa.gov/hrp/hazards/"
+    },
+    "closed_environment": {
+      "name": "Hostile & closed environment",
+      "source": "https://www.nasa.gov/hrp/hazards/"
+    }
+  },
+  "prompts": {
+    "repeat_bp_hr_rest": {
+      "system": "heart"
+    },
+    "repeat_glucose_fasting": {
+      "system": "metabolism"
+    },
+    "reaction_test_mood_checkin": {
+      "system": "mind_sleep"
+    },
+    "repeat_temperature_evening": {
+      "system": "immune_temp"
+    }
+  },
+  "environments": {
+    "iss": {
+      "name": "Space station (low Earth orbit)",
+      "one_way_delay_text": "near real-time",
+      "one_way_delay_s": [
+        0,
+        1
+      ]
+    },
+    "lunar_base": {
+      "name": "Lunar surface base",
+      "one_way_delay_text": "~1.3 s",
+      "one_way_delay_s": [
+        1.2,
+        1.4
+      ],
+      "source": "Light travel time over the mean Earth–Moon distance (~384,400 km / c ≈ 1.28 s); NASA ASCEND paper describes few-second maximum delays just beyond the Moon. https://ntrs.nasa.gov/api/citations/20220013418/downloads/ASCEND-Communication%20Delays%2C%20Disruptions%2C%20and%20Blackouts%20for%20Crewed%20Mars%20Missions.pdf"
+    },
+    "mars_transit": {
+      "name": "Mars transit",
+      "one_way_delay_text": "up to ~22 min",
+      "one_way_delay_s": [
+        0,
+        1320
+      ],
+      "source": "NASA ASCEND paper: Earth–Mars one-way delays vary from 0 to 22 minutes over a mission. https://ntrs.nasa.gov/api/citations/20220013418/downloads/ASCEND-Communication%20Delays%2C%20Disruptions%2C%20and%20Blackouts%20for%20Crewed%20Mars%20Missions.pdf"
+    }
+  },
+  "default_environment": "mars_transit",
+  "levels": [
+    "green",
+    "yellow",
+    "orange",
+    "red"
+  ],
+  "crew": [
+    {
+      "id": "A1",
+      "display_name": "Crew Member Alpha"
+    },
+    {
+      "id": "A2",
+      "display_name": "Crew Member Bravo"
+    },
+    {
+      "id": "A3",
+      "display_name": "Crew Member Charlie"
+    }
+  ],
+  "normal_bands": {
+    "A1": {
+      "sys": [
+        106.95,
+        128.67
+      ],
+      "dia": [
+        60.19,
+        73.33
+      ],
+      "hr": [
+        65.76,
+        77.61
+      ],
+      "glucose": [
+        87.9,
+        108.2
+      ],
+      "temp": [
+        35.95,
+        36.45
+      ],
+      "sleep_h": [
+        4.46,
+        6.31
+      ],
+      "mood": [
+        2.98,
+        4.62
+      ],
+      "reaction_ms": [
+        241.65,
+        305.35
+      ],
+      "exercise_min": [
+        21.4,
+        190.89
+      ]
+    },
+    "A2": {
+      "sys": [
+        109.44,
+        123.26
+      ],
+      "dia": [
+        68.55,
+        89.26
+      ],
+      "hr": [
+        52.13,
+        66.47
+      ],
+      "glucose": [
+        74.68,
+        91.99
+      ],
+      "temp": [
+        36.03,
+        36.49
+      ],
+      "sleep_h": [
+        5.95,
+        7.89
+      ],
+      "mood": [
+        2.98,
+        4.81
+      ],
+      "reaction_ms": [
+        255.15,
+        310.75
+      ],
+      "exercise_min": [
+        4.71,
+        184.24
+      ]
+    },
+    "A3": {
+      "sys": [
+        121.17,
+        138.63
+      ],
+      "dia": [
+        63.96,
+        88.26
+      ],
+      "hr": [
+        60.1,
+        75.04
+      ],
+      "glucose": [
+        81.48,
+        116.92
+      ],
+      "temp": [
+        36.56,
+        37.09
+      ],
+      "sleep_h": [
+        4.9,
+        8.03
+      ],
+      "mood": [
+        2.64,
+        4.62
+      ],
+      "reaction_ms": [
+        212.61,
+        275.01
+      ],
+      "exercise_min": [
+        5.61,
+        233.92
+      ]
+    }
+  },
+  "cabin_co2_limit_mmHg": 3.0,
+  "space_weather": {
+    "source": "NASA DONKI SEP events",
+    "status": "missing",
+    "event_days": []
+  }
+}

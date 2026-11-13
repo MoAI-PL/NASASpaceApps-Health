@@ -1,0 +1,56 @@
+# Baseline — UI-facing configuration: systems, hazards, prompts, environments, escalation.
+
+systems:
+  heart: {name: "Heart & circulation", features: [sys, dia, hr], hazard: gravity}
+  metabolism: {name: "Metabolism", features: [glucose], hazard: null}
+  mind_sleep: {name: "Mind & sleep", features: [sleep_h, mood, reaction_ms], hazard: isolation}
+  immune_temp: {name: "Immune & temperature", features: [temp], hazard: closed_environment}
+
+features:
+  sys: {name: "Systolic blood pressure", unit: "mmHg", system: heart}
+  dia: {name: "Diastolic blood pressure", unit: "mmHg", system: heart}
+  hr: {name: "Resting heart rate", unit: "bpm", system: heart}
+  glucose: {name: "Fasting blood glucose", unit: "mg/dL", system: metabolism}
+  temp: {name: "Body temperature", unit: "°C", system: immune_temp}
+  sleep_h: {name: "Sleep", unit: "h", system: mind_sleep}
+  mood: {name: "Mood", unit: "1–5", system: mind_sleep}
+  reaction_ms: {name: "Reaction time", unit: "ms", system: mind_sleep}
+  exercise_min: {name: "Exercise", unit: "min", system: null}
+
+hazards:
+  radiation: {name: "Space radiation", source: "https://www.nasa.gov/hrp/hazards/"}
+  isolation: {name: "Isolation & confinement", source: "https://www.nasa.gov/hrp/hazards/"}
+  distance: {name: "Distance from Earth", source: "https://www.nasa.gov/hrp/hazards/"}
+  gravity: {name: "Gravity fields", source: "https://www.nasa.gov/hrp/hazards/"}
+  closed_environment: {name: "Hostile & closed environment", source: "https://www.nasa.gov/hrp/hazards/"}
+
+# Prompt ids are fixed; the UI team writes the How / Why / If-abnormal text for each.
+prompts:
+  heart: repeat_bp_hr_rest
+  metabolism: repeat_glucose_fasting
+  mind_sleep: reaction_test_mood_checkin
+  immune_temp: repeat_temperature_evening
+
+environments:
+  iss:
+    name: "Space station (low Earth orbit)"
+    one_way_delay_text: "near real-time"
+    one_way_delay_s: [0, 1]
+    assumption: true
+  lunar_base:
+    name: "Lunar surface base"
+    one_way_delay_text: "~1.3 s"
+    one_way_delay_s: [1.2, 1.4]
+    source: "Light travel time over the mean Earth–Moon distance (~384,400 km / c ≈ 1.28 s); NASA ASCEND paper describes few-second maximum delays just beyond the Moon. https://ntrs.nasa.gov/api/citations/20220013418/downloads/ASCEND-Communication%20Delays%2C%20Disruptions%2C%20and%20Blackouts%20for%20Crewed%20Mars%20Missions.pdf"
+  mars_transit:
+    name: "Mars transit"
+    one_way_delay_text: "up to ~22 min"
+    one_way_delay_s: [0, 1320]
+    source: "NASA ASCEND paper: Earth–Mars one-way delays vary from 0 to 22 minutes over a mission. https://ntrs.nasa.gov/api/citations/20220013418/downloads/ASCEND-Communication%20Delays%2C%20Disruptions%2C%20and%20Blackouts%20for%20Crewed%20Mars%20Missions.pdf"
+default_environment: mars_transit
+
+escalation:
+  orange_or_yellow_days: 5      # yellow lasting this many consecutive days escalates to the crew medical officer
+  multi_system_count: 2         # this many systems at yellow+ escalates to the crew medical officer
+  assumption: true
+  note: "Escalation ladder thresholds chosen by the team; to be reviewed with a flight-medicine source."

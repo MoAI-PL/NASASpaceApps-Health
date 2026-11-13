@@ -1,0 +1,31 @@
+# Baseline — detector, scoring and alert configuration
+# Detector chosen by the model-selection benchmark (python -m src.benchmark → outputs/results/benchmark.md):
+# the multivariate personal-drift model beat every autoencoder variant at an equal false-alarm budget.
+detector: drift          # drift (production) | autoencoder (alternative, kept for the benchmark)
+drift:
+  train_split: train_large   # 300 healthy synthetic astronauts
+  regularisation: 0.01
+window_days: 7
+architecture:
+  hidden: 32
+  bottleneck: 8
+  dropout: 0.1
+training:
+  seed: 7
+  lr: 0.001
+  batch_size: 64
+  max_epochs: 200
+  patience: 10
+  device: auto   # auto = CUDA if available, else CPU. CPU is the reference for exact reproducibility.
+scoring:
+  # Used only when detector: autoencoder (v1 = reconstruction only; v2 adds the latent distance).
+  components: [reconstruction, latent]
+  day_weights: [1, 2, 3, 4, 5, 6, 7]   # latest day of the window weighs most
+  persistence_days: 3
+  # Percentile thresholds on the Systemic Anomaly Index (SAI). Tuned ONLY on the bench selection split
+  # by `python -m src.evaluate --split bench --tune` (selection split; dev and test untouched)
+  # so that false alarms <= max_false_alarms_per_week per astronaut-week.
+  p_yellow: 92
+  p_orange: 99
+  max_false_alarms_per_week: 0.05
+  system_secondary_share: 0.3

@@ -1,0 +1,32 @@
+{
+  "astronaut": "A1",
+  "display_name": "Crew Member Alpha",
+  "day": 46,
+  "date": "2024-06-15",
+  "env": "mars_transit",
+  "status": "queued_for_downlink",
+  "level": "yellow",
+  "escalation": "crew_medical_officer",
+  "sai_last_7_days": [
+    51,
+    64,
+    85,
+    89,
+    82,
+    91,
+    98
+  ],
+  "top_contributions": {
+    "hr": 0.32,
+    "mood": 0.21,
+    "temp": 0.13,
+    "sleep_h": 0.11,
+    "other": 0.22
+  },
+  "open_prompts": [
+    "repeat_bp_hr_rest",
+    "reaction_test_mood_checkin"
+  ],
+  "events": [],
+  "note": "Synthetic demonstration data. Not medical advice."
+}

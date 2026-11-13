@@ -1,0 +1,26 @@
+# Baseline — fixed thresholds used by baseline B1 and by the critical (red) safety net.
+# `op`: ge (>=), gt (>), le (<=), lt (<). Every rule has a source or assumption: true.
+
+b1_rules:
+  - {feature: temp, op: ge, value: 38.0, persistence_days: 2, assumption: true, note: "Common clinical fever definition; verify against a guideline before quoting."}
+  - {feature: hr, op: gt, value: 100, persistence_days: 2, assumption: true, note: "Common resting tachycardia definition; verify."}
+  - {feature: sys, op: ge, value: 140, persistence_days: 2, source: "American Heart Association, Understanding Blood Pressure Readings — Stage 2 hypertension: systolic >= 140 or diastolic >= 90 mmHg. https://heart.org/bplevels"}
+  - {feature: dia, op: ge, value: 90, persistence_days: 2, source: "American Heart Association, Understanding Blood Pressure Readings — Stage 2 hypertension. https://heart.org/bplevels"}
+  - {feature: glucose, op: ge, value: 126, persistence_days: 2, assumption: true, note: "Fasting glucose diagnostic cut-off commonly attributed to the ADA; verify before quoting."}
+  - {feature: glucose, op: lt, value: 70, persistence_days: 2, source: "American Diabetes Association, Hypoglycemia (HCP) — Level 1 hypoglycemia: glucose < 70 mg/dL. https://professional.diabetes.org/sites/dpro/files/2025-05/hypoglycemia-hcp-5-27-25.pdf"}
+  - {feature: sleep_h, op: lt, value: 5.0, persistence_days: 3, assumption: true}
+  - {feature: mood, op: le, value: 2, persistence_days: 3, assumption: true}
+
+critical_rules:
+  - {feature: temp, op: ge, value: 39.5, assumption: true}
+  - {feature: sys, op: gt, value: 180, source: "American Heart Association — hypertensive crisis: systolic above 180 and/or diastolic above 120 mmHg. https://heart.org/bplevels"}
+  - {feature: dia, op: gt, value: 120, source: "American Heart Association — hypertensive crisis. https://heart.org/bplevels"}
+  - {feature: glucose, op: lt, value: 54, source: "American Diabetes Association — Level 2 hypoglycemia: glucose < 54 mg/dL. https://professional.diabetes.org/sites/dpro/files/2025-05/hypoglycemia-hcp-5-27-25.pdf"}
+  - {feature: hr, op: gt, value: 130, assumption: true}
+  - {feature: hr, op: lt, value: 40, assumption: true}
+
+b2:
+  z_threshold: 3.0
+  persistence_days: 2
+  assumption: true
+  note: "Method parameter of the personal single-indicator baseline (B2)."

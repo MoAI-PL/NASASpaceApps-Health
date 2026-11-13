@@ -1,0 +1,77 @@
+{
+  "chosen_p_yellow": 90,
+  "grid": [
+    {
+      "p_yellow": 90,
+      "fa_per_week_AE": 0.093,
+      "detection_rate_AE": {
+        "S1": 1.0,
+        "S2": 1.0,
+        "S3": 1.0
+      }
+    },
+    {
+      "p_yellow": 92,
+      "fa_per_week_AE": 0.076,
+      "detection_rate_AE": {
+        "S1": 1.0,
+        "S2": 1.0,
+        "S3": 1.0
+      }
+    },
+    {
+      "p_yellow": 94,
+      "fa_per_week_AE": 0.059,
+      "detection_rate_AE": {
+        "S1": 1.0,
+        "S2": 1.0,
+        "S3": 1.0
+      }
+    },
+    {
+      "p_yellow": 95,
+      "fa_per_week_AE": 0.052,
+      "detection_rate_AE": {
+        "S1": 1.0,
+        "S2": 0.9,
+        "S3": 1.0
+      }
+    },
+    {
+      "p_yellow": 96,
+      "fa_per_week_AE": 0.045,
+      "detection_rate_AE": {
+        "S1": 1.0,
+        "S2": 0.9,
+        "S3": 1.0
+      }
+    },
+    {
+      "p_yellow": 97,
+      "fa_per_week_AE": 0.031,
+      "detection_rate_AE": {
+        "S1": 0.9,
+        "S2": 0.8,
+        "S3": 1.0
+      }
+    },
+    {
+      "p_yellow": 98,
+      "fa_per_week_AE": 0.014,
+      "detection_rate_AE": {
+        "S1": 0.9,
+        "S2": 0.7,
+        "S3": 1.0
+      }
+    },
+    {
+      "p_yellow": 99,
+      "fa_per_week_AE": 0.003,
+      "detection_rate_AE": {
+        "S1": 0.9,
+        "S2": 0.6,
+        "S3": 0.7
+      }
+    }
+  ]
+}

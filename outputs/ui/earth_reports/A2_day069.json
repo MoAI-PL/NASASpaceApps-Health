@@ -1,0 +1,31 @@
+{
+  "astronaut": "A2",
+  "display_name": "Crew Member Bravo",
+  "day": 69,
+  "date": "2024-07-08",
+  "env": "mars_transit",
+  "status": "queued_for_downlink",
+  "level": "orange",
+  "escalation": "crew_medical_officer",
+  "sai_last_7_days": [
+    87,
+    95,
+    97,
+    97,
+    95,
+    99,
+    100
+  ],
+  "top_contributions": {
+    "hr": 0.32,
+    "sys": 0.32,
+    "temp": 0.09,
+    "dia": 0.07,
+    "other": 0.2
+  },
+  "open_prompts": [
+    "repeat_bp_hr_rest"
+  ],
+  "events": [],
+  "note": "Synthetic demonstration data. Not medical advice."
+}

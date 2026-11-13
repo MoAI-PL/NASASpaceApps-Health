@@ -1,0 +1,172 @@
+# Baseline — synthetic crew simulation parameters
+# Every value carries either a `source` (verified reference) or `assumption: true`.
+# Assumptions are plausible placeholders chosen by the team and are listed in README → Limitations.
+
+mission:
+  start_date: {value: "2024-05-01", assumption: true, note: "Real calendar window used only to align real NASA DONKI solar particle events with mission days."}
+  days: {value: 120, assumption: true}
+  calibration_days: {value: 21, assumption: true, note: "Personal baseline period; no scenario is ever active here."}
+  scenario_free_days: {value: 29, assumption: true}
+  scenario_start_range: {value: [30, 80], assumption: true}
+
+# Population mean / sd describe differences BETWEEN people; day_sd is variation WITHIN a person.
+# min / max are physiological clipping bounds.
+features:
+  sys:
+    unit: mmHg
+    pop_mean: 115
+    pop_sd: 10
+    day_sd: 5
+    min: 80
+    max: 220
+    assumption: true
+  dia:
+    unit: mmHg
+    pop_mean: 75
+    pop_sd: 7
+    day_sd: 4
+    min: 45
+    max: 140
+    assumption: true
+  hr:
+    unit: bpm
+    pop_mean: 65
+    pop_sd: 8
+    day_sd: 3.5
+    min: 35
+    max: 180
+    assumption: true
+  glucose:
+    unit: mg/dL
+    pop_mean: 90
+    pop_sd: 8
+    day_sd: 6
+    min: 40
+    max: 300
+    assumption: true
+  temp:
+    unit: degC
+    pop_mean: 36.6
+    pop_sd: 0.2
+    day_sd: 0.15
+    min: 35.0
+    max: 41.5
+    assumption: true
+  sleep_h:
+    unit: h
+    pop_mean: 6.1
+    pop_sd: 0.5
+    day_sd: 0.6
+    min: 2.0
+    max: 10.0
+    source: "Barger L.K. et al., The Lancet Neurology (2014): ISS crew averaged 6.09 h of sleep per night (pop_mean). pop_sd and day_sd are assumptions. https://www.eurekalert.org/news-releases/595450"
+  mood:
+    unit: score 1-5
+    pop_mean: 3.8
+    pop_sd: 0.4
+    day_sd: 0.5
+    min: 1
+    max: 5
+    assumption: true
+  reaction_ms:
+    unit: ms
+    pop_mean: 280
+    pop_sd: 30
+    day_sd: 15
+    min: 150
+    max: 700
+    assumption: true
+  exercise_min:
+    unit: min
+    pop_mean: 120
+    pop_sd: 15
+    day_sd: 20
+    min: 0
+    max: 240
+    rest_day_every: 7
+    rest_day_max: 15
+    assumption: true
+
+# Correlated day-to-day variation through two latent AR(1) processes (unit variance).
+# A loading is the share of the feature's within-person sd driven by the latent factor.
+latent:
+  phi: {value: 0.7, assumption: true}
+  fatigue_loadings:
+    value: {sleep_h: -0.6, mood: -0.6, reaction_ms: 0.6, hr: 0.25}
+    assumption: true
+  load_exercise_loading: {value: 0.7, assumption: true, note: "Share of exercise variation driven by the training-load factor."}
+  load_next_day_loadings:
+    value: {hr: -0.2, sleep_h: 0.2}
+    assumption: true
+    note: "Effect of the previous day's training load."
+
+missing_prob: {value: 0.05, assumption: true}
+
+radiation:
+  baseline_mGy_per_day: {value: 0.5, assumption: true, note: "Order-of-magnitude placeholder for deep-space absorbed dose; replace with a verified value (e.g. Curiosity RAD cruise measurements) before quoting it."}
+  baseline_rel_noise: {value: 0.05, assumption: true}
+  sep_spike_mGy: {value: 2.0, assumption: true, note: "Added on days with a DONKI solar energetic particle event; magnitude is illustrative only."}
+
+cabin_co2:
+  baseline_mmHg: {value: 2.3, assumption: true}
+  day_sd: {value: 0.3, assumption: true}
+  episodes_per_mission: {value: 2, assumption: true}
+  episode_days: {value: [1, 3], assumption: true}
+  episode_level_mmHg: {value: [3.8, 4.8], assumption: true, note: "Within the 1-9 mmHg range reported on the ISS by NASA OCHMO."}
+  limit_mmHg:
+    value: 3.0
+    source: "NASA OCHMO Technical Brief OCHMO-TB-004 Carbon Dioxide: NASA-STD-3001 Vol. 2 [V2 6004] limits the 1-hour average ppCO2 to 3 mmHg; ISS flight rule keeps the 24-hour average at or below 3.0 mmHg. https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-004-carbon-dioxide.pdf"
+
+# Scenario shifts are in units of the astronaut's personal within-person sd (day_sd).
+# Sizes were fixed BEFORE any evaluation (PLAN.md M1.3) and must not be changed to improve results.
+scenarios:
+  S1:
+    name: Cardiovascular deconditioning
+    ramp_days: 21
+    shifts: {hr: 2.5, sys: 2.0, dia: 1.5, reaction_ms: 0.5}
+    exercise_factor: 0.6
+    role: dev
+    assumption: true
+  S2:
+    name: Isolation and stress
+    ramp_days: 14
+    shifts: {sleep_h: -2.0, mood: -2.0, reaction_ms: 2.0, hr: 1.0}
+    role: dev
+    assumption: true
+  S3:
+    name: Metabolic disturbance
+    ramp_days: 14
+    shifts: {glucose: 2.5, sleep_h: -1.0, mood: -1.0}
+    role: dev
+    assumption: true
+  S4:
+    name: Sensor fault
+    ramp_days: 0
+    duration_days: 5
+    sensor_shift_sd: 6.0
+    role: dev
+    could: true
+    assumption: true
+  S5:
+    name: Infection onset (HOLD-OUT)
+    ramp_days: 5
+    shifts: {temp: 2.5, hr: 2.0, sleep_h: -1.5, mood: -1.5, reaction_ms: 1.0}
+    role: test
+    assumption: true
+
+# Seeds must not overlap between splits.
+splits:
+  train: {first_seed: 1000, composition: {none: 60}}
+  val: {first_seed: 1500, composition: {none: 10}}
+  dev: {first_seed: 2000, composition: {S1: 10, S2: 10, S3: 10, none: 10}}
+  dev_s4: {first_seed: 2040, composition: {S4: 10}}
+  test: {first_seed: 3000, composition: {S5: 10, none: 10}}
+  demo:
+    seed: 42
+    crew:
+      - {id: A1, display_name: "Crew Member Alpha", scenario: none}
+      - {id: A2, display_name: "Crew Member Bravo", scenario: S1, start_day: 50}
+      - {id: A3, display_name: "Crew Member Charlie", scenario: S2, start_day: 70}
+  # Added for the model-selection benchmark (scenario sizes unchanged):
+  train_large: {first_seed: 5000, composition: {none: 300}}
+  bench: {first_seed: 4000, composition: {S1: 30, S2: 30, S3: 30, none: 40}}

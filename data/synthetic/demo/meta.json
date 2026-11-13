@@ -1,0 +1,24 @@
+{
+  "split": "demo",
+  "scale": 1.0,
+  "config_hash": "a1576132d46c",
+  "sep_status": "missing",
+  "sep_days": [],
+  "astronauts": [
+    {
+      "astronaut": "A1",
+      "seed": 42,
+      "scenario": "none"
+    },
+    {
+      "astronaut": "A2",
+      "seed": 43,
+      "scenario": "S1"
+    },
+    {
+      "astronaut": "A3",
+      "seed": 44,
+      "scenario": "S2"
+    }
+  ]
+}
