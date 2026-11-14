@@ -95,8 +95,8 @@ export default function App() {
         {screen === "body" && <Body record={record} records={records} system={system} onSelect={setSystem} />}
         {screen === "trends" && <Trends records={records} day={record.day} astronaut={astronaut} />}
         {screen === "earth" && (
-          <EarthLink astronaut={astronaut} day={record.day} env={env} queued={queued}
-                     onQueue={() => setQueued([...queued, { astronaut, day: record.day }])} />
+          <EarthLink astronaut={astronaut} day={record.day} env={env} record={record} records={records} queued={queued}
+                     onQueue={(report) => setQueued([...queued.filter((q) => !(q.astronaut === report.astronaut && q.day === report.day)), report])} />
         )}
         {screen === "how" && <HowWeKnow />}
         {screen === "settings" && <Settings astronaut={astronaut} onAstronaut={setAstronaut} env={env} onEnv={setEnv} />}
