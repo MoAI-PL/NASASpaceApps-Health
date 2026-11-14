@@ -16,8 +16,17 @@ import { Panel, SourceLink, TapButton, Text } from "../components/ui.jsx";
 // ===== Storage (optional: the screen works without it) =====
 const storageKey = (record) => `baseline.checkin.${record.astronaut}.${record.day}`;
 
-function loadEntries(record) {
+// Unsaved entries live here while the app is open, per crew member and day, so moving the day
+// slider, switching crew member or opening another screen never throws typed values away.
+const drafts = new Map();
+
+function loadSaved(record) {
   try { return JSON.parse(localStorage.getItem(storageKey(record))) ?? {}; } catch { return {}; }
+}
+
+/** The unsaved draft for this crew member and day if there is one, else what was saved. */
+function loadEntries(record) {
+  return drafts.get(storageKey(record)) ?? loadSaved(record);
 }
 
 /** True when the entries were written to this device. */
@@ -52,14 +61,24 @@ export default function CheckIn({ record }) {
   const [open, setOpen] = useState(null);
   const [saved, setSaved] = useState(null); // null | "device" | "memory"
 
-  // Another crew member or mission day: show what was saved for it.
+  // Another crew member or mission day: show its draft or what was saved for it.
   useEffect(() => { setEntries(loadEntries(record)); setSaved(null); }, [record.astronaut, record.day]);
 
-  const set = (f, v) => { setEntries({ ...entries, [f]: v }); setSaved(null); };
+  const set = (f, v) => {
+    const next = { ...entries, [f]: v };
+    drafts.set(storageKey(record), next);
+    setEntries(next);
+    setSaved(null);
+  };
+  const unsaved = drafts.has(storageKey(record));
   const problems = Object.fromEntries(INDICATORS.map((f) => [f, problem(f, entries[f])]));
   const count = INDICATORS.filter((f) => entries[f] != null).length;
   const canSave = count > 0 && INDICATORS.every((f) => !problems[f]);
-  const save = () => setSaved(storeEntries(record, entries) ? "device" : "memory");
+  const save = () => {
+    const ok = storeEntries(record, entries);
+    if (ok) drafts.delete(storageKey(record)); // no device storage: the draft stays in memory
+    setSaved(ok ? "device" : "memory");
+  };
 
   return (
     <div className="grid gap-4">
@@ -122,6 +141,9 @@ export default function CheckIn({ record }) {
         {saved === "memory" && "Kept until the app is closed: this browser does not allow saving."}
         {!saved && count === 0 && <span className="text-ink-2">Enter at least one measurement to save.</span>}
         {!saved && count > 0 && !canSave && <span className="text-ink-2">Fix the highlighted values to save.</span>}
+        {!saved && unsaved && canSave && (
+          <span className="text-ink-2">Not saved yet — your entries for day {record.day} are kept while the app is open.</span>
+        )}
       </p>
     </div>
   );
