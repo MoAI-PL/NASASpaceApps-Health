@@ -17,20 +17,20 @@ const ENV_PATHS = {
   mars_transit: <g><path d="M6 22 L14 14 L22 10 L18 18 Z" /><path d="M10 22 L6 26 M14 18 L9 23" /><circle cx="26" cy="7" r="2.5" /></g>,
   mars_rover: <g><rect x="7" y="12" width="18" height="7" rx="2" /><circle cx="10" cy="22" r="2.5" /><circle cx="22" cy="22" r="2.5" /><path d="M3 26 H29 M20 12 V8 H24" /></g>,
 };
-function EnvIcon({ id }) {
+export function EnvIcon({ id, size = 28 }) {
   return (
-    <svg width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       {ENV_PATHS[id] ?? <circle cx="16" cy="16" r="9" />}
     </svg>
   );
 }
 
-/** Crew member always visible (one tap to switch between the three demo cases); the mission
- *  environment also always visible. */
+/** Crew member (one tap to switch between the three demo cases) and mission environment. On wide
+ *  screens the crew switch lives in the sidebar's bottom-left corner, so this row hides there. */
 export function DemoControls({ astronaut, onAstronaut, env, onEnv }) {
   return (
     <div className="mt-3">
-      <div className="grid grid-cols-3 gap-2" role="group" aria-label="Crew member">
+      <div className="grid grid-cols-3 gap-2 lg:hidden" role="group" aria-label="Crew member">
         {META.crew.map((c) => (
           <TapButton key={c.id} active={c.id === astronaut} onClick={() => onAstronaut(c.id)} className="text-center! px-2!">
             <span className="hidden sm:inline">{c.display_name}</span>
