@@ -1,7 +1,7 @@
 // Baseline — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
-import { META, offNormalSince } from "../data.js";
+import { META, fmt, offNormalSince } from "../data.js";
 import { PROMPTS, SYSTEM_TEXT } from "../content/texts.js";
 import { Glyph, StatusIcon } from "./icons.jsx";
 import { SourceLink, Text } from "./ui.jsx";
@@ -33,10 +33,10 @@ export default function SystemDetail({ record, records, system }) {
               <tr key={f} className="border-t border-line">
                 <td className="py-2">{META.features[f].name}</td>
                 <td className="py-2 text-right font-semibold">
-                  {v ?? "missing"} <span className="text-muted text-base">{META.features[f].unit}</span>
+                  {fmt(f, v) ?? "missing"} <span className="text-muted text-base">{META.features[f].unit}</span>
                 </td>
                 <td className="py-2 text-right text-ink-2 text-base">
-                  your normal {lo}–{hi} {dir && <span className="ml-1 font-semibold text-ink">{dir}</span>}
+                  your normal {fmt(f, lo)}–{fmt(f, hi)} {dir && <span className="ml-1 font-semibold text-ink">{dir}</span>}
                 </td>
               </tr>
             );

@@ -2,7 +2,7 @@
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
 import { useState } from "react";
-import { INDICATORS, META } from "../data.js";
+import { INDICATORS, META, fmt } from "../data.js";
 import { CHECKIN } from "../content/texts.js";
 import { Panel, SourceLink, TapButton, Text } from "../components/ui.jsx";
 
@@ -38,7 +38,7 @@ export default function CheckIn({ record }) {
               )}
               <TapButton active={open === f} onClick={() => setOpen(open === f ? null : f)}>How / Why</TapButton>
             </div>
-            <p className="mt-2 text-ink-2">Recorded today: {record.values[f] ?? "missing"}</p>
+            <p className="mt-2 text-ink-2">Recorded today: {fmt(f, record.values[f]) ?? "missing"}</p>
             {open === f && (
               <dl className="mt-3 grid gap-2 text-lg">
                 <dt className="text-ink-2">How</dt><dd><Text>{card.how}</Text></dd>

@@ -1,7 +1,7 @@
 // Baseline — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
-import { META } from "../data.js";
+import { META, fmt } from "../data.js";
 import { STATUS_LABEL } from "../content/texts.js";
 import { Glyph, StatusIcon } from "./icons.jsx";
 
@@ -9,8 +9,8 @@ import { Glyph, StatusIcon } from "./icons.jsx";
 export default function HazardStrip({ record, env }) {
   const delay = META.environments[env].one_way_delay_text;
   const detail = (id, st) =>
-    id === "radiation" ? `${record.context.radiation_cum_mGy} mGy total` :
-    id === "closed_environment" ? `CO₂ ${record.context.cabin_co2_mmHg} mmHg` :
+    id === "radiation" ? `${fmt("radiation_cum_mGy", record.context.radiation_cum_mGy)} mGy total` :
+    id === "closed_environment" ? `CO₂ ${fmt("cabin_co2_mmHg", record.context.cabin_co2_mmHg)} mmHg` :
     id === "distance" ? `Earth: ${delay}` : STATUS_LABEL[st];
   return (
     <section className="panel p-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4" aria-label="Spaceflight hazards">

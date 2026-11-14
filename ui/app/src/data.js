@@ -29,6 +29,16 @@ export function recordsFor(astronaut) {
   return byAstronaut.get(astronaut) ?? [];
 }
 
+// ===== Number formatting =====
+// Display precision per value id (default: whole numbers). The JSON keeps full precision;
+// rounding happens only on screen, so comparisons with the normal band stay exact.
+const DECIMALS = { temp: 1, sleep_h: 1, radiation_mGy: 2, radiation_cum_mGy: 1, cabin_co2_mmHg: 1 };
+
+/** Value rounded for display (string), or null when missing. */
+export function fmt(id, value) {
+  return value == null ? null : Number(value).toFixed(DECIMALS[id] ?? 0);
+}
+
 /** Indicator ids the crew measures (exercise is context, not a health indicator). */
 export const INDICATORS = Object.keys(META.features).filter((f) => f !== "exercise_min");
 
