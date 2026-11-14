@@ -17,7 +17,7 @@
 
   /* Status and chart colours: Okabe–Ito based (colour-blind safe), checked against WCAG AA.
      Contrast vs --color-panel: good 5.1, warning 13.2, serious 7.7, critical 3.6, model 7.6,
-     b1 4.5, b2 5.7 (graphics need >= 3). Text on them: dark #0b0b0b on good / warning / serious /
+     b1 6.4, b2 5.7 (graphics need >= 3). Text on them: dark #0b0b0b on good / warning / serious /
      model (>= 5.7), white on critical (4.8). */
   --color-good: #009e73;
   --color-warning: #f0e442;
@@ -26,7 +26,9 @@
   --color-on-status: #0b0b0b;
 
   --color-model: #56b4e9;
-  --color-b1: #d55e00;
+  /* B1 (fixed thresholds) is neutral grey, so it is never confused with the orange "Act"
+     status (review finding 4); contrast vs --color-panel 6.4. */
+  --color-b1: #9e9d96;
   --color-b2: #cc79a7;
 
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
