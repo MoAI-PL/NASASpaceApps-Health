@@ -265,6 +265,40 @@ export const SYSTEM_TEXT = {
   },
 };
 
+// ===== Is it me or the habitat? (Today) =====
+// When the same body system is away from normal in two or more crew members on the same day,
+// a shared cause in the closed habitat is worth checking before a personal one. The "2 or more"
+// rule is a team assumption, not validated: the synthetic demo crew has no shared scenario.
+export const HABITAT = {
+  title: "Is it me or the habitat?",
+  rule: "Same body system away from normal in 2 or more crew members on the same day. Crewmates are counted, never named. Team rule — an assumption, not validated.",
+  verdict: {
+    shared: "Shared by the crew — check the habitat first",
+    personal: "Only you — likely personal, not the habitat",
+    clear: "No shared change in the crew today",
+  },
+  personalBody: "No one else on the crew shows the same change. Follow the steps for you above.",
+  clearBody: "Everyone is within their normal, or changes are in different body systems.",
+  checks: {
+    heart: {
+      items: ["Cabin CO₂ above its usual level", "Cabin temperature and the exercise schedule"],
+      source: ["ochmo_co2", "hrp_closed_env"],
+    },
+    metabolism: {
+      items: ["The same food or water batch for everyone", "Changes to the meal or exercise plan"],
+      source: ["hrp_nutrition", "hrp_closed_env"],
+    },
+    mind_sleep: {
+      items: ["Cabin CO₂ (headaches, poor sleep)", "Lighting schedule, noise and shift changes"],
+      source: ["ochmo_co2", "hrp_sleep"],
+    },
+    immune_temp: {
+      items: ["An infection passing between crew members", "A recent solar particle event (radiation)"],
+      source: ["hrp_immune", "hrp_closed_env", "nasa_radiation"],
+    },
+  },
+};
+
 // ===== How we know: method and evidence (screen "How we know") =====
 // Numbers copied by hand on 2026-11-14 from the ML results, which the README also reports:
 // outputs/results/benchmark.md, dev_metrics.json, final_test.json (hold-out, run once).

@@ -88,6 +88,26 @@ export function recentDirection(records, astronaut, day, f) {
   return Math.sign(driftZ(records, astronaut, day, f) ?? 0);
 }
 
+/** For each body system: how many crew members are away from their normal on `day`, and whether
+ *  `astronaut` is one of them. Counts only (crewmates stay anonymous on screen). */
+export function crewSystemsOnDay(astronaut, day) {
+  const counts = {};
+  for (const system of Object.keys(META.systems)) counts[system] = { off: 0, crew: 0, you: false };
+  for (const [id, list] of byAstronaut) {
+    const r = list.find((x) => x.day === day);
+    if (!r) continue;
+    for (const [system, status] of Object.entries(r.systems)) {
+      if (!counts[system]) continue;
+      counts[system].crew += 1;
+      if (status !== "green") {
+        counts[system].off += 1;
+        if (id === astronaut) counts[system].you = true;
+      }
+    }
+  }
+  return counts;
+}
+
 /** Consecutive days up to `day` with every indicator recorded (the check-in streak). */
 export function checkinStreak(records, day) {
   let streak = 0;
