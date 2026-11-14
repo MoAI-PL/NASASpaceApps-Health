@@ -2,7 +2,7 @@
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
 import { useState } from "react";
-import { META, checkinStreak } from "../data.js";
+import { META, checkinStreak, recentDirection } from "../data.js";
 import { ESCALATION_TEXT, EVENT_TEXT, PROMPTS } from "../content/texts.js";
 import Gauge from "../components/Gauge.jsx";
 import BodyMap from "../components/BodyMap.jsx";
@@ -45,18 +45,29 @@ export default function Today({ record, records, env, onOpenSystem }) {
 
       <Panel title="What moved away from your normal">
         {record.sai == null ? (
-          <p className="text-muted">Not enough days yet.</p>
+          <p className="text-muted">Learning your normal — the index starts on day 7.</p>
         ) : (
-          moved.map(([f, share]) => (
-            <div key={f} className="mb-2">
-              <div className="flex justify-between text-lg">
-                <span>{META.features[f]?.name ?? f}</span><span>{Math.round(share * 100)}%</span>
-              </div>
-              <div className="h-3 rounded bg-panel-2">
-                <div className="h-3 rounded bg-model" style={{ width: `${share * 100}%` }} />
-              </div>
-            </div>
-          ))
+          <>
+            {moved.map(([f, share]) => {
+              const dir = recentDirection(records, record.astronaut, record.day, f);
+              return (
+                <div key={f} className="mb-3">
+                  <div className="flex justify-between gap-3 text-lg">
+                    <span>
+                      <span aria-hidden="true">{dir > 0 ? "▲ " : dir < 0 ? "▼ " : ""}</span>
+                      {META.features[f]?.name ?? f}
+                      {dir !== 0 && <span className="text-ink-2"> — {dir > 0 ? "higher" : "lower"} than your normal</span>}
+                    </span>
+                    <span className="text-ink-2 whitespace-nowrap">{Math.round(share * 100)}%</span>
+                  </div>
+                  <div className="h-3 rounded bg-panel-2">
+                    <div className="h-3 rounded bg-model" style={{ width: `${share * 100}%` }} />
+                  </div>
+                </div>
+              );
+            })}
+            <p className="text-ink-2 text-base">% = share of the deviation from your normal over the last 7 days.</p>
+          </>
         )}
         <h3 className="mt-4 text-ink-2 text-lg">Today's actions</h3>
         {record.prompts.length === 0 ? (
