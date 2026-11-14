@@ -191,10 +191,6 @@ export default function PolyBody({ systems, selected = null, onSelect, width = 2
           <stop offset="0.25" stopColor="rgb(170 245 255 / 0.85)" />
           <stop offset="1" stopColor="rgb(80 220 255 / 0)" />
         </radialGradient>
-        <radialGradient id={id("zone-fade")} cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0.35" stopColor="#fff" />
-          <stop offset="1" stopColor="#000" />
-        </radialGradient>
         <linearGradient id={id("scan")} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="rgb(170 240 255 / 0)" />
           <stop offset="0.85" stopColor="rgb(170 240 255 / 0.16)" />
@@ -203,11 +199,6 @@ export default function PolyBody({ systems, selected = null, onSelect, width = 2
         <filter id={id("bloom")} x="-40%" y="-20%" width="180%" height="140%"><feGaussianBlur stdDeviation={8 * k} /></filter>
         <filter id={id("soft")} x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation={2 * k} /></filter>
         <filter id={id("hair")} x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation={0.45 * k} /></filter>
-        {Object.entries(ZONE_GLOW).map(([system, [x, y, rx, ry]]) => (
-          <mask key={system} id={id(`zone-${system}`)} maskUnits="userSpaceOnUse" x="0" y="0" width={W} height={H}>
-            <ellipse cx={x} cy={y} rx={rx * 1.7} ry={ry * 1.7} fill={url("zone-fade")} />
-          </mask>
-        ))}
         <clipPath id={id("body")}><path d={BODY} /></clipPath>
       </defs>
 
@@ -227,27 +218,26 @@ export default function PolyBody({ systems, selected = null, onSelect, width = 2
         <path d={MUSCLES.join("")} fill="none" stroke="#9aeeff" strokeWidth={1.1 * k} strokeLinecap="round" filter={url("hair")} opacity="0.18" />
       </g>
 
-      {/* Wire grid on the body (not on the face), clipped to the figure; status colour around an organ. */}
+      {/* Wire grid, clipped to the figure. Every part takes the colour of its body system's status:
+          head = Mind & sleep, chest = Heart & circulation, abdomen = Metabolism, neck, pelvis,
+          arms and legs = Immune & temperature. The selected system is lit and outlined. */}
       <g clipPath={url("body")} pointerEvents="none">
-        {grids.filter((g) => off(g.system) && ZONE_GLOW[g.system] && g.path).map((g) => (
-          <path key={`base-${g.id}`} d={g.path} fill="none" stroke="var(--body-wire)" strokeWidth={0.4 * k} strokeOpacity="0.34" />
-        ))}
         {grids.map((g) => {
-          const lit = off(g.system) || selected === g.system, zone = off(g.system) && ZONE_GLOW[g.system];
-          const colour = off(g.system) ? STATUS_COLOR[systems[g.system]] : "var(--body-wire)";
+          const isOff = off(g.system), isSel = selected === g.system;
+          const colour = isOff ? STATUS_COLOR[systems[g.system]] : "var(--body-wire)";
           return (
-            <g key={g.id} style={{ color: colour }} mask={zone ? url(`zone-${g.system}`) : undefined}>
-              {off(g.system) && !zone && <polygon points={g.outline} fill="currentColor" fillOpacity="0.26" />}
-              {g.path && <path d={g.path} fill="none" stroke="currentColor" strokeWidth={(lit ? 0.55 : 0.42) * k}
-                                strokeOpacity={(lit ? 0.95 : 0.8) * (g.faint ? 0.4 : 1)} />}
-              {selected === g.system && <polygon points={g.outline} fill="none" stroke="var(--color-ink)" strokeWidth={1.2 * k} strokeOpacity="0.8" />}
+            <g key={g.id} style={{ color: colour }}>
+              {(isOff || isSel) && <polygon points={g.outline} fill="currentColor" fillOpacity={isOff ? (isSel ? 0.3 : 0.2) : 0.1} />}
+              {g.path && <path d={g.path} fill="none" stroke="currentColor" strokeWidth={(isOff || isSel ? 0.6 : 0.42) * k}
+                                strokeOpacity={isOff || isSel ? 1 : 0.8} />}
+              {isSel && <polygon points={g.outline} fill="none" stroke="var(--color-ink)" strokeWidth={1.2 * k} strokeOpacity="0.85" />}
             </g>
           );
         })}
         {/* Organ glow in the status colour (head, heart, abdomen) when away from normal. */}
         <g filter={url("bloom")}>
           {Object.entries(ZONE_GLOW).map(([system, [x, y, rx, ry]]) => off(system) && (
-            <ellipse key={system} cx={x} cy={y} rx={rx} ry={ry} fill={STATUS_COLOR[systems[system]]} opacity="0.9" />
+            <ellipse key={system} cx={x} cy={y} rx={rx} ry={ry} fill={STATUS_COLOR[systems[system]]} opacity="0.55" />
           ))}
         </g>
       </g>
