@@ -65,7 +65,6 @@ export const EVENT_TEXT = {
   possible_sensor_fault: { title: "Possible sensor fault", body: "One reading is far from your normal while the others are not. Re-measure before acting." },
 };
 
-// ===== Prompts: the model asks for a follow-up measurement (ids from the contract) =====
 // ===== Check-in cards: one per indicator (ids from meta.features) =====
 // How = how to measure, Why = why it matters in space, If abnormal = what to do when the value is
 // off your normal. Paraphrased from SOURCES (listed per card).
@@ -123,6 +122,60 @@ export const CHECKIN = {
     step: 1, range: [100, 2000],
   },
 };
+
+// ===== Guided check-in: one measurement at a time, in the order of a morning routine =====
+// Order follows the sources: resting heart rate before getting up (AHA), fasting glucose before
+// eating (MedlinePlus), blood pressure after 5 minutes of quiet rest (AHA). `tool` picks the
+// helper on the step: a 30-second pulse timer, the rest timer with two readings, the in-app
+// reaction test. Short steps are condensed from the CHECKIN cards and share their sources.
+export const GUIDE = [
+  {
+    id: "hr", fields: ["hr"], title: "Resting heart rate", tool: "pulse",
+    steps: [
+      "Do this in the morning, before getting up or drinking coffee.",
+      "Put two fingertips (not the thumb) on the thumb side of your inner wrist.",
+      "Press Start and count the beats until the timer ends. The app does the maths.",
+    ],
+  },
+  {
+    id: "temp", fields: ["temp"], title: "Body temperature",
+    steps: [
+      "Measure at the same time each day — temperature is lowest in the early morning.",
+      "Enter the reading from the thermometer.",
+    ],
+  },
+  {
+    id: "glucose", fields: ["glucose"], title: "Fasting blood glucose",
+    steps: [
+      "Measure fasting: nothing to eat for at least 8 hours.",
+      "Enter the reading from the glucose meter.",
+    ],
+  },
+  {
+    id: "bp", fields: ["sys", "dia"], title: "Blood pressure", tool: "bp",
+    steps: [
+      "No exercise or caffeine in the last 30 minutes; empty your bladder first.",
+      "Sit still, arm supported at heart level, cuff on the bare upper arm.",
+      "Rest 5 minutes without talking, then take two readings one minute apart. The app averages them.",
+    ],
+  },
+  {
+    id: "sleep_h", fields: ["sleep_h"], title: "Sleep",
+    steps: ["How many hours did you actually sleep in your last sleep period? Not the time in your sleep station."],
+  },
+  {
+    id: "mood", fields: ["mood"], title: "Mood",
+    steps: ["How do you feel today? Pick the first answer that fits — there is no right answer."],
+  },
+  {
+    id: "reaction_ms", fields: ["reaction_ms"], title: "Reaction time", tool: "reaction",
+    steps: [
+      "Tap the circle as soon as it appears. Five tries; the result is your middle (median) time.",
+      "This short in-app test is not the validated NASA test: compare it only with your own results.",
+    ],
+  },
+];
+export const MOOD_WORDS = { 1: "Very low", 2: "Low", 3: "OK", 4: "Good", 5: "Very good" };
 
 // ===== Prompts: the model asks for a follow-up measurement (ids from the contract) =====
 // Each prompt reuses the How / Why / If abnormal of the indicators it asks for; a prompt for two
