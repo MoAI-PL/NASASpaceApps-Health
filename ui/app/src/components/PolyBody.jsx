@@ -1,15 +1,16 @@
 // Baseline — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 //
-// Holographic human figure: an athletic male body ("classical statue" proportions) in translucent
-// teal, with a realistic male face, a contour-following wire grid on the body and glowing joints.
+// Holographic human figure: an athletic body with classical proportions in translucent teal, a
+// calm mannequin head (soft light and shade, no drawn features), a contour-following wire grid
+// and glowing joints.
 // Our own geometry, drawn here in plain SVG: no 3D library, no third-party model or image.
 //
-// Anatomy: about 8.5 head-heights; broad shoulders (≈ 3 head widths), V-taper to a narrow waist,
-// muscular arms and legs, thick neck. The WHOLE figure — head, ears, neck, torso, arms, hands,
+// Anatomy: about 8.5 head-heights; shoulders two head-heights wide, V-taper to a narrow waist,
+// muscular arms and legs. The WHOLE figure — head, ears, neck, torso, arms, hands,
 // legs — is ONE smooth outline through anatomical landmarks (no seams). Volume comes from light:
-// rim light, soft shadows and highlights; the face is sculpted the same way and has no grid.
-// Layers, back to front: halo → bloom → body → face & hair → wire grid → organ glow → joints →
+// rim light, soft shadows and highlights; the head is shaped by light only.
+// Layers, back to front: halo → bloom → body (light and shade) → wire grid → organ glow → joints →
 // scan line → status shapes. Parts take their body system's status (colour + shape, never colour alone).
 
 import { useId } from "react";
@@ -38,20 +39,22 @@ const both = (list, mirror) => [...list, ...list.map(mirror)];
 const mirrorEllipse = ([x, ...r]) => [mx(x), ...r];
 
 // A-pose: the arms hang away from the body; everything on the arm turns about the shoulder.
-const PIVOT = [84, 80], TURN = (18 * Math.PI) / 180;
+// Arm points are drawn for a vertical arm, moved 6 units in (classical shoulder width: two
+// head-heights), then turned about the shoulder.
+const ARM_IN = 6, PIVOT = [90, 80], TURN = (18 * Math.PI) / 180;
 const arm = ([x, y, ...r]) => {
-  const dx = x - PIVOT[0], dy = y - PIVOT[1];
+  const dx = x + ARM_IN - PIVOT[0], dy = y - PIVOT[1];
   return [PIVOT[0] + dx * Math.cos(TURN) - dy * Math.sin(TURN), PIVOT[1] + dx * Math.sin(TURN) + dy * Math.cos(TURN), ...r];
 };
 const armPath = (d) => mapPath(d, arm);
 
 // ===== The outline (left half, from the top of the head down to the crotch) =====
 const HEAD_SIDE = [
-  [130, 8], [122.4, 9.2], [116.6, 12.6], [113.2, 18.6], [112.2, 26],         // skull
-  [109.6, 27.6], [108.2, 31.8], [108.6, 37.6], [110.4, 41.8], [112.8, 43],   // ear
-  [114.4, 46.6], [117, 50.2], [116.4, 54.6],                                 // jaw angle → neck
+  [130, 8], [123.2, 9.2], [118.2, 12.6], [115.2, 18.6], [114.2, 26],         // skull
+  [112, 27.8], [110.8, 31.8], [111.2, 37.4], [112.8, 41.6], [114.8, 42.8],   // ear
+  [116.2, 46.4], [118.6, 50.2], [118.4, 54.6],                               // jaw angle → neck
 ];
-const NECK_TRAPEZIUS = [[113.6, 58], [106, 63.4], [96, 67.8], [86.4, 72.4]];
+const NECK_TRAPEZIUS = [[117.6, 58.6], [109.2, 63.8], [99, 68.2], [90.4, 72.6]];
 const ARM_HAND = [
   [79, 76.6], [74.6, 83], [72.6, 91], [72.4, 100], [73.2, 110],                // deltoid
   [72.6, 118], [72.4, 128], [73.6, 138], [74.8, 146],                          // triceps, elbow
@@ -79,26 +82,15 @@ const TORSO_LEG = [
 const LEFT = [...HEAD_SIDE, ...NECK_TRAPEZIUS, ...ARM_HAND, ...TORSO_LEG];
 const BODY = smooth([...LEFT, ...mirrorPts(LEFT).reverse().slice(1, -1)], true);
 
-// ===== Hair: short, cut close at the sides =====
-const HAIR = smooth([
-  [112.2, 23], [112.8, 16.4], [116.4, 11.2], [122.4, 7.8], [130, 7], [137.6, 7.8], [143.6, 11.2], [147.2, 16.4], [147.8, 23],
-  [146, 21.4], [144.4, 17.4], [139.6, 15.6], [134.4, 15.4], [130, 16], [125.6, 15.4], [120.4, 15.6], [115.6, 17.4], [114, 21.4],
-], true);
-const HAIR_STRANDS = [
-  "M117 16 Q121 11 127 10", "M120 15.4 Q125 11.4 131 10.8", "M125 15.2 Q130 11.6 136 11.4",
-  "M130 15.6 Q135 12 140 12.6", "M135 15.2 Q140 12.8 144 14.6", "M114.4 19.6 Q116 14.6 121 12",
-].join("");
-
 // ===== Light and shade =====
 // Soft shadows: [cx, cy, rx, ry, opacity].
 const SHADE = [
   ...both([
-    [122.4, 30.4, 5.6, 3.2, 0.7],   // deep-set eye socket under the brow
-    [127.2, 36, 1.5, 5.4, 0.45],    // side of the nose
-    [127.4, 42.2, 1.3, 1, 0.55],    // nostril
-    [118.4, 41.4, 2.8, 4.6, 0.38],  // hollow under the cheekbone
+    [122.6, 30.6, 5, 2.6, 0.2],     // soft eye area
+    [127.6, 36.4, 1.4, 5, 0.18],    // side of the nose
+    [120, 41.6, 2.6, 4, 0.16],      // under the cheekbone
     [121.4, 52.4, 7.4, 2.4, 0.55],  // under the jaw, onto the neck
-    [112, 108, 17, 5, 0.5],         // under the pectoral
+    [113.6, 107.4, 15, 4.6, 0.5],   // under the pectoral
     [100.6, 118, 3.4, 13, 0.35],    // under the lat / serratus
     [122.8, 127.4, 5.6, 1.4, 0.32], // between abdominal blocks
     [122.8, 141.4, 5.6, 1.4, 0.3],
@@ -106,18 +98,15 @@ const SHADE = [
     [109, 170, 3, 12, 0.3],         // oblique edge
     [121.6, 263, 4, 6, 0.3],        // above the knee
   ], mirrorEllipse),
-  [CX, 44, 3.6, 1.2, 0.5],          // under the nose
-  [CX, 49.6, 3.4, 1.1, 0.45],       // under the lower lip
   [CX, 120, 1.4, 34, 0.32],         // centre line of the abdomen
   [CX, 218, 3, 14, 0.4],            // between the thighs
 ];
 // Soft highlights: [cx, cy, rx, ry, opacity].
 const SHEEN = [
   ...both([
-    [122, 26.4, 5.4, 1.7, 0.42],    // brow ridge
-    [119.2, 36.8, 3.6, 2.2, 0.4],   // cheekbone
-    [118.6, 47.6, 3, 1.8, 0.28],    // jaw
-    [113, 88, 15, 9, 0.34],         // pectoral
+    [122.6, 26.6, 5, 1.6, 0.26],    // brow
+    [120.6, 37, 3.4, 2.2, 0.3],     // cheekbone
+    [114.4, 89, 13, 8, 0.34],       // pectoral
     [123, 120.6, 5, 5, 0.22],       // abdominal blocks
     [123, 134.6, 5, 5, 0.2],
     [123, 148.6, 4.8, 5, 0.18],
@@ -127,29 +116,20 @@ const SHEEN = [
   ], mirrorEllipse),
   ...both([[78.4, 92, 6, 10, 0.36], [81, 124, 4.6, 11, 0.26], [79, 162, 4, 10, 0.22], [83.2, 206, 4.4, 7, 0.18]].map(arm), mirrorEllipse),
   [CX, 19.6, 8.4, 3.4, 0.3],        // forehead
-  [CX, 34.8, 1, 5.4, 0.55],         // bridge of the nose
-  [CX, 40.6, 2, 1.5, 0.55],         // tip of the nose
-  [CX, 48, 2.8, 0.9, 0.32],         // lower lip
-  [CX, 52.2, 4.4, 1.8, 0.34],       // square chin
-  [CX, 60, 2, 2.4, 0.3],            // Adam's apple
+  [CX, 35.4, 1, 5.6, 0.34],         // bridge of the nose
+  [CX, 41, 1.8, 1.4, 0.3],          // tip of the nose
+  [CX, 51.6, 4, 1.8, 0.28],         // chin
 ];
-// Fine lines: lids, nostrils, lips, ear; muscle edges on the body.
-const FACE_LINES = [
-  ...both(["M118.8 30.4 Q122.4 28.6 126 30.4", "M119.2 30.8 Q122.4 31.8 125.6 30.8", "M110 32.4 Q109.2 37 111.2 41"], mirrorPath),
-  "M126.4 42.6 Q128.2 43.8 130 43.2 Q131.8 43.8 133.6 42.6",
-  "M125 46.4 Q130 47.2 135 46.4", "M130 50.8 L130 52.4",
-];
-const BROWS = both(["M116.6 26.4 Q121.4 23.6 127.4 25.2 L127.2 26.6 Q121.6 25.4 117 27.6Z"], mirrorPath);
-const UPPER_LIP = "M124.8 46.2 Q127.6 45 130 45.6 Q132.4 45 135.2 46.2 Q130 46.9 124.8 46.2Z";
+// Muscle edges on the body.
 const MUSCLES = [
   ...both([
-    "M128 70 Q114 66 92 74", "M129.5 104 C122 117 104 116 97 99", "M92 74 Q88 86 94.6 99",
+    "M128 70 Q115 66.4 96 74", "M129.5 104 C122 116.4 105 115.6 98.6 99.4", "M96 74 Q93 86 97.6 99.4",
     "M118 120 Q123.6 122.2 129.4 120.6", "M117.8 134 Q123.6 136.2 129.4 134.6", "M118.4 148 Q123.8 150.2 129.4 148.6",
     "M116.6 112 Q113.8 140 118 176", "M104 160 Q114 180 127 196",
     "M102 112 L108 116", "M102.4 120 L108.4 124", "M103 128 L109 131",
     "M113 210 Q112.4 240 114 268", "M124 256 Q126.6 270 119 280", "M103 214 Q104 246 108 270",
     "M108 278 Q114.6 286 121 278", "M106 292 Q103.4 310 108 330", "M124 292 Q127.4 310 122 330",
-    "M118 50 Q122 60 127.6 68", "M116 58 Q108 63 97 66",
+    "M119.6 52 Q123 60 127.6 68", "M118 59 Q110 64 100.4 67.2",
   ], mirrorPath),
   ...both([armPath("M81.6 104 Q84 120 82.4 140"), armPath("M73.6 104 Q78 108.6 83.4 104"), armPath("M78 152 Q76 168 79 186")], mirrorPath),
   "M130 110 L130 182",
@@ -159,10 +139,10 @@ const MUSCLES = [
 const TUBES = [
   { id: "arm_l", system: "immune_temp", cols: 9, stations: [[84, 76, 8], [82.4, 88, 10.4], [82.6, 100, 11], [83, 112, 10.6], [83, 124, 10.6], [83.4, 136, 9.6], [83.2, 146, 8.8], [82.6, 156, 9], [82.6, 168, 8], [83, 180, 6.4], [83, 190, 5.6], [83.6, 200, 7.6], [84.4, 212, 7.6], [85, 222, 5.6]].map(arm) },
   { id: "leg_l", system: "immune_temp", cols: 10, stations: [[114, 204, 16.5], [114, 220, 15.5], [114.6, 236, 14], [115.4, 252, 12.6], [116, 266, 11], [116, 280, 10], [115.6, 292, 10.6], [115.4, 306, 10.8], [116.4, 322, 9.6], [116.6, 340, 7.6], [116.6, 356, 6.4], [116.4, 366, 6], [114.6, 378, 8.8], [115, 390, 8.6]] },
-  { id: "neck", system: "immune_temp", cols: 9, stations: [[CX, 55, 14.6], [CX, 60, 16.4], [CX, 66, 18]] },
+  { id: "neck", system: "immune_temp", cols: 9, stations: [[CX, 55, 12.6], [CX, 60, 14.4], [CX, 66, 17]] },
   { id: "belly", system: "metabolism", cols: 17, stations: [[CX, 140, 31.5], [CX, 150, 26.6], [CX, 160, 26.8], [CX, 172, 28], [CX, 184, 29.4], [CX, 196, 29.6], [CX, 205, 26]] },
-  { id: "chest", system: "heart", cols: 17, stations: [[CX, 62, 14], [CX, 68, 26], [CX, 74, 40], [CX, 82, 48], [CX, 92, 50], [CX, 100, 46], [CX, 112, 40], [CX, 126, 35], [CX, 140, 31.5]] },
-  { id: "head", system: "mind_sleep", cols: 13, stations: [[CX, 8, 2], [CX, 12, 10], [CX, 18, 15], [CX, 26, 18], [CX, 34, 18.2], [CX, 42, 17], [CX, 48, 15], [CX, 53, 9], [CX, 55, 4]], faint: true },
+  { id: "chest", system: "heart", cols: 17, stations: [[CX, 62, 13], [CX, 68, 24], [CX, 74, 36], [CX, 82, 43], [CX, 92, 45], [CX, 100, 42.5], [CX, 112, 40], [CX, 126, 35], [CX, 140, 31.5]] },
+  { id: "head", system: "mind_sleep", cols: 13, stations: [[CX, 2, 9], [CX, 9, 12.6], [CX, 18, 15], [CX, 26, 16.6], [CX, 34, 16.4], [CX, 42, 15.2], [CX, 48, 13.4], [CX, 53, 8.4], [CX, 55, 4]], faint: true },
 ];
 const PARTS = [
   ...TUBES,
@@ -209,7 +189,7 @@ const JOINTS = both([arm([80, 86]), arm([83.2, 148]), arm([83, 190]), [101, 190]
 // ===== Status =====
 /** Soft organ glow when a system is away from normal: [cx, cy, rx, ry]. Immune & temperature is
  *  whole-body, so its limbs are tinted instead. */
-const ZONE_GLOW = { mind_sleep: [CX, 30, 15, 18], heart: [122, 100, 22, 17], metabolism: [CX, 160, 19, 20] };
+const ZONE_GLOW = { mind_sleep: [CX, 30, 13, 17], heart: [122, 100, 22, 17], metabolism: [CX, 160, 19, 20] };
 /** Status shapes (beside the head, on the chest, on the abdomen, on the left calf). */
 const MARKER_AT = { mind_sleep: [166, 24], heart: [121, 101], metabolism: [CX, 160], immune_temp: [113, 300] };
 
@@ -291,20 +271,6 @@ export default function PolyBody({ systems, selected = null, onSelect, width = 2
         <g filter={url("soft")} fill="#c8f6ff">
           {SHEEN.map(([x, y, rx, ry, o], i) => <ellipse key={i} cx={x} cy={y} rx={rx} ry={ry} opacity={o} />)}
         </g>
-        {/* Face: brows, eyes (dark iris, small catch-light), upper lip, fine lines. */}
-        <path d={BROWS.join("")} fill="#a9ecff" opacity="0.5" filter={url("hair")} />
-        {[122.4, mx(122.4)].map((x) => (
-          <g key={x}>
-            <path d={x < CX ? "M118.8 30.4 Q122.4 28.6 126 30.4 Q122.4 31.8 118.8 30.4Z" : mirrorPath("M118.8 30.4 Q122.4 28.6 126 30.4 Q122.4 31.8 118.8 30.4Z")}
-                  fill="#c8f6ff" opacity="0.22" />
-            <circle cx={x} cy="30.4" r="1.1" fill="#03213d" opacity="0.75" />
-            <circle cx={x + 0.4} cy="30" r="0.28" fill="#e6fbff" opacity="0.7" />
-          </g>
-        ))}
-        <path d={UPPER_LIP} fill="#03213d" opacity="0.32" />
-        <path d={FACE_LINES.join("")} fill="none" stroke="#bff3ff" strokeWidth={0.75 * k} strokeLinecap="round" filter={url("hair")} opacity="0.55" />
-        <path d={HAIR} fill="#0b4f7a" opacity="0.55" />
-        <path d={HAIR_STRANDS} fill="none" stroke="#9fe9ff" strokeWidth={0.6 * k} opacity="0.45" />
         <path d={MUSCLES.join("")} fill="none" stroke="#9aeeff" strokeWidth={1.1 * k} strokeLinecap="round" filter={url("hair")} opacity="0.36" />
       </g>
 
