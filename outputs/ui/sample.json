@@ -162,6 +162,15 @@
           1320
         ],
         "source": "NASA ASCEND paper: Earth–Mars one-way delays vary from 0 to 22 minutes over a mission. https://ntrs.nasa.gov/api/citations/20220013418/downloads/ASCEND-Communication%20Delays%2C%20Disruptions%2C%20and%20Blackouts%20for%20Crewed%20Mars%20Missions.pdf"
+      },
+      "mars_rover": {
+        "name": "Mars surface rover",
+        "one_way_delay_text": "up to ~22 min",
+        "one_way_delay_s": [
+          0,
+          1320
+        ],
+        "source": "NASA ASCEND paper: Earth–Mars one-way delays vary from 0 to 22 minutes over a mission (a pressurized rover on Mars reaches Earth through the surface base or an orbiter; that relay is a team assumption). https://ntrs.nasa.gov/api/citations/20220013418/downloads/ASCEND-Communication%20Delays%2C%20Disruptions%2C%20and%20Blackouts%20for%20Crewed%20Mars%20Missions.pdf"
       }
     },
     "default_environment": "mars_transit",
