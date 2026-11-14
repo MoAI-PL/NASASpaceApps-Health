@@ -1,26 +1,27 @@
 // Baseline — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 //
-// Polygonal "blueprint" body figure. Our own geometry, generated here in plain SVG: no 3D library,
-// no third-party model or image. The body is built from anatomical cross-sections (about eight
-// head-heights tall, arms out to the sides). Each part is a low-poly tube: rings of points along a
-// centre line, joined into triangles. Columns crowd towards the outline (as a round body does in
-// a front view), so the flat drawing reads as a 3D volume. Edges become glowing lines, vertices
-// become nodes. Parts take their body system's status: nominal parts stay wire teal, parts away
-// from normal light up in the status colour and carry the status shape (never colour alone).
+// Holographic body figure: a glowing, rim-lit blue body with muscle definition and a polygonal
+// wire mesh on top. Our own geometry, generated here in plain SVG: no 3D library, no third-party
+// model or image. The body is built from anatomical cross-sections (about eight head-heights,
+// relaxed pose, open hands). Each part is a low-poly tube: rings of points along a centre line,
+// joined into triangles; columns crowd towards the outline, as a round body does in a front view.
+// Layers, back to front: halo → outer bloom → body fill → inner rim light → muscle lines and soft
+// highlights → wire mesh → scan line → status shapes. Parts take their body system's status:
+// parts away from normal light up in the status colour and carry the status shape.
 
 import { useId } from "react";
 import { STATUS_COLOR, StatusIcon } from "./icons.jsx";
 
-// ===== Geometry (viewBox 0 0 360 405, figure centred on x = 180) =====
-const W = 360, H = 405, CX = 180;
+// ===== Geometry (viewBox 0 0 300 405, figure centred on x = 150) =====
+const W = 300, H = 405, CX = 150;
 
 // Stations: [x, y, half-width] along each part's centre line, top to bottom.
 const HEAD = [
   [CX, 12, 2.5], [CX, 15, 8], [CX, 20, 13], [CX, 27, 16.5], [CX, 35, 18], [CX, 42, 17.5],
   [CX, 47, 16], [CX, 52, 14], [CX, 56, 11.5], [CX, 59.5, 7.5],
 ];
-const NECK = [[CX, 54, 9.5], [CX, 64, 10.5], [CX, 73, 13]];
+const NECK = [[CX, 54, 9.5], [CX, 63, 10.5], [CX, 71, 13]];
 // Trapezius slope → shoulders → chest; the heart zone ends below the ribs.
 const CHEST = [
   [CX, 70, 13], [CX, 74, 22], [CX, 78, 31], [CX, 83, 37.5], [CX, 90, 41], [CX, 98, 42.5],
@@ -35,9 +36,9 @@ const BELLY = [
 /** Arm stations from the shoulder joint along a straight line: [distance, half-width]. */
 const ARM_PROFILE = [
   [-4, 9], [2, 13.5], [10, 14], [22, 12], [38, 10.5], [52, 9.5], [64, 7.8], [72, 8.6], [84, 8.2],
-  [100, 6.6], [114, 5], [119, 5.6], [127, 7.4], [137, 7.6], [146, 6.4], [155, 5], [162, 3.4], [166, 1.4],
+  [100, 6.6], [114, 5], [119, 6.2], [127, 8.6], [137, 9], [146, 7.6], [155, 5.6], [162, 3.6], [166, 1.4],
 ];
-const SHOULDER = [CX - 40, 86], ARM_ANGLE = (36 * Math.PI) / 180; // 36° below horizontal
+const SHOULDER = [CX - 40, 86], ARM_ANGLE = (62 * Math.PI) / 180; // relaxed: 62° below horizontal
 const ARM = ARM_PROFILE.map(([t, w]) => [SHOULDER[0] - Math.cos(ARM_ANGLE) * t, SHOULDER[1] + Math.sin(ARM_ANGLE) * t, w]);
 
 // Thigh → knee → calf → ankle → foot (front view, feet turned slightly out).
@@ -48,8 +49,9 @@ const LEG = [
   [CX - 26.5, 372, 10.2], [CX - 28.5, 380, 12.4], [CX - 30, 385, 10],
 ];
 const mirror = (stations) => stations.map(([x, y, w]) => [2 * CX - x, y, w]);
+const mirrorPath = (d) => d.replace(/(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)/g, (_, x, y) => `${(2 * CX - +x).toFixed(1)} ${y}`);
 
-/** Body parts: geometry, columns across, and the body system whose status they show. */
+/** Body parts (mesh + tap areas): geometry, columns across, the body system they show. */
 const PARTS = [
   { id: "arm_l", system: "immune_temp", stations: ARM, cols: 7 },
   { id: "arm_r", system: "immune_temp", stations: mirror(ARM), cols: 7 },
@@ -60,6 +62,43 @@ const PARTS = [
   { id: "chest", system: "heart", stations: CHEST, cols: 13 },
   { id: "head", system: "mind_sleep", stations: HEAD, cols: 9 },
 ];
+
+/** Rim light outlines: whole torso in one piece; caps that join another part are left open. */
+const RIMS = [
+  { stations: HEAD, mode: "closed" },
+  { stations: NECK, mode: "sides" },
+  { stations: [...CHEST, ...BELLY.slice(1)], mode: "open-top" },
+  { stations: ARM, mode: "open-top" },
+  { stations: mirror(ARM), mode: "open-top" },
+  { stations: LEG, mode: "open-top" },
+  { stations: mirror(LEG), mode: "open-top" },
+];
+
+// Muscle definition (left half, mirrored): clavicle, pectoral, abdominal edge, iliac "V",
+// deltoid, quadriceps, kneecap, calf; plus the centre line and the abdominal segments.
+const MUSCLES_LEFT = [
+  "M145 75 Q131 70 114 79",
+  "M149 104 C140 118 121 119 110 101",
+  "M133 122 Q129 150 136 183",
+  "M117 168 Q128 190 145 205",
+  "M121 82 Q111 90 109 110",
+  "M120 206 Q125 232 129 258",
+  "M121 262 Q128 271 135 262",
+  "M136 285 Q138 300 134 318",
+  "M135 132 Q142 135 149 133", "M135 147 Q142 150 149 148", "M136 162 Q142 165 149 163",
+];
+const MUSCLES = [
+  ...MUSCLES_LEFT,
+  ...MUSCLES_LEFT.map(mirrorPath),
+  "M150 84 L150 128", "M150 136 L150 186",
+];
+// Soft highlights on the rounded forms: [cx, cy, rx, ry, opacity].
+const SHEEN_LEFT = [[130, 101, 14, 8, 0.28], [112, 92, 7, 11, 0.3], [128, 226, 7, 20, 0.2], [143, 150, 5, 14, 0.14], [92, 132, 4, 12, 0.18]];
+const SHEEN = [...SHEEN_LEFT, ...SHEEN_LEFT.map(([x, ...r]) => [2 * CX - x, ...r]), [146, 25, 8, 6, 0.3]];
+
+/** Soft glow where an organ system sits, shown when it is away from normal: [cx, cy, rx, ry].
+ *  Immune & temperature is whole-body, so its limbs are tinted instead. */
+const ZONE_GLOW = { mind_sleep: [CX, 34, 17, 20], heart: [CX - 7, 104, 26, 22], metabolism: [CX, 168, 25, 24] };
 
 /** Where each system's status shape sits when it is away from normal. */
 const MARKER_AT = { mind_sleep: [CX, 36], heart: [CX, 106], metabolism: [CX, 172], immune_temp: [CX - 23, 300] };
@@ -101,14 +140,15 @@ function rings(stations, cols, seed, step) {
   });
 }
 
+const pt = ([x, y]) => `${x.toFixed(1)} ${y.toFixed(1)}`;
+
 /** Triangulated mesh of one part: edge path, node path, outline polygon. */
 function mesh(part, seed, step) {
   const R = rings(part.stations, part.cols, seed, step);
   const edges = new Set(), segs = [];
-  const p = ([x, y]) => `${x.toFixed(1)} ${y.toFixed(1)}`;
   const add = (a, b) => {
-    const k = [p(a), p(b)].sort().join("|");
-    if (!edges.has(k)) { edges.add(k); segs.push(`M${p(a)}L${p(b)}`); }
+    const k = [pt(a), pt(b)].sort().join("|");
+    if (!edges.has(k)) { edges.add(k); segs.push(`M${pt(a)}L${pt(b)}`); }
   };
   R.forEach((ring, i) => {
     ring.forEach((v, j) => {
@@ -126,9 +166,19 @@ function mesh(part, seed, step) {
     ...part,
     path: segs.join(""),
     // Nodes as zero-length round-capped segments: one path element instead of hundreds of circles.
-    nodes: R.flat().map((v) => `M${p(v)}h0.01`).join(""),
-    outline: [...left, ...right].map(p).join(" "),
+    nodes: R.flat().map((v) => `M${pt(v)}h0.01`).join(""),
+    outline: [...left, ...right].map(pt).join(" "),
   };
+}
+
+/** Rim outline path of a part: closed, open at the top cap, or the two sides only. */
+function rim({ stations, mode }) {
+  const R = rings(stations, 2, 0, 4);
+  const left = R.map((r) => r[0]), right = R.map((r) => r[1]);
+  const line = (pts) => `M${pts.map(pt).join("L")}`;
+  if (mode === "sides") return line(left) + line(right);
+  const loop = [...left, ...right.reverse()];
+  return mode === "closed" ? `${line(loop)}Z` : line(loop);
 }
 
 /** Meshes at two levels of detail: fine for the large figure, lighter for small ones. */
@@ -136,17 +186,18 @@ const MESHES = {
   fine: PARTS.map((part, i) => mesh(part, (i + 1) * 101, 6.5)),
   light: PARTS.map((part, i) => mesh({ ...part, cols: Math.max(5, part.cols - 4) }, (i + 1) * 101, 10)),
 };
+const RIM_PATH = RIMS.map(rim).join("");
+const SILHOUETTE = MESHES.fine.map((m) => m.outline);
 
 // ===== Component =====
 /**
- * Polygonal body. `systems`: status per body system; `selected`: highlighted system;
- * `onSelect(system)`: tap on a part; `width`: rendered width in px (height follows the viewBox).
+ * Holographic body. `systems`: status per body system; `selected`: highlighted system;
+ * `onSelect(system)`: tap on a part; `width`: largest rendered width in px (scales down to fit).
  */
 export default function PolyBody({ systems, selected = null, onSelect, width = 300, label }) {
   const uid = useId().replace(/[^a-zA-Z0-9]/g, ""); // unique ids if two figures share a page
   const id = (name) => `${name}-${uid}`;
   const url = (name) => `url(#${id(name)})`;
-  const colour = (system) => (systems[system] === "green" ? "var(--body-wire)" : STATUS_COLOR[systems[system]]);
   const meshes = width >= 240 ? MESHES.fine : MESHES.light;
   const k = W / width; // viewBox units per screen pixel: keeps lines about the same on screen
 
@@ -154,55 +205,98 @@ export default function PolyBody({ systems, selected = null, onSelect, width = 3
     <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={label} className="block mx-auto poly-body"
          style={{ width: "100%", maxWidth: width, height: "auto" }}>
       <defs>
-        <pattern id={id("grid")} width="24" height="24" patternUnits="userSpaceOnUse">
-          <path d="M24 0H0V24" fill="none" stroke="rgb(120 220 230 / 0.06)" strokeWidth="1" />
-        </pattern>
-        <radialGradient id={id("halo")} cx="0.5" cy="0.45" r="0.55">
-          <stop offset="0" stopColor="rgb(70 120 190 / 0.32)" />
-          <stop offset="1" stopColor="rgb(70 120 190 / 0)" />
+        <radialGradient id={id("halo")} cx="0.5" cy="0.42" r="0.6">
+          <stop offset="0" stopColor="rgb(40 140 255 / 0.5)" />
+          <stop offset="0.55" stopColor="rgb(30 90 220 / 0.16)" />
+          <stop offset="1" stopColor="rgb(30 90 220 / 0)" />
+        </radialGradient>
+        {/* One body-wide gradient (user space), so parts join without seams. */}
+        <radialGradient id={id("skin")} gradientUnits="userSpaceOnUse" cx={CX} cy="150" r="230">
+          <stop offset="0" stopColor="#1650c4" />
+          <stop offset="0.5" stopColor="#0d3591" />
+          <stop offset="1" stopColor="#081f5c" />
         </radialGradient>
         <radialGradient id={id("platform")} cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0" stopColor="rgb(70 214 224 / 0.5)" />
-          <stop offset="0.6" stopColor="rgb(70 214 224 / 0.1)" />
-          <stop offset="1" stopColor="rgb(70 214 224 / 0)" />
+          <stop offset="0" stopColor="rgb(90 200 255 / 0.55)" />
+          <stop offset="0.6" stopColor="rgb(90 200 255 / 0.1)" />
+          <stop offset="1" stopColor="rgb(90 200 255 / 0)" />
         </radialGradient>
         <linearGradient id={id("scan")} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="rgb(150 240 245 / 0)" />
-          <stop offset="0.85" stopColor="rgb(150 240 245 / 0.2)" />
-          <stop offset="1" stopColor="rgb(220 255 255 / 0.55)" />
+          <stop offset="0" stopColor="rgb(170 230 255 / 0)" />
+          <stop offset="0.85" stopColor="rgb(170 230 255 / 0.18)" />
+          <stop offset="1" stopColor="rgb(230 248 255 / 0.5)" />
         </linearGradient>
-        <filter id={id("glow")} x="-10%" y="-10%" width="120%" height="120%">
-          <feGaussianBlur stdDeviation={1.6 * k} result="b" />
-          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+        <filter id={id("bloom")} x="-30%" y="-15%" width="160%" height="130%">
+          <feGaussianBlur stdDeviation={7 * k} />
+        </filter>
+        <filter id={id("soft")} x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation={2.4 * k} />
+        </filter>
+        <filter id={id("hair")} x="-10%" y="-10%" width="120%" height="120%">
+          <feGaussianBlur stdDeviation={0.7 * k} />
         </filter>
         <clipPath id={id("clip")}>
-          {meshes.map((m) => <polygon key={m.id} points={m.outline} />)}
+          {SILHOUETTE.map((o, i) => <polygon key={i} points={o} />)}
         </clipPath>
       </defs>
 
-      {/* Soft halo, blueprint grid and the lit platform under the feet. */}
+      {/* Light behind the figure and the lit platform under the feet. */}
       <rect x="0" y="0" width={W} height={H} fill={url("halo")} />
-      <rect x="0" y="0" width={W} height={H} fill={url("grid")} />
-      <ellipse cx={CX} cy="392" rx="96" ry="11" fill={url("platform")} />
-      <ellipse cx={CX} cy="392" rx="66" ry="7" fill="none" stroke="rgb(110 225 235 / 0.45)" strokeWidth={0.8 * k} />
-      <ellipse cx={CX} cy="392" rx="96" ry="11" fill="none" stroke="rgb(110 225 235 / 0.18)" strokeWidth={0.8 * k} />
+      <ellipse cx={CX} cy="392" rx="92" ry="11" fill={url("platform")} />
+      <ellipse cx={CX} cy="392" rx="62" ry="7" fill="none" stroke="rgb(120 210 255 / 0.45)" strokeWidth={0.8 * k} />
+      <ellipse cx={CX} cy="392" rx="92" ry="11" fill="none" stroke="rgb(120 210 255 / 0.18)" strokeWidth={0.8 * k} />
 
-      {/* Parts: tinted surface (also the tap area), glowing wire edges, nodes and a bright outline. */}
-      {meshes.map((m) => {
-        const off = systems[m.system] !== "green", isSel = selected === m.system, lit = off || isSel;
-        return (
-          <g key={m.id} onClick={onSelect ? () => onSelect(m.system) : undefined}
-             style={{ cursor: onSelect ? "pointer" : "default", color: colour(m.system) }}>
-            <polygon points={m.outline} fill="currentColor" fillOpacity={off ? 0.09 : 0.035} stroke="none" />
-            <path d={m.path} fill="none" stroke="currentColor" strokeWidth={(lit ? 0.75 : 0.55) * k}
-                  strokeOpacity={lit ? 0.95 : 0.62} strokeLinejoin="round" filter={url("glow")} />
-            <path d={m.nodes} fill="none" stroke="currentColor" strokeWidth={(lit ? 1.9 : 1.5) * k}
-                  strokeLinecap="round" strokeOpacity={lit ? 1 : 0.85} />
-            <polygon points={m.outline} fill="none" stroke="currentColor" strokeWidth={(isSel ? 1.6 : 0.9) * k}
-                     strokeOpacity={lit ? 1 : 0.8} strokeLinejoin="round" />
-          </g>
-        );
-      })}
+      {/* Outer bloom: the silhouette, blurred, glowing into the background. */}
+      <g filter={url("bloom")} opacity="0.65" pointerEvents="none">
+        {SILHOUETTE.map((o, i) => <polygon key={i} points={o} fill="#2f8cff" />)}
+      </g>
+
+      {/* Body fill (also the tap areas, one per part); off-normal parts tinted in their status colour. */}
+      {meshes.map((m) => (
+        <g key={m.id} onClick={onSelect ? () => onSelect(m.system) : undefined} style={{ cursor: onSelect ? "pointer" : "default" }}>
+          <polygon points={m.outline} fill={url("skin")} />
+          {systems[m.system] !== "green" && !ZONE_GLOW[m.system] && (
+            <polygon points={m.outline} fill={STATUS_COLOR[systems[m.system]]} fillOpacity="0.32" />
+          )}
+        </g>
+      ))}
+
+      {/* Inside the body only: rim light along the outline, muscle lines and soft highlights. */}
+      <g clipPath={url("clip")} pointerEvents="none">
+        <path d={RIM_PATH} fill="none" stroke="#7fd4ff" strokeWidth={9 * k} strokeLinejoin="round" filter={url("soft")} opacity="0.85" />
+        <path d={RIM_PATH} fill="none" stroke="#c9f0ff" strokeWidth={1.6 * k} strokeLinejoin="round" opacity="0.9" />
+        <path d={MUSCLES.join("")} fill="none" stroke="#8fdcff" strokeWidth={1.4 * k} strokeLinecap="round"
+              filter={url("hair")} opacity="0.55" />
+        <g filter={url("soft")}>
+          {SHEEN.map(([x, y, rx, ry, o], i) => <ellipse key={i} cx={x} cy={y} rx={rx} ry={ry} fill="#bfeaff" opacity={o} />)}
+        </g>
+        {/* Organ glow in the status colour (heart, abdomen, head) when away from normal. */}
+        <g filter={url("bloom")}>
+          {Object.entries(ZONE_GLOW).map(([system, [x, y, rx, ry]]) => systems[system] !== "green" && (
+            <ellipse key={system} cx={x} cy={y} rx={rx} ry={ry} fill={STATUS_COLOR[systems[system]]} opacity="0.9" />
+          ))}
+        </g>
+      </g>
+
+      {/* Polygonal wire mesh on top: faint on nominal parts, bright on selected and off-normal ones. */}
+      <g pointerEvents="none">
+        {meshes.map((m) => {
+          const off = systems[m.system] !== "green", lit = off || selected === m.system;
+          const colour = off ? STATUS_COLOR[systems[m.system]] : "var(--body-wire)";
+          const fade = off && ZONE_GLOW[m.system] && selected !== m.system ? 0.6 : 1; // the organ glow carries it
+          return (
+            <g key={m.id} style={{ color: colour }}>
+              <path d={m.path} fill="none" stroke="currentColor" strokeWidth={(lit ? 0.6 : 0.45) * k}
+                    strokeOpacity={(lit ? 0.75 : 0.32) * fade} strokeLinejoin="round" />
+              <path d={m.nodes} fill="none" stroke="currentColor" strokeWidth={(lit ? 1.6 : 1.2) * k}
+                    strokeLinecap="round" strokeOpacity={(lit ? 0.9 : 0.45) * fade} />
+              {selected === m.system && (
+                <polygon points={m.outline} fill="none" stroke="var(--color-ink)" strokeWidth={1.4 * k} strokeOpacity="0.85" />
+              )}
+            </g>
+          );
+        })}
+      </g>
 
       {/* A slow scan line moves down the body (off when the system asks for reduced motion). */}
       <g clipPath={url("clip")} pointerEvents="none">
