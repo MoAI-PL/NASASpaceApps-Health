@@ -11,7 +11,7 @@ import { BpTool, PulseTool, ReactionTest } from "../components/MeasureTools.jsx"
 import { SourceLink, TapButton, Text } from "../components/ui.jsx";
 
 // ===== Guided check-in: one measurement at a time, the app times and calculates =====
-// Steps follow a morning routine (content/texts.js GUIDE). Each step shows its short how-to
+// Steps follow a post-sleep routine on a spacecraft day (content/texts.js GUIDE). Each step shows its short how-to
 // first, a large input or a measuring helper, the comparison with the personal normal and, on
 // request, why it matters and what to do if abnormal. The last step summarises and saves.
 

@@ -68,10 +68,13 @@ export const EVENT_TEXT = {
 // ===== Check-in cards: one per indicator (ids from meta.features) =====
 // How = how to measure, Why = why it matters in space, If abnormal = what to do when the value is
 // off your normal. Paraphrased from SOURCES (listed per card).
+// Written for spaceflight: no "morning", "bed" or "sitting" assumptions. Earth guidance (AHA,
+// MedlinePlus) is adapted to a spacecraft day — "after your sleep period" instead of "in the
+// morning", "anchor yourself" in weightlessness — without changing what the source says.
 // `range`: input plausibility limits that catch typos (e.g. 1200 instead of 120). Team assumption,
 // deliberately wide; NOT clinical thresholds and never shown as medical advice.
 const BP = {
-  how: "Sit and rest quietly for 5 minutes first: no exercise or caffeine in the last 30 minutes, no talking. Upper-arm cuff on bare skin, arm supported at heart level. Take two readings one minute apart, at the same time every day.",
+  how: "No exercise or caffeine in the last 30 minutes. Keep still and quiet for 5 minutes first — in weightlessness, anchor your feet; with gravity, sit. Cuff on the bare upper arm, arm supported at heart level. Take two readings one minute apart, at the same point of your daily schedule.",
   why: "Weightlessness shifts body fluids towards the head and changes how the heart and blood vessels work; this can lead to heart rhythm problems and low blood pressure with fainting.",
   ifAbnormal: "One high reading is not an emergency: measure again. Above 180/120 mmHg, wait one minute and measure again; if it stays that high, tell the crew medical officer at once — with chest pain or shortness of breath, open Emergency.",
   source: ["aha_bp_home", "hrp_cardio", "hrp_gravity"],
@@ -80,23 +83,23 @@ export const CHECKIN = {
   sys: { ...BP, step: 1, range: [60, 250] },
   dia: { ...BP, step: 1, range: [30, 150] },
   hr: {
-    how: "Measure in the morning after sleep, before getting up or drinking coffee. Two fingertips (not the thumb) on the thumb side of the inner wrist; count the beats for 30 seconds and multiply by 2.",
-    why: "Spaceflight changes the heart and blood vessels and can bring heart rhythm problems. On Earth, a higher resting heart rate goes with lower physical fitness.",
+    how: "Measure right after your sleep period, while still resting in your sleep station and before caffeine or exercise. Two fingertips (not the thumb) on the thumb side of the inner wrist; count the beats for 30 seconds and multiply by 2.",
+    why: "Spaceflight changes the heart and blood vessels and can bring heart rhythm problems. A higher resting heart rate goes with lower physical fitness.",
     ifAbnormal: "Re-measure at rest. For most adults 60–100 beats per minute is normal at rest, but compare with your own normal. With chest discomfort, shortness of breath or light-headedness, open Emergency.",
     source: ["aha_heart_rate", "hrp_cardio", "aha_heart_attack"],
     step: 1, range: [25, 220],
   },
   glucose: {
-    how: "Measure fasting: nothing to eat for at least 8 hours before the test.",
+    how: "Measure fasting: nothing to eat for at least 8 hours — easiest right after your sleep period, before your first meal.",
     why: "Spaceflight has been linked to reduced insulin sensitivity and changes in glucose tolerance, and the space diet must keep the crew well fed for years without resupply.",
-    ifAbnormal: "A normal fasting value is 70–99 mg/dL. Re-measure fasting the next morning and tell the crew medical officer if it stays outside your normal. If someone feels faint from low blood sugar, give something sweet only once they are conscious.",
+    ifAbnormal: "A normal fasting value is 70–99 mg/dL. Re-measure fasting after your next sleep period and tell the crew medical officer if it stays outside your normal. If someone feels faint from low blood sugar, give something sweet only once they are conscious.",
     source: ["mlp_glucose", "tobin_2002", "hrp_nutrition", "mlp_unconscious"],
     step: 1, range: [20, 600],
   },
   temp: {
-    how: "Measure at the same time each day. Body temperature is lowest in the early morning and changes during the day.",
+    how: "Body temperature changes over the day and is lowest early in your day, so measure at the same point of your schedule each day — right after your sleep period.",
     why: "Radiation, weightlessness and poor sleep can weaken the immune system and wake up dormant viruses, and germs pass more easily between people in a closed habitat.",
-    ifAbnormal: "Above 38 °C usually means fever from an infection or illness. Re-measure in the evening and tell the crew medical officer about a fever or any new rash.",
+    ifAbnormal: "Above 38 °C usually means fever from an infection or illness. Re-measure before your next sleep period and tell the crew medical officer about a fever or any new rash.",
     source: ["mlp_temp", "hrp_immune", "hrp_closed_env"],
     step: 0.1, range: [32, 43],
   },
@@ -115,24 +118,25 @@ export const CHECKIN = {
     step: 1, scale: [1, 2, 3, 4, 5],
   },
   reaction_ms: {
-    how: "Do the short reaction test at the same time each day: tap as soon as the signal appears. Enter your average reaction time.",
+    how: "Use the reaction test in the guided check-in, at the same point of your schedule each day: tap as soon as the circle appears. The result is the median of five tries.",
     why: "A reaction-time test has been used on the space station as an objective measure of fatigue from sleep loss and workload.",
-    ifAbnormal: "Slower than your normal can mean fatigue. Check your sleep and workload, and re-test tomorrow; tell the crew medical officer if it stays slow.",
+    ifAbnormal: "Slower than your normal can mean fatigue. Check your sleep and workload, and re-test after your next sleep period; tell the crew medical officer if it stays slow.",
     source: ["nasa_pvt", "hrp_sleep"],
     step: 1, range: [100, 2000],
   },
 };
 
-// ===== Guided check-in: one measurement at a time, in the order of a morning routine =====
-// Order follows the sources: resting heart rate before getting up (AHA), fasting glucose before
-// eating (MedlinePlus), blood pressure after 5 minutes of quiet rest (AHA). `tool` picks the
+// ===== Guided check-in: one measurement at a time, in the order of a post-sleep routine =====
+// Order follows the sources, adapted to a spacecraft day: resting heart rate while still resting
+// after the sleep period (AHA), fasting glucose before the first meal (MedlinePlus), blood
+// pressure after 5 minutes of quiet rest (AHA). `tool` picks the
 // helper on the step: a 30-second pulse timer, the rest timer with two readings, the in-app
 // reaction test. Short steps are condensed from the CHECKIN cards and share their sources.
 export const GUIDE = [
   {
     id: "hr", fields: ["hr"], title: "Resting heart rate", tool: "pulse",
     steps: [
-      "Do this in the morning, before getting up or drinking coffee.",
+      "Do this right after your sleep period, still resting in your sleep station — before caffeine or exercise.",
       "Put two fingertips (not the thumb) on the thumb side of your inner wrist.",
       "Press Start and count the beats until the timer ends. The app does the maths.",
     ],
@@ -140,14 +144,14 @@ export const GUIDE = [
   {
     id: "temp", fields: ["temp"], title: "Body temperature",
     steps: [
-      "Measure at the same time each day — temperature is lowest in the early morning.",
+      "Measure at the same point of your schedule each day: right after your sleep period.",
       "Enter the reading from the thermometer.",
     ],
   },
   {
     id: "glucose", fields: ["glucose"], title: "Fasting blood glucose",
     steps: [
-      "Measure fasting: nothing to eat for at least 8 hours.",
+      "Measure before your first meal: nothing to eat for at least 8 hours.",
       "Enter the reading from the glucose meter.",
     ],
   },
@@ -155,7 +159,7 @@ export const GUIDE = [
     id: "bp", fields: ["sys", "dia"], title: "Blood pressure", tool: "bp",
     steps: [
       "No exercise or caffeine in the last 30 minutes; empty your bladder first.",
-      "Sit still, arm supported at heart level, cuff on the bare upper arm.",
+      "Keep still: in weightlessness anchor your feet, with gravity sit. Arm supported at heart level, cuff on the bare upper arm.",
       "Rest 5 minutes without talking, then take two readings one minute apart. The app averages them.",
     ],
   },
@@ -196,7 +200,7 @@ export const PROMPTS = {
     title: "Do the reaction test and mood check-in",
     ...merge(["Reaction test", CHECKIN.reaction_ms], ["Mood", CHECKIN.mood]),
   },
-  repeat_temperature_evening: { title: "Re-measure body temperature this evening", ...CHECKIN.temp },
+  repeat_temperature_evening: { title: "Re-measure body temperature before your next sleep", ...CHECKIN.temp },
 };
 
 // ===== Body systems: why each matters in space (ids from meta.systems) =====
@@ -303,7 +307,7 @@ export const EMERGENCY = {
       "Shout for the whole crew and the crew medical officer. Send someone for the defibrillator (AED).",
       "Start chest compressions at once: hard and fast in the centre of the chest, about 5 cm deep, 100–120 per minute, letting the chest rise fully after each push.",
       "In weightlessness: begin with the microgravity technique you trained (Evetts-Russomano); if compressions are not effective, switch to the reverse bear hug. Move to the handstand method once the person is strapped to the medical restraint.",
-      "On the Moon or Mars: lay the person on their back on a firm, flat surface.",
+      "With gravity (Moon or Mars): lay the person on their back on a firm, flat surface.",
       "Give 30 compressions, then 2 rescue breaths if trained; keep pauses under 10 seconds.",
       "Use the AED as soon as it arrives and follow its voice prompts. In weightlessness, shock only a person who is strapped down on an electrically isolated surface.",
       "Swap the person doing compressions about every 2 minutes. Keep going until they recover or the crew medical officer takes over.",
@@ -315,12 +319,13 @@ export const EMERGENCY = {
     title: "Unresponsive but breathing",
     steps: [
       "Call the crew medical officer now. Do not leave the person alone.",
-      "If you do not suspect a neck or spine injury, turn them onto their side (recovery position) and tilt the head back gently to keep the airway open.",
-      "If you suspect a spine injury, keep them where they are as long as they keep breathing.",
+      "Keep the airway open: tilt the head back gently.",
+      "In weightlessness: strap the person to the medical restraint so they do not drift.",
+      "With gravity (Moon or Mars): if you do not suspect a neck or spine injury, turn them onto their side (recovery position). If you suspect a spine injury, do not move them while they keep breathing.",
       "Check breathing and pulse often. If breathing stops, start CPR.",
-      "Keep them warm. Give nothing to eat or drink, and no pillow under the head.",
+      "Keep them warm. Give nothing to eat or drink.",
     ],
-    source: "mlp_unconscious",
+    source: ["mlp_unconscious", "cpr_microgravity"],
     then: [{ label: "Breathing stopped → CPR", next: "cpr", status: "red" }],
   },
   symptom: {
@@ -350,7 +355,7 @@ export const EMERGENCY = {
       "Loosen anything tight around the neck and chest.",
       "Help them use a medicine already prescribed for them, such as an inhaler, from the medical kit.",
       "Keep watching breathing and pulse. Quieter breathing (wheezing stops) does not always mean it is better.",
-      "Give nothing to eat or drink, and no pillow under the head.",
+      "Give nothing to eat or drink.",
       "Check the cabin CO₂ reading: too much CO₂ can cause headache and shortness of breath.",
     ],
     source: ["mlp_breathing", "ochmo_co2", "mlp_cpr"],
