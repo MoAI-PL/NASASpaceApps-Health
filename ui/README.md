@@ -33,9 +33,9 @@ content is visible in the demo until it is written.
 - [ ] Write every `TODO(UI)` text in `src/content/texts.js` from cited sources (NASA HRP pages or
       other public guidance) and add each source to `SOURCES`.
 - [ ] Emergency steps: replace the DRAFT steps with a protocol from cited sources, set `draft: false`.
-- [ ] Final body figure (own SVG) in `src/components/BodyMap.jsx`.
-- [ ] Check contrast (WCAG AA) and colour-blind safety of the palette in `src/styles.css`
-      (option: Okabe–Ito). Shapes + words already carry every state.
+- [x] Final body figure (own SVG) in `src/components/BodyMap.jsx`.
+- [x] Check contrast (WCAG AA) and colour-blind safety of the palette in `src/styles.css`
+      (Okabe–Ito based; ratios listed next to the tokens). Shapes + words already carry every state.
 - [ ] Deploy `dist/` as a public static site (no login) and put the link in the main README.
 - [ ] Keep the disclaimer visible: "Prototype — synthetic data — not medical advice".
 - [ ] No NASA logos or branding; no third-party images without an open license.
@@ -49,5 +49,5 @@ if the UI needs a new field, ask the ML side (contract changes are logged in `..
 stylesheet bundled in `concept/vendor/`, no build step, works offline when opened directly in a
 browser. It reads `concept/data.js`, which `python -m src.export --crew demo` generates.
 
-Demo story: Crew Member Bravo, scrub from day 45 to day 80 — the model turns yellow on day 60,
-fixed clinical thresholds only on day 76.
+Demo story: Crew Member Bravo, scrub from day 45 to day 80 — the model turns yellow on day 58,
+fixed clinical thresholds only on day 76 (one earlier model false alarm on day 36).
