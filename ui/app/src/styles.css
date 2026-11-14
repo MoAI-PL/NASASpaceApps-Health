@@ -226,3 +226,9 @@ input[type="range"] {
   width: 18px; height: 18px; border-radius: 9999px;
   background: var(--color-ink); border: 3px solid var(--color-model); box-shadow: 0 0 10px rgb(86 180 233 / 0.7);
 }
+
+/* Native drop-down lists (e.g. Trends "Show"): dark popup in the app's colours, so the light
+   text is never drawn on the browser's default white list. */
+select { color-scheme: dark; }
+select option { background-color: var(--color-panel); color: var(--color-ink); }
+select option:checked { background-color: #1f4f6e; color: var(--color-ink); }
