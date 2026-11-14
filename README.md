@@ -8,7 +8,7 @@
 
 ## 1. Overview
 
-*Halfway to Mars, a crew member feels a sharp pain in the chest and collapses. There is no doctor on board and Earth is minutes away.* (the challenge author's scenario)
+Halfway to Mars, “your fellow crew mate feels a sharp pain in the chest and collapses” — the scenario set by the challenge author, the Brazilian Space Agency, in the [challenge video](https://www.youtube.com/watch?v=RERG3gEmdC8) (0:43). Our addition: there is no doctor on board, and a message to Earth takes up to ~22 minutes one way.
 
 Baseline lets astronauts assess their own health on long missions along two paths:
 
@@ -45,7 +45,7 @@ The one-time hold-out test is **not** part of `run_all`: `python -m src.evaluate
 
 ## 3. How it works
 
-1. **Daily check-in** — blood pressure, resting heart rate, fasting glucose, temperature, sleep, mood (1–5), reaction time; exercise minutes as context. The six indicators named in the challenge statement are all included.
+1. **Daily check-in** — blood pressure, resting heart rate, fasting glucose, temperature, sleep, mood (1–5), reaction time; exercise minutes as context. The six indicators named in the challenge statement are all included. Image-based indicators (camera, ultrasound), which the challenge also allows, are out of scope: Baseline uses daily self-measurements only.
 2. **Personal normalisation** — each indicator is converted to a z-score against that astronaut's own calibration period (mission days 1–21). The model therefore sees *deviation from this person's normal*, not absolute values.
 3. **Drift summary** — for each day, the last 7 days are summarised as a weighted mean of the personal z-scores (latest day heaviest), one value per feature.
 4. **Personal-drift model (unsupervised)** — a Gaussian model of that 9-dimensional summary is learned from 300 healthy simulated astronauts, with no illness labels. The anomaly score is the squared Mahalanobis distance of today's summary from the healthy model (a Hotelling T²-type statistic): it rises when several indicators drift together, even if each one alone still looks normal.
@@ -151,7 +151,7 @@ Figures (1600 × 900, slide-ready): `benchmark.png`, `lead_time_test.png`, `lead
 
 ## 8. Earth spin-off
 
-The same offline, personal-baseline monitoring fits isolated crews on Earth: Antarctic research stations wintering without evacuation, remote communities with limited access to care, and long maritime deployments. A personal normal travels with the person; no labelled patient data or constant connectivity is needed.
+The same offline, personal-baseline monitoring fits isolated crews on Earth: Antarctic research stations wintering without evacuation, remote communities with limited access to care, and long maritime deployments. A personal normal travels with the person; no labelled patient data or constant connectivity is needed. The challenge author names exactly this use — remote communities and places with limited access to health services — in the [challenge video](https://www.youtube.com/watch?v=RERG3gEmdC8).
 
 ## 9. Limitations
 
@@ -163,7 +163,7 @@ The same offline, personal-baseline monitoring fits isolated crews on Earth: Ant
 - Model selection used synthetic scenarios designed by the team; the winning model's advantage may partly reflect the linear-Gaussian simulator (see 7.3).
 - Radiation dose values are illustrative; SEP event dates are real only after `src.donki` has been run with internet access.
 
-## 10. Use of AI
+## 10. Use of AI (Super Intelligence, SI)
 
 Generative AI was used in this project, as required to be disclosed by the NASA Space Apps rules:
 - **Claude (Anthropic)**, including via Claude Code, drafted the Python code, tests, configuration files, the concept UI, the figures and this README, and helped search for and verify sources. Every source file carries the header "AI-assisted: drafted with Claude (Anthropic), reviewed by the team".
@@ -173,6 +173,7 @@ Generative AI was used in this project, as required to be disclosed by the NASA 
 ## 11. References
 
 Data and scientific sources
+- Brazilian Space Agency (AEB) — challenge introduction video, NASA Space Apps Challenge 2026 (source of the scenario quote and the Earth-application idea): https://www.youtube.com/watch?v=RERG3gEmdC8
 - NASA Human Research Program — 5 Hazards of Human Spaceflight: https://www.nasa.gov/hrp/hazards/
 - NASA Human Research Program — Risks of Human Spaceflight: https://www.nasa.gov/hrp/risks/
 - NASA Human Research Program — Ongoing HRP Research in Space: https://www.nasa.gov/hrp/ongoing-hrp-research/
