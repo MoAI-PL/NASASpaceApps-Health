@@ -8,6 +8,7 @@ import NextStep from "../components/NextStep.jsx";
 import BodyMap from "../components/BodyMap.jsx";
 import HazardStrip from "../components/HazardStrip.jsx";
 import HabitatCheck from "../components/HabitatCheck.jsx";
+import Readiness from "../components/Readiness.jsx";
 import { StatusIcon } from "../components/icons.jsx";
 import { Panel, SourceLink, Text } from "../components/ui.jsx";
 
@@ -69,6 +70,7 @@ export default function Today({ record, records, env, onOpenSystem, onOpenChecki
         )}
       </Panel>
 
+      <div className="md:col-span-3"><Readiness records={records} astronaut={record.astronaut} day={record.day} /></div>
       <div className="md:col-span-3"><HabitatCheck astronaut={record.astronaut} day={record.day} /></div>
       <div className="md:col-span-3"><HazardStrip record={record} env={env} /></div>
     </div>

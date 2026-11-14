@@ -192,6 +192,7 @@ Crew-facing guidance in the UI app (`ui/app/src/content/texts.js`; paraphrased a
 - NASA Human Research Roadmap, Psychomotor Vigilance Test (Reaction Self-Test) on ISS: https://humanresearchroadmap.nasa.gov/Tasks/task.aspx?i=1651
 - Hinkelbein J. et al. (2020), Cardiopulmonary resuscitation (CPR) during spaceflight — a guideline for CPR in microgravity (DGLRM / ESAM-SMG), Scand J Trauma Resusc Emerg Med 28:108, CC BY 4.0: https://link.springer.com/article/10.1186/s13049-020-00793-y
 - Tobin B.W. et al. (2002), Insulin secretion and sensitivity in space flight: diabetogenic effects, Nutrition 18(10):842–8: https://pubmed.ncbi.nlm.nih.gov/12361776/
+- Van Dongen H.P.A., Maislin G., Mullington J.M., Dinges D.F. (2003), The cumulative cost of additional wakefulness, Sleep 26(2):117–26 (basis of the "Feels fine ≠ is fine" readiness check in the UI): https://pubmed.ncbi.nlm.nih.gov/12683469/
 - American Heart Association: Home Blood Pressure Monitoring; Target Heart Rates; Warning Signs of a Heart Attack — https://www.heart.org/
 - MedlinePlus (U.S. National Library of Medicine): CPR — adult (000013); Unconsciousness — first aid (000022); Breathing difficulties — first aid (000007); Chest pain (003079); Body temperature norms (001982); Blood sugar test (003482) — https://medlineplus.gov/ency/
 

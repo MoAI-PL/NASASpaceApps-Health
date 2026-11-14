@@ -40,6 +40,7 @@ export const SOURCES = {
   nhlbi_sleep: { title: "NIH National Heart, Lung, and Blood Institute — Why Is Sleep Important?", url: "https://www.nhlbi.nih.gov/health/sleep/why-sleep-important" },
   mlp_metabolism: { title: "MedlinePlus — Metabolic Disorders (what metabolism is)", url: "https://medlineplus.gov/metabolicdisorders.html" },
   mlp_immune: { title: "MedlinePlus — Immune System and Disorders", url: "https://medlineplus.gov/immunesystemanddisorders.html" },
+  van_dongen_2003: { title: "Van Dongen H.P.A. et al. (2003) — The cumulative cost of additional wakefulness, Sleep 26(2):117–26 (sleepiness ratings missed growing performance deficits)", url: "https://pubmed.ncbi.nlm.nih.gov/12683469/" },
   tobin_2002: { title: "Tobin B.W. et al. (2002) — Insulin secretion and sensitivity in space flight: diabetogenic effects, Nutrition 18(10):842–8", url: "https://pubmed.ncbi.nlm.nih.gov/12361776/" },
 };
 
@@ -263,6 +264,35 @@ export const SYSTEM_TEXT = {
     ],
     source: ["mlp_immune", "mlp_temp", "hrp_immune", "hrp_closed_env", "nhlbi_sleep"],
   },
+};
+
+// ===== Ready for critical tasks? (Today) =====
+// Compares how the crew member feels (mood self-rating) with how they perform (reaction
+// self-test, like the PVT on the ISS). In sleep-restriction studies people largely missed
+// their own growing performance deficits, so a slower reaction with an unchanged self-rating
+// is flagged before critical tasks. Thresholds are team assumptions, not validated.
+export const READINESS = {
+  title: "Ready for critical tasks?",
+  verdict: {
+    go: "Ready — your reactions are within your normal",
+    blindSpot: "Feels fine ≠ is fine",
+    both: "You feel it, and the test shows it",
+    noData: "Do the reaction test to know",
+    learning: "Still learning your normal",
+  },
+  body: {
+    go: "Your alertness is as usual. This checks alertness only — follow any other steps above.",
+    learning: "The check starts once Baseline knows your normal reaction time.",
+    blindSpot: "You rate your mood as usual, but your reactions are slower than your normal. Tiredness can hide from your own judgement.",
+    both: "Your mood is lower and your reactions are slower than your normal.",
+    noData: "No reaction test in the last 7 days.",
+  },
+  advice: [
+    "Before a spacewalk, docking or robotic-arm work: ask a crewmate to check each step with you, or rest first.",
+    "Sleep, then repeat the reaction test.",
+  ],
+  rule: "Slower = 7-day reaction time 1.5 SD or more above your normal; \"as usual\" = mood within 0.5 SD. Team thresholds — an assumption, not validated. The cited study used sleepiness ratings; here mood is the self-rating.",
+  source: ["van_dongen_2003", "nasa_pvt", "hrp_sleep"],
 };
 
 // ===== Is it me or the habitat? (Today) =====
