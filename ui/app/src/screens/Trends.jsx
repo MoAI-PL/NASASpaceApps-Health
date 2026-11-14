@@ -43,7 +43,7 @@ function niceTicks(lo, hi, count = 4) {
   return ticks;
 }
 
-export default function Trends({ records, day, astronaut }) {
+export default function Trends({ records, day, astronaut, onAbout }) {
   const [series, setSeries] = useState("sai");
   const [boxRef, boxWidth] = useWidth();
   const narrow = boxWidth < 600;
@@ -115,6 +115,11 @@ export default function Trends({ records, day, astronaut }) {
         </svg>
       </div>
       <p className="mt-3 text-base text-ink-2">Each mark is a day on which that method raised an alert.</p>
+      {onAbout && (
+        <button type="button" onClick={onAbout} className="tap mt-3 px-5 rounded-2xl bg-panel-2 glass-control text-lg">
+          Why trust this? Method, evidence and limits ▶
+        </button>
+      )}
     </section>
   );
 }

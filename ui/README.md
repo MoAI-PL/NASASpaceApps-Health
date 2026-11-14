@@ -22,7 +22,7 @@ Layout:
 | `src/data.js` | The only file that reads ML output (`demo_crew.json`, `meta.json`, `earth_reports/`) + helpers |
 | `src/content/texts.js` | All crew-facing text: prompts, check-in cards, systems, events, emergency steps, sources |
 | `src/components/` | Status icons (colour + shape + glyph + word), hazard/system icons, gauge, body map, hazard strip, system detail, drift radar, mission timeline (NASA DONKI events) |
-| `src/screens/` | Today · Check-in · Body · Trends · Earth link · How we know · Emergency · Settings |
+| `src/screens/` | Four tabs: Today (with the Earth link card) · Check-in · Body · Trends. Always in the header: Emergency and Help ("?"), which opens How we know and the sources. Crew member and environment are demo controls in the timeline panel. |
 | `src/styles.css` | Design tokens (all colours in one `@theme` block), the space backdrop and the liquid-glass utilities (`panel`, `glass-control`, `glass-active`, `tap`); solid panels when the system asks for reduced transparency or more contrast |
 
 Any text starting with `TODO(UI)` shows up in the app as a dashed "content gap", so missing

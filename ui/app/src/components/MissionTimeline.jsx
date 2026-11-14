@@ -67,7 +67,7 @@ function ReplaySummary({ records, scenario, onClose }) {
   );
 }
 
-export default function MissionTimeline({ records, day, onDay, astronaut }) {
+export default function MissionTimeline({ records, day, onDay, astronaut, controls }) {
   const days = META.mission.days;
   const events = META.space_weather.events ?? [];
   const sep = META.space_weather.event_days ?? [];
@@ -157,6 +157,7 @@ export default function MissionTimeline({ records, day, onDay, astronaut }) {
         Strip: this crew member’s daily status (grey = nominal){scenario && <> · dashed line: simulated change begins (day {scenario.start_day})</>} ·{" "}
         <Glyph name="radiation" size={14} className="inline text-warning" /> real solar particle events from NASA DONKI ({META.mission.start_date} onward).
       </p>
+      {controls}
       {summary && !playing && <ReplaySummary records={records} scenario={scenario} onClose={() => setSummary(false)} />}
     </div>
   );

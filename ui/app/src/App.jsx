@@ -13,8 +13,8 @@ import Body from "./screens/Body.jsx";
 import Trends from "./screens/Trends.jsx";
 import EarthLink from "./screens/EarthLink.jsx";
 import Emergency from "./screens/Emergency.jsx";
-import Settings from "./screens/Settings.jsx";
-import HowWeKnow from "./screens/HowWeKnow.jsx";
+import { DemoControls } from "./screens/Settings.jsx";
+import AboutDialog from "./components/AboutDialog.jsx";
 import MissionTimeline from "./components/MissionTimeline.jsx";
 import HelpDialog from "./components/HelpDialog.jsx";
 import Welcome from "./components/Welcome.jsx";
@@ -25,18 +25,16 @@ const SCREENS = [
   { id: "checkin", label: "Check-in", icon: "nav_checkin" },
   { id: "body", label: "Body", icon: "nav_body" },
   { id: "trends", label: "Trends", icon: "nav_trends" },
-  { id: "earth", label: "Earth link", icon: "nav_earth" },
-  { id: "how", label: "How we know", icon: "nav_how" },
-  { id: "settings", label: "Settings", icon: "nav_settings" },
 ];
 
 // ===== Navigation =====
-/** One screen button: icon + word, glass pill; `vertical` = sidebar layout. */
+/** One screen button: icon + word, glass pill; `vertical` = sidebar layout. In the top bar the
+ *  icon sits above the word on phones, so all four tabs fit side by side without scrolling. */
 function NavButton({ screen, active, onClick, vertical = false }) {
   return (
     <button type="button" onClick={onClick} aria-current={active ? "page" : undefined}
-            className={`tap shrink-0 flex items-center gap-3 rounded-2xl whitespace-nowrap glass-control
-                        ${vertical ? "w-full px-4 text-lg" : "px-4 text-base"}
+            className={`tap shrink-0 flex items-center rounded-2xl whitespace-nowrap glass-control
+                        ${vertical ? "w-full gap-3 px-4 text-lg" : "flex-col sm:flex-row justify-center gap-1 sm:gap-3 px-1 sm:px-4 text-sm sm:text-base"}
                         ${active ? "glass-active font-semibold text-ink" : "border-transparent! shadow-none! text-ink-2"}`}>
       <Glyph name={screen.icon} size={vertical ? 26 : 22} className={active ? "text-model drop-shadow-[0_0_6px_rgb(86_180_233/0.85)]" : "text-ink-2"} />
       {screen.label}
@@ -98,6 +96,7 @@ export default function App() {
   const [system, setSystem] = useState("heart");
   const [emergency, setEmergency] = useState(false);
   const [help, setHelp] = useState(false);
+  const [about, setAbout] = useState(false);
   const [welcomed, setWelcomed] = usePersisted("intro", "show", (v) => v === "show" || v === "seen");
   const [queued, setQueued] = useState([]);
 
@@ -139,33 +138,38 @@ export default function App() {
       </header>
 
       {/* Demo control: scrub through the precomputed 120-day mission. */}
-      <MissionTimeline records={records} day={record.day} onDay={setDay} astronaut={astronaut} />
+      <MissionTimeline records={records} day={record.day} onDay={setDay} astronaut={astronaut}
+                       controls={<DemoControls astronaut={astronaut} onAstronaut={setAstronaut} env={env} onEnv={setEnv} />} />
 
       {/* Phones and tablets: one row of glass pills that scrolls sideways inside the bar (the page
           itself never does). Wide screens use the sidebar instead. */}
-      <nav className="lg:hidden flex gap-2 mb-4 overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0 pb-1" aria-label="Screens">
+      <nav className="lg:hidden grid grid-cols-4 gap-2 mb-4" aria-label="Screens">
         {SCREENS.map((s) => (
           <NavButton key={s.id} screen={s} active={s.id === screen} onClick={() => setScreen(s.id)} />
         ))}
       </nav>
 
       <main>
-        {screen === "today" && <Today record={record} records={records} env={env} onOpenSystem={openSystem} onOpenCheckin={() => setScreen("checkin")}
-                                         onEmergency={() => setEmergency(true)} />}
+        {/* Four tabs only. Earth link lives on Today; How we know and sources open from "?" and from
+            Trends; crew member and environment are demo controls in the timeline panel. */}
+        {screen === "today" && (
+          <div className="grid gap-4">
+            <Today record={record} records={records} env={env} onOpenSystem={openSystem} onOpenCheckin={() => setScreen("checkin")}
+                   onEmergency={() => setEmergency(true)} />
+            <EarthLink astronaut={astronaut} day={record.day} env={env} record={record} records={records} queued={queued}
+                       onQueue={(report) => setQueued([...queued.filter((q) => !(q.astronaut === report.astronaut && q.day === report.day)), report])} />
+          </div>
+        )}
         {screen === "checkin" && <CheckIn record={record} onEmergency={() => setEmergency(true)} />}
         {screen === "body" && <Body record={record} records={records} system={system} onSelect={setSystem} />}
-        {screen === "trends" && <Trends records={records} day={record.day} astronaut={astronaut} />}
-        {screen === "earth" && (
-          <EarthLink astronaut={astronaut} day={record.day} env={env} record={record} records={records} queued={queued}
-                     onQueue={(report) => setQueued([...queued.filter((q) => !(q.astronaut === report.astronaut && q.day === report.day)), report])} />
-        )}
-        {screen === "how" && <HowWeKnow />}
-        {screen === "settings" && <Settings astronaut={astronaut} onAstronaut={setAstronaut} env={env} onEnv={setEnv} />}
+        {screen === "trends" && <Trends records={records} day={record.day} astronaut={astronaut} onAbout={() => setAbout(true)} />}
       </main>
 
       <footer className="mt-8 mb-8 text-sm text-muted">{META.disclaimer}</footer>
       </div>
-      {help && <HelpDialog onClose={() => setHelp(false)} onIntro={() => { setHelp(false); setWelcomed("show"); }} />}
+      {help && <HelpDialog onClose={() => setHelp(false)} onIntro={() => { setHelp(false); setWelcomed("show"); }}
+                            onAbout={() => { setHelp(false); setAbout(true); }} />}
+      {about && <AboutDialog onClose={() => setAbout(false)} />}
       {welcomed === "show" && !emergency && <Welcome onClose={() => setWelcomed("seen")} />}
       {emergency && <Emergency env={env} record={record} onClose={() => setEmergency(false)} />}
     </div>
