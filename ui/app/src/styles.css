@@ -153,9 +153,19 @@ main .panel:nth-child(n + 5) { animation-delay: 240ms; }
 }
 
 /* Polygonal body (PolyBody.jsx): blueprint wire colour and the slow scan line. */
-:root { --body-wire: #8fdcff; }
+:root { --body-wire: #8ff0ff; }
 .poly-body-scan {
   animation: body-scan 5.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+/* Joint lights twinkle gently. */
+.poly-body-joint {
+  animation: joint-twinkle 2.6s ease-in-out infinite alternate;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes joint-twinkle {
+  from { opacity: 0.55; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1.1); }
 }
 @keyframes body-scan {
   0%   { transform: translateY(0); opacity: 0; }
