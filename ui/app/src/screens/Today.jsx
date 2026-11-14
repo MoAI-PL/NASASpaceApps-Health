@@ -1,21 +1,23 @@
 // Baseline — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
+import { useState } from "react";
 import { META, checkinStreak } from "../data.js";
 import { ESCALATION_TEXT, EVENT_TEXT, PROMPTS } from "../content/texts.js";
 import Gauge from "../components/Gauge.jsx";
 import BodyMap from "../components/BodyMap.jsx";
 import HazardStrip from "../components/HazardStrip.jsx";
 import { StatusIcon } from "../components/icons.jsx";
-import { Panel, Text } from "../components/ui.jsx";
+import { Panel, SourceLink, Text } from "../components/ui.jsx";
 
 // ===== Today: SAI, body figure, what moved, actions, hazards, streak =====
 export default function Today({ record, records, env, onOpenSystem }) {
   const moved = Object.entries(record.contributions).filter(([f]) => f !== "other");
   const streak = checkinStreak(records, record.day);
+  const [openPrompt, setOpenPrompt] = useState(null);
 
   return (
-    <div className="grid gap-4 md:grid-cols-3">
+    <div className="grid gap-4 md:grid-cols-3 md:items-start">
       {record.events.length > 0 && (
         <div className="md:col-span-3 grid gap-2">
           {record.events.map((e) => (
@@ -30,7 +32,14 @@ export default function Today({ record, records, env, onOpenSystem }) {
         </div>
       )}
 
-      <Gauge record={record} />
+      <Gauge record={record}>
+        <div className="mt-5 pt-4 border-t border-line w-full grid gap-3 text-lg">
+          <div className="flex items-center gap-3">
+            <StatusIcon status={record.level} /> {ESCALATION_TEXT[record.escalation]}
+          </div>
+          <p className="text-ink-2">Check-in streak: <span className="font-semibold text-ink">{streak} days</span></p>
+        </div>
+      </Gauge>
       <BodyMap record={record} selected={null} onSelect={onOpenSystem} />
 
       <Panel title="What moved away from your normal">
@@ -52,14 +61,26 @@ export default function Today({ record, records, env, onOpenSystem }) {
         {record.prompts.length === 0 ? (
           <p className="text-lg mt-1">Routine measurements only.</p>
         ) : (
-          record.prompts.map((p) => (
-            <div key={p} className="tap mt-2 flex items-center gap-3 px-4 rounded-xl bg-panel-2 text-lg">▶ {PROMPTS[p].title}</div>
-          ))
+          record.prompts.map((p) => {
+            const prompt = PROMPTS[p], open = openPrompt === p;
+            return (
+              <div key={p} className="mt-2 rounded-xl bg-panel-2">
+                <button type="button" onClick={() => setOpenPrompt(open ? null : p)} aria-expanded={open}
+                        className="tap w-full flex items-center gap-3 px-4 rounded-xl text-lg text-left">
+                  <span aria-hidden="true">{open ? "▼" : "▶"}</span> {prompt.title}
+                </button>
+                {open && (
+                  <dl className="px-4 pb-4 grid gap-2 text-lg">
+                    <dt className="text-ink-2">How</dt><dd><Text>{prompt.how}</Text></dd>
+                    <dt className="text-ink-2">Why</dt><dd><Text>{prompt.why}</Text></dd>
+                    <dt className="text-ink-2">If abnormal</dt><dd><Text>{prompt.ifAbnormal}</Text></dd>
+                    <dd><SourceLink id={prompt.source} /></dd>
+                  </dl>
+                )}
+              </div>
+            );
+          })
         )}
-        <div className="mt-4 flex items-center gap-3 text-lg">
-          <StatusIcon status={record.level} /> {ESCALATION_TEXT[record.escalation]}
-        </div>
-        <p className="mt-4 text-ink-2">Check-in streak: <span className="font-semibold text-ink">{streak} days</span></p>
       </Panel>
 
       <div className="md:col-span-3"><HazardStrip record={record} env={env} /></div>

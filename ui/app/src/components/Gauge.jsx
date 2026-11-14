@@ -5,7 +5,7 @@ import { META } from "../data.js";
 import { STATUS_COLOR, StatusChip } from "./icons.jsx";
 
 // ===== Systemic Anomaly Index gauge (0–100, null on days 1–6) =====
-export default function Gauge({ record }) {
+export default function Gauge({ record, children }) {
   const { sai, level } = record;
   const angle = sai == null ? 0 : (sai / 100) * 180;
   const r = 90, cx = 110, cy = 110;
@@ -27,6 +27,7 @@ export default function Gauge({ record }) {
           Learning your personal baseline · day {record.day} of {META.mission.calibration_days}
         </p>
       )}
+      {children}
     </section>
   );
 }
