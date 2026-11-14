@@ -87,11 +87,18 @@ export default function CheckIn({ record }) {
         return (
           <Panel key={f}>
             <div className="flex flex-wrap items-center gap-4">
-              <label htmlFor={`in-${f}`} className="text-xl font-semibold flex-1 min-w-48">
-                {feat.name} <span className="text-muted text-base">({feat.unit})</span>
-              </label>
+              {/* A <label> only for a real input; the 1–5 scale is a labelled button group. */}
               {card.scale ? (
-                <div className="flex gap-2" role="group" aria-label={feat.name}>
+                <span id={`lbl-${f}`} className="text-xl font-semibold flex-1 min-w-48">
+                  {feat.name} <span className="text-muted text-base">({feat.unit})</span>
+                </span>
+              ) : (
+                <label htmlFor={`in-${f}`} className="text-xl font-semibold flex-1 min-w-48">
+                  {feat.name} <span className="text-muted text-base">({feat.unit})</span>
+                </label>
+              )}
+              {card.scale ? (
+                <div className="flex gap-2" role="group" aria-labelledby={`lbl-${f}`}>
                   {card.scale.map((v) => (
                     <TapButton key={v} active={entries[f] === v} onClick={() => set(f, v)} className="text-center font-semibold">{v}</TapButton>
                   ))}
