@@ -19,7 +19,7 @@ export default function HelpDialog({ onClose }) {
 
   return (
     <div role="dialog" aria-modal="true" aria-labelledby="help-title"
-         className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+         className="fixed inset-0 bg-black/55 backdrop-blur-md flex items-center justify-center p-4 z-50">
       <div className="panel p-6 max-w-2xl w-full max-h-full overflow-auto">
         <h2 id="help-title" className="text-2xl font-bold">How to read Baseline</h2>
 

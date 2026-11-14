@@ -56,6 +56,17 @@ const GLYPHS = {
   metabolism: <path d="M16 3 C11 11 7 16 7 20 A9 9 0 0 0 25 20 C25 16 21 11 16 3 Z" strokeWidth="0" />,
   mind_sleep: <path d="M20 4 A12 12 0 1 0 28 21 A10 10 0 0 1 20 4 Z" strokeWidth="0" />,
   immune_temp: <g fill="none" strokeWidth="2.5"><path d="M13 19 V6 A3 3 0 0 1 19 6 V19" /><circle cx="16" cy="23" r="5" /><path d="M16 23 V11" /></g>,
+  // navigation (screens)
+  nav_today: <g fill="none" strokeWidth="2.5" strokeLinecap="round"><path d="M5 23 A11 11 0 0 1 27 23" /><path d="M16 23 L22 14" /><circle cx="16" cy="23" r="2" fill="currentColor" /></g>,
+  nav_checkin: <g fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="7" y="5" width="18" height="23" rx="3" /><path d="M12 5 V3 H20 V5" /><path d="M11.5 17 L15 20.5 L21 13.5" /></g>,
+  nav_body: <g fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="16" cy="7" r="3.5" /><path d="M8 13.5 H24" /><path d="M16 13.5 V21" /><path d="M16 21 L11 29 M16 21 L21 29" /></g>,
+  nav_trends: <g fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 27 H28" /><path d="M6 21 L12 14 L17 18 L26 7" /><circle cx="26" cy="7" r="1.5" fill="currentColor" /></g>,
+  nav_earth: <g fill="none" strokeWidth="2.5" strokeLinecap="round"><circle cx="13" cy="19" r="9" /><path d="M4 19 H22 M13 10 C9 14 9 24 13 28 C17 24 17 14 13 10" /><path d="M21 4 A8 8 0 0 1 28 11" /><path d="M21 8.5 A4 4 0 0 1 24 11.5" /></g>,
+  nav_how: <g fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 4 H20" /><path d="M13 4 V13 L6 26 A2 2 0 0 0 8 29 H24 A2 2 0 0 0 26 26 L19 13 V4" /><path d="M9 21 H23" /></g>,
+  nav_settings: <g fill="none" strokeWidth="2.5" strokeLinecap="round"><path d="M5 9 H27 M5 16 H27 M5 23 H27" /><circle cx="11" cy="9" r="3" fill="var(--color-panel)" /><circle cx="21" cy="16" r="3" fill="var(--color-panel)" /><circle cx="13" cy="23" r="3" fill="var(--color-panel)" /></g>,
+  nav_help: <g fill="none" strokeWidth="2.5" strokeLinecap="round"><circle cx="16" cy="16" r="12" /><path d="M12.5 12.5 A3.5 3.5 0 1 1 17 15.8 C16.2 16.2 16 16.8 16 18" /><circle cx="16" cy="22.5" r="1.4" fill="currentColor" stroke="none" /></g>,
+  // brand mark: the index arc
+  logo: <g fill="none" strokeLinecap="round"><path d="M6 22 A10 10 0 0 1 26 22" strokeWidth="4" stroke="var(--color-model)" /><circle cx="16" cy="22" r="3" fill="currentColor" stroke="none" /></g>,
 };
 
 export function Glyph({ name, size = 32, className = "text-ink" }) {

@@ -37,7 +37,7 @@ export default function Emergency({ env, record, onClose }) {
 
   return (
     <div role="dialog" aria-modal="true" aria-labelledby="em-title"
-         className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+         className="fixed inset-0 bg-black/55 backdrop-blur-md flex items-center justify-center p-4 z-50">
       <div className="panel p-6 max-w-2xl w-full border-critical! max-h-full overflow-auto">
         <p className="flex items-center gap-3 text-xl font-bold text-ink-2"><StatusIcon status="red" size={30} /> Emergency</p>
 
