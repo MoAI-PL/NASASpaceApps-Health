@@ -29,6 +29,30 @@ export function recordsFor(astronaut) {
   return byAstronaut.get(astronaut) ?? [];
 }
 
+// ===== Number formatting =====
+// Display precision per value id (default: whole numbers). The JSON keeps full precision;
+// rounding happens only on screen, so comparisons with the normal band stay exact.
+const DECIMALS = { temp: 1, sleep_h: 1, radiation_mGy: 2, radiation_cum_mGy: 1, cabin_co2_mmHg: 1 };
+
+/** Value rounded for display (string), or null when missing. */
+export function fmt(id, value) {
+  return value == null ? null : Number(value).toFixed(DECIMALS[id] ?? 0);
+}
+
+/** Longest round trip of a message to Earth and back for an environment, as short text
+ *  (2 × the maximum one-way delay in meta.environments; signal travel only, no reply time). */
+export function roundTripText(env) {
+  const s = 2 * (META.environments[env]?.one_way_delay_s?.[1] ?? 0);
+  if (s < 2) return "a few seconds or less";
+  return s < 120 ? `up to ~${Math.round(s)} s` : `up to ~${Math.round(s / 60)} min`;
+}
+
+/** Normal-band edge for display. Whole-number scales (mood) get one decimal, so a value that
+ *  is above the band never looks as if it were inside it (5 vs a band shown as "3–5"). */
+export function fmtBand(id, value) {
+  return id === "mood" ? Number(value).toFixed(1) : fmt(id, value);
+}
+
 /** Indicator ids the crew measures (exercise is context, not a health indicator). */
 export const INDICATORS = Object.keys(META.features).filter((f) => f !== "exercise_min");
 
@@ -40,6 +64,28 @@ export function offNormalSince(records, day, system) {
     since = r.systems[system] === "green" ? null : since ?? r.day;
   }
   return since;
+}
+
+/** 7-day drift of one indicator in personal standard deviations, or null without data.
+ *  Mirrors the model's summary: weighted mean (weights 1…7, latest heaviest) of the distance
+ *  from the personal band centre. The band is mean ± 2 sd, so sd = band width / 4. */
+export function driftZ(records, astronaut, day, f) {
+  const band = META.normal_bands[astronaut]?.[f];
+  if (!band) return null;
+  const mid = (band[0] + band[1]) / 2, sd = (band[1] - band[0]) / 4 || 1;
+  let sum = 0, weights = 0;
+  for (const r of records) {
+    const w = r.day - (day - 7);
+    if (w < 1 || w > 7 || r.values[f] == null) continue;
+    sum += w * (r.values[f] - mid) / sd;
+    weights += w;
+  }
+  return weights ? sum / weights : null;
+}
+
+/** Direction an indicator moved over the last 7 days (+1 higher, −1 lower, 0 unknown). */
+export function recentDirection(records, astronaut, day, f) {
+  return Math.sign(driftZ(records, astronaut, day, f) ?? 0);
 }
 
 /** Consecutive days up to `day` with every indicator recorded (the check-in streak). */

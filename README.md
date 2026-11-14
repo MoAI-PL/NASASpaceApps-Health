@@ -159,7 +159,7 @@ The same offline, personal-baseline monitoring fits isolated crews on Earth: Ant
 - Most simulation parameters are assumptions (listed in `config_sources.md`); spaceflight adaptation (e.g. fluid shifts) is not modelled — the healthy baseline is stationary.
 - Daily granularity; no continuous wearable streams (HRV, SpO₂, respiratory rate) — possible future work.
 - Bone loss is not covered (not measurable with daily self-measurements).
-- The emergency-mode steps in the concept UI are placeholders until written from cited sources.
+- The emergency-mode steps and the measurement guidance in the app are first-aid and self-measurement guidance paraphrased from the public sources listed in References; they are not a validated medical protocol and do not replace crew medical training or onboard procedures.
 - Model selection used synthetic scenarios designed by the team; the winning model's advantage may partly reflect the linear-Gaussian simulator (see 7.3).
 - Radiation dose values are illustrative; SEP event dates are real only after `src.donki` has been run with internet access.
 
@@ -183,6 +183,16 @@ Data and scientific sources
 - Barger L.K. et al., sleep deficiency in astronauts, The Lancet Neurology (2014); press release: https://www.eurekalert.org/news-releases/595450
 - American Heart Association — Understanding Blood Pressure Readings: https://heart.org/bplevels
 - American Diabetes Association — Hypoglycemia (HCP): https://professional.diabetes.org/sites/dpro/files/2025-05/hypoglycemia-hcp-5-27-25.pdf
+
+Crew-facing guidance in the UI app (`ui/app/src/content/texts.js`; paraphrased and linked, no text copied; checked 2026-11-14)
+- NASA HRP risk pages: Cardiovascular Adaptations, Altered Immune System Responses, Inadequate Sleep and Irregular Schedules, Behavioral Changes and Psychiatric Disorders, Inadequate Food and Nutrition — https://www.nasa.gov/hrp/risks/
+- NASA HRP hazard pages: Gravity Fields, Isolation and Confinement, Hostile/Closed Environments, Distance from Earth — https://www.nasa.gov/hrp/hazards/
+- NASA, Space Radiation Won't Stop NASA's Human Exploration (shelter during solar particle events): https://www.nasa.gov/humans-in-space/space-radiation-wont-stop-nasas-human-exploration/
+- NASA Human Research Roadmap, Psychomotor Vigilance Test (Reaction Self-Test) on ISS: https://humanresearchroadmap.nasa.gov/Tasks/task.aspx?i=1651
+- Hinkelbein J. et al. (2020), Cardiopulmonary resuscitation (CPR) during spaceflight — a guideline for CPR in microgravity (DGLRM / ESAM-SMG), Scand J Trauma Resusc Emerg Med 28:108, CC BY 4.0: https://link.springer.com/article/10.1186/s13049-020-00793-y
+- Tobin B.W. et al. (2002), Insulin secretion and sensitivity in space flight: diabetogenic effects, Nutrition 18(10):842–8: https://pubmed.ncbi.nlm.nih.gov/12361776/
+- American Heart Association: Home Blood Pressure Monitoring; Target Heart Rates; Warning Signs of a Heart Attack — https://www.heart.org/
+- MedlinePlus (U.S. National Library of Medicine): CPR — adult (000013); Unconsciousness — first aid (000022); Breathing difficulties — first aid (000007); Chest pain (003079); Body temperature norms (001982); Blood sugar test (003482) — https://medlineplus.gov/ency/
 
 Software (open-source licenses)
 - Methods: Mahalanobis distance / Hotelling T² statistic (classical multivariate statistics); autoencoders for anomaly detection (benchmarked alternative).

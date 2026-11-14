@@ -35,13 +35,19 @@ export function Text({ children, className = "" }) {
   return <span className={className}>{children}</span>;
 }
 
-/** Link to a source from content/texts.js SOURCES. */
+/** Link(s) to sources from content/texts.js SOURCES; `id` is one id or a list of ids. */
 export function SourceLink({ id }) {
-  const s = SOURCES[id];
-  if (!s) return <Text className="text-sm">TODO(UI): source</Text>;
+  const ids = (Array.isArray(id) ? id : [id]).filter(Boolean);
+  if (ids.length === 0 || ids.some((i) => !SOURCES[i])) return <Text className="text-sm">TODO(UI): source</Text>;
   return (
-    <a href={s.url} target="_blank" rel="noreferrer" className="text-sm text-ink-2 underline underline-offset-2">
-      Source: {s.title}
-    </a>
+    <span className="text-sm text-ink-2">
+      {ids.length === 1 ? "Source: " : "Sources: "}
+      {ids.map((i, n) => (
+        <span key={i}>
+          {n > 0 && " · "}
+          <a href={SOURCES[i].url} target="_blank" rel="noreferrer" className="underline underline-offset-2">{SOURCES[i].title}</a>
+        </span>
+      ))}
+    </span>
   );
 }

@@ -30,7 +30,7 @@ export function StatusIcon({ status, size = 28 }) {
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-label={STATUS_LABEL[key]} className="shrink-0">
       {body}
       <text x={h} y={shape === "triangle" ? h + size * 0.2 : h + size * 0.17} textAnchor="middle" fontSize={size * 0.45}
-            fontWeight="700" fill={key === "yellow" ? "#0b0b0b" : "#ffffff"}>{GLYPH[shape]}</text>
+            fontWeight="700" fill={key === "red" ? "#ffffff" : "var(--color-on-status)"}>{GLYPH[shape]}</text>
     </svg>
   );
 }

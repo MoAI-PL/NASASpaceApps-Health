@@ -21,8 +21,8 @@ Layout:
 |---|---|
 | `src/data.js` | The only file that reads ML output (`demo_crew.json`, `meta.json`, `earth_reports/`) + helpers |
 | `src/content/texts.js` | All crew-facing text: prompts, check-in cards, systems, events, emergency steps, sources |
-| `src/components/` | Status icons (colour + shape + glyph + word), hazard/system icons, gauge, body map, hazard strip, system detail |
-| `src/screens/` | Today · Check-in · Body · Trends · Earth link · Emergency · Settings |
+| `src/components/` | Status icons (colour + shape + glyph + word), hazard/system icons, gauge, body map, hazard strip, system detail, drift radar, mission timeline (NASA DONKI events) |
+| `src/screens/` | Today · Check-in · Body · Trends · Earth link · How we know · Emergency · Settings |
 | `src/styles.css` | Design tokens (all colours in one `@theme` block) and shared utilities (`panel`, `tap`) |
 
 Any text starting with `TODO(UI)` shows up in the app as a dashed "content gap", so missing
@@ -30,12 +30,13 @@ content is visible in the demo until it is written.
 
 ### TODO for the UI team
 
-- [ ] Write every `TODO(UI)` text in `src/content/texts.js` from cited sources (NASA HRP pages or
+- [x] Write every `TODO(UI)` text in `src/content/texts.js` from cited sources (NASA HRP pages or
       other public guidance) and add each source to `SOURCES`.
-- [ ] Emergency steps: replace the DRAFT steps with a protocol from cited sources, set `draft: false`.
-- [ ] Final body figure (own SVG) in `src/components/BodyMap.jsx`.
-- [ ] Check contrast (WCAG AA) and colour-blind safety of the palette in `src/styles.css`
-      (option: Okabe–Ito). Shapes + words already carry every state.
+- [x] Emergency: a step-by-step flow for a crew mate (responsive? breathing? → CPR / recovery /
+      chest pain / breathing difficulty) from cited sources (`EMERGENCY` in `texts.js`).
+- [x] Final body figure (own SVG) in `src/components/BodyMap.jsx`.
+- [x] Check contrast (WCAG AA) and colour-blind safety of the palette in `src/styles.css`
+      (Okabe–Ito based; ratios listed next to the tokens). Shapes + words already carry every state.
 - [ ] Deploy `dist/` as a public static site (no login) and put the link in the main README.
 - [ ] Keep the disclaimer visible: "Prototype — synthetic data — not medical advice".
 - [ ] No NASA logos or branding; no third-party images without an open license.
@@ -49,5 +50,5 @@ if the UI needs a new field, ask the ML side (contract changes are logged in `..
 stylesheet bundled in `concept/vendor/`, no build step, works offline when opened directly in a
 browser. It reads `concept/data.js`, which `python -m src.export --crew demo` generates.
 
-Demo story: Crew Member Bravo, scrub from day 45 to day 80 — the model turns yellow on day 60,
-fixed clinical thresholds only on day 76.
+Demo story: Crew Member Bravo, scrub from day 45 to day 80 — the model turns yellow on day 58,
+fixed clinical thresholds only on day 76 (one earlier model false alarm on day 36).

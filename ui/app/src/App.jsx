@@ -14,6 +14,9 @@ import Trends from "./screens/Trends.jsx";
 import EarthLink from "./screens/EarthLink.jsx";
 import Emergency from "./screens/Emergency.jsx";
 import Settings from "./screens/Settings.jsx";
+import HowWeKnow from "./screens/HowWeKnow.jsx";
+import MissionTimeline from "./components/MissionTimeline.jsx";
+import HelpDialog from "./components/HelpDialog.jsx";
 
 // ===== Screens (order = navigation order) =====
 const SCREENS = [
@@ -22,6 +25,7 @@ const SCREENS = [
   { id: "body", label: "Body" },
   { id: "trends", label: "Trends" },
   { id: "earth", label: "Earth link" },
+  { id: "how", label: "How we know" },
   { id: "settings", label: "Settings" },
 ];
 
@@ -44,10 +48,11 @@ function usePersisted(key, fallback, valid) {
 export default function App() {
   const [astronaut, setAstronaut] = usePersisted("astronaut", "A2", (v) => META.crew.some((c) => c.id === v));
   const [env, setEnv] = usePersisted("env", META.default_environment, (v) => v in META.environments);
-  const [day, setDay] = useState(70); // demo story: Crew Member Bravo, days 45 → 80
+  const [day, setDay] = useState(80); // demo story: Bravo — model alert day 58, fixed thresholds day 76
   const [screen, setScreen] = useState("today");
   const [system, setSystem] = useState("heart");
   const [emergency, setEmergency] = useState(false);
+  const [help, setHelp] = useState(false);
   const [queued, setQueued] = useState([]);
 
   const records = useMemo(() => recordsFor(astronaut), [astronaut]);
@@ -57,48 +62,55 @@ export default function App() {
 
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-6">
-      <header className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4">
-        <h1 className="text-3xl font-bold">Baseline</h1>
-        <span className="text-lg text-ink-2">{crewName} · {META.environments[env].name}</span>
+      {/* Sticky header: the Emergency button is always visible and never covers content. */}
+      <header className="sticky top-0 z-40 -mx-4 md:-mx-6 px-4 md:px-6 py-3 mb-4 bg-bg/95 backdrop-blur border-b border-line
+                         flex items-center gap-2 md:gap-4">
+        <div className="flex flex-wrap items-baseline gap-x-4 flex-1 min-w-0">
+          <h1 className="text-2xl md:text-3xl font-bold">Baseline</h1>
+          <span className="text-sm md:text-lg text-ink-2 truncate max-w-full">
+            {/* Phones show the call sign only ("Bravo"); wider screens the full name and environment. */}
+            <span className="sm:hidden">{crewName?.replace(/^Crew Member /, "")}</span>
+            <span className="hidden sm:inline">{crewName} · {META.environments[env].name}</span>
+          </span>
+        </div>
+        <button type="button" onClick={() => setHelp(true)} aria-label="Help: how to read Baseline"
+                className="tap shrink-0 rounded-2xl bg-panel-2 border border-line text-2xl font-bold">?</button>
+        <button type="button" onClick={() => setEmergency(true)}
+                className="tap shrink-0 px-3 md:px-8 rounded-2xl text-lg md:text-xl font-bold text-white flex items-center gap-2 md:gap-3 bg-critical">
+          <StatusIcon status="red" size={30} /> Emergency
+        </button>
       </header>
 
       {/* Demo control: scrub through the precomputed 120-day mission. */}
-      <div className="panel p-4 mb-4 flex flex-wrap items-center gap-4">
-        <label htmlFor="day" className="text-lg whitespace-nowrap">
-          Mission day <span className="font-bold text-2xl">{record.day}</span>
-          <span className="text-muted text-sm ml-2">demo</span>
-        </label>
-        <input id="day" type="range" min="1" max={META.mission.days} value={day}
-               onChange={(e) => setDay(+e.target.value)} className="flex-1 min-w-48" />
-      </div>
+      <MissionTimeline records={records} day={record.day} onDay={setDay} />
 
-      <nav className="flex flex-wrap gap-2 mb-4" aria-label="Screens">
+      {/* Phones: one row that scrolls sideways inside the bar (the page itself never does);
+          wider screens: the buttons wrap. Review finding 3. */}
+      <nav className="flex gap-2 mb-4 overflow-x-auto md:flex-wrap md:overflow-visible -mx-4 px-4 md:mx-0 md:px-0" aria-label="Screens">
         {SCREENS.map((s) => (
           <button key={s.id} type="button" onClick={() => setScreen(s.id)} aria-current={s.id === screen ? "page" : undefined}
-                  className={`tap px-5 rounded-xl text-lg ${s.id === screen ? "bg-line font-semibold" : "bg-panel"}`}>
+                  className={`tap shrink-0 px-4 md:px-5 rounded-xl text-base md:text-lg whitespace-nowrap ${s.id === screen ? "bg-line font-semibold" : "bg-panel"}`}>
             {s.label}
           </button>
         ))}
       </nav>
 
       <main>
-        {screen === "today" && <Today record={record} records={records} env={env} onOpenSystem={openSystem} />}
+        {screen === "today" && <Today record={record} records={records} env={env} onOpenSystem={openSystem} onOpenCheckin={() => setScreen("checkin")} />}
         {screen === "checkin" && <CheckIn record={record} />}
         {screen === "body" && <Body record={record} records={records} system={system} onSelect={setSystem} />}
         {screen === "trends" && <Trends records={records} day={record.day} astronaut={astronaut} />}
         {screen === "earth" && (
-          <EarthLink astronaut={astronaut} day={record.day} env={env} queued={queued}
-                     onQueue={() => setQueued([...queued, { astronaut, day: record.day }])} />
+          <EarthLink astronaut={astronaut} day={record.day} env={env} record={record} records={records} queued={queued}
+                     onQueue={(report) => setQueued([...queued.filter((q) => !(q.astronaut === report.astronaut && q.day === report.day)), report])} />
         )}
+        {screen === "how" && <HowWeKnow />}
         {screen === "settings" && <Settings astronaut={astronaut} onAstronaut={setAstronaut} env={env} onEnv={setEnv} />}
       </main>
 
-      <button type="button" onClick={() => setEmergency(true)}
-              className="fixed bottom-6 right-6 tap px-8 rounded-2xl text-xl font-bold text-white shadow-lg flex items-center gap-3 bg-critical">
-        <StatusIcon status="red" size={30} /> Emergency
-      </button>
-      <footer className="mt-8 mb-28 text-sm text-muted">{META.disclaimer}</footer>
-      {emergency && <Emergency env={env} onClose={() => setEmergency(false)} />}
+      <footer className="mt-8 mb-8 text-sm text-muted">{META.disclaimer}</footer>
+      {help && <HelpDialog onClose={() => setHelp(false)} />}
+      {emergency && <Emergency env={env} record={record} onClose={() => setEmergency(false)} />}
     </div>
   );
 }
