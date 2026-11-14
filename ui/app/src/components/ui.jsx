@@ -20,7 +20,7 @@ export function TapButton({ active = false, className = "", ...props }) {
   return (
     <button
       type="button"
-      className={`tap px-5 rounded-xl text-lg text-left ${active ? "bg-line" : "bg-panel-2"} ${className}`}
+      className={`tap px-5 rounded-2xl text-lg text-left glass-control ${active ? "glass-active" : "bg-panel-2"} ${className}`}
       aria-pressed={active}
       {...props}
     />

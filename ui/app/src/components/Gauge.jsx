@@ -8,6 +8,8 @@ import { STATUS_COLOR, StatusChip } from "./icons.jsx";
 // The arc carries tick marks at the Watch and Act thresholds (meta.index), and one plain sentence
 // says what the number means, so the index never stands alone.
 const R = 90, CX = 110, CY = 110;
+const ARC = "M20 110 A90 90 0 0 1 200 110";
+const ARC_INNER = "M25 110 A85 85 0 0 1 195 110";
 
 /** Point on the arc for an index value (0 = left end, 100 = right end). */
 function point(value, radius = R) {
@@ -29,15 +31,33 @@ function Tick({ value, label }) {
 export default function Gauge({ record, children }) {
   const { sai, level } = record;
   const { p_yellow, p_orange, persistence_days } = META.index;
-  const [ex, ey] = point(sai ?? 0);
   return (
     <section className="panel p-5 flex flex-col items-center">
       <h2 className="text-ink-2 text-lg">{META.index.name}</h2>
-      <svg width="240" height="140" viewBox="-10 -14 240 140" role="img"
+      <svg width="256" height="140" viewBox="-18 -14 256 140" role="img"
            aria-label={`${META.index.short} ${sai ?? "not available yet"}; watch from ${p_yellow}, act from ${p_orange}`}>
-        <path d="M20 110 A90 90 0 0 1 200 110" stroke="var(--color-line)" strokeWidth="18" fill="none" strokeLinecap="round" />
+        <defs>
+          {/* Soft light under the arc, in the status colour (liquid-glass look). */}
+          <filter id="gauge-glow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="7" />
+          </filter>
+          <linearGradient id="gauge-track" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="rgb(255 255 255 / 0.16)" />
+            <stop offset="1" stopColor="rgb(255 255 255 / 0.05)" />
+          </linearGradient>
+        </defs>
+        <path d={ARC} stroke="url(#gauge-track)" strokeWidth="18" fill="none" strokeLinecap="round" />
         {sai != null && sai > 0 && (
-          <path d={`M20 110 A90 90 0 0 1 ${ex} ${ey}`} stroke={STATUS_COLOR[level]} strokeWidth="18" fill="none" strokeLinecap="round" />
+          <g style={{ color: STATUS_COLOR[level] }}>
+            {/* Full arc drawn with pathLength 100, revealed by the dash: the value animates smoothly. */}
+            <path d={ARC} pathLength="100" stroke="currentColor" strokeWidth="18" fill="none" strokeLinecap="round"
+                  strokeDasharray={`${sai} 100`} filter="url(#gauge-glow)" opacity="0.55" className="gauge-arc" />
+            <path d={ARC} pathLength="100" stroke="currentColor" strokeWidth="18" fill="none" strokeLinecap="round"
+                  strokeDasharray={`${sai} 100`} className="gauge-arc" />
+            {/* Thin bright line along the inner edge: the specular highlight of the glass. */}
+            <path d={ARC_INNER} pathLength="100" stroke="rgb(255 255 255 / 0.4)" strokeWidth="2.5" fill="none" strokeLinecap="round"
+                  strokeDasharray={`${sai} 100`} className="gauge-arc" />
+          </g>
         )}
         <Tick value={p_yellow} label={p_yellow} />
         <Tick value={p_orange} label={p_orange} />
