@@ -17,7 +17,7 @@ export default function EarthLink({ astronaut, day, env, queued, onQueue }) {
       <Panel>
         <h2 className="flex items-center gap-3 text-xl font-semibold"><Glyph name="distance" /> Earth link · {e.name}</h2>
         <p className="text-lg text-ink-2 mt-1">One-way signal delay: {e.one_way_delay_text}</p>
-        <TapButton onClick={onQueue} className="mt-4 bg-model! text-white font-semibold">Queue health report for downlink</TapButton>
+        <TapButton onClick={onQueue} className="mt-4 bg-model! text-on-status font-semibold">Queue health report for downlink</TapButton>
         <p className="mt-3 text-lg">Manually queued: {manual.length ? manual.map((q) => `day ${q.day}`).join(", ") : "none"}</p>
       </Panel>
 

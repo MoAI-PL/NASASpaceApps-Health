@@ -50,7 +50,7 @@ export default function CheckIn({ record }) {
           </Panel>
         );
       })}
-      <TapButton onClick={() => setSaved(true)} className="bg-model! text-white font-semibold text-center">Save check-in</TapButton>
+      <TapButton onClick={() => setSaved(true)} className="bg-model! text-on-status font-semibold text-center">Save check-in</TapButton>
       {saved && <p role="status" className="text-lg">Saved on this device. (Demo: the index uses the precomputed mission data.)</p>}
     </div>
   );
