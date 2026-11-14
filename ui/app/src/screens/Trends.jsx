@@ -67,10 +67,12 @@ export default function Trends({ records, day, astronaut }) {
 
   return (
     <section className="panel p-5">
-      <div className="flex flex-wrap gap-2 mb-3">
-        <TapButton active={isSai} onClick={() => setSeries("sai")}>{META.index.short}</TapButton>
+      <div className="flex gap-2 mb-3 overflow-x-auto md:flex-wrap md:overflow-visible" role="group" aria-label="Series">
+        <TapButton active={isSai} onClick={() => setSeries("sai")} className="shrink-0">{META.index.short}</TapButton>
         {INDICATORS.map((f) => (
-          <TapButton key={f} active={f === series} onClick={() => setSeries(f)} className="text-base">{META.features[f].name}</TapButton>
+          <TapButton key={f} active={f === series} onClick={() => setSeries(f)} className="text-base shrink-0 whitespace-nowrap">
+            {META.features[f].name}
+          </TapButton>
         ))}
       </div>
       <h2 className="text-xl font-semibold">{name}{unit && <span className="text-ink-2 font-normal"> ({unit})</span>}</h2>

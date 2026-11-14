@@ -62,7 +62,9 @@ export default function App() {
                          flex items-center gap-4">
         <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 flex-1 min-w-0">
           <h1 className="text-2xl md:text-3xl font-bold">Baseline</h1>
-          <span className="text-sm md:text-lg text-ink-2">{crewName} · {META.environments[env].name}</span>
+          <span className="text-sm md:text-lg text-ink-2">
+            {crewName}<span className="hidden sm:inline"> · {META.environments[env].name}</span>
+          </span>
         </div>
         <button type="button" onClick={() => setEmergency(true)}
                 className="tap shrink-0 px-5 md:px-8 rounded-2xl text-xl font-bold text-white flex items-center gap-3 bg-critical">
@@ -71,8 +73,8 @@ export default function App() {
       </header>
 
       {/* Demo control: scrub through the precomputed 120-day mission. */}
-      <div className="panel p-4 mb-4 flex flex-wrap items-center gap-4">
-        <label htmlFor="day" className="text-lg whitespace-nowrap">
+      <div className="panel px-4 py-2 md:p-4 mb-3 md:mb-4 flex flex-wrap items-center gap-x-4">
+        <label htmlFor="day" className="text-base md:text-lg whitespace-nowrap">
           Mission day <span className="font-bold text-2xl">{record.day}</span>
           <span className="text-muted text-sm ml-2">demo</span>
         </label>
@@ -80,10 +82,12 @@ export default function App() {
                onChange={(e) => setDay(+e.target.value)} className="flex-1 min-w-48" />
       </div>
 
-      <nav className="flex flex-wrap gap-2 mb-4" aria-label="Screens">
+      {/* Phones: one row that scrolls sideways inside the bar (the page itself never does);
+          wider screens: the buttons wrap. Review finding 3. */}
+      <nav className="flex gap-2 mb-4 overflow-x-auto md:flex-wrap md:overflow-visible -mx-4 px-4 md:mx-0 md:px-0" aria-label="Screens">
         {SCREENS.map((s) => (
           <button key={s.id} type="button" onClick={() => setScreen(s.id)} aria-current={s.id === screen ? "page" : undefined}
-                  className={`tap px-5 rounded-xl text-lg ${s.id === screen ? "bg-line font-semibold" : "bg-panel"}`}>
+                  className={`tap shrink-0 px-4 md:px-5 rounded-xl text-base md:text-lg whitespace-nowrap ${s.id === screen ? "bg-line font-semibold" : "bg-panel"}`}>
             {s.label}
           </button>
         ))}
