@@ -26,11 +26,11 @@ export function EnvIcon({ id, size = 28 }) {
 }
 
 /** Crew member (one tap to switch between the three demo cases) and mission environment. On wide
- *  screens the crew switch lives in the sidebar's bottom-left corner, so this row hides there. */
+ *  screens both live in the sidebar's bottom-left corner (SidebarPicker), so this block hides there. */
 export function DemoControls({ astronaut, onAstronaut, env, onEnv }) {
   return (
-    <div className="mt-3">
-      <div className="grid grid-cols-3 gap-2 lg:hidden" role="group" aria-label="Crew member">
+    <div className="mt-3 lg:hidden">
+      <div className="grid grid-cols-3 gap-2" role="group" aria-label="Crew member">
         {META.crew.map((c) => (
           <TapButton key={c.id} active={c.id === astronaut} onClick={() => onAstronaut(c.id)} className="text-center! px-2!">
             <span className="hidden sm:inline">{c.display_name}</span>
@@ -51,6 +51,43 @@ export function DemoControls({ astronaut, onAstronaut, env, onEnv }) {
           </TapButton>
         ))}
       </div>
+    </div>
+  );
+}
+
+/** Compact button for the sidebar picker: 44 px high (WCAG minimum; the sidebar is the wide-screen
+ *  demo layout, the 64 px glove-size buttons stay in the timeline panel on phones and tablets). */
+function SmallButton({ active, className = "", ...props }) {
+  return (
+    <button type="button" aria-pressed={active}
+            className={`min-h-11 px-1 rounded-xl text-sm glass-control ${active ? "glass-active text-ink font-semibold" : "bg-panel-2 text-ink-2 hover:text-ink"} ${className}`}
+            {...props} />
+  );
+}
+
+/** Crew member and mission environment in the sidebar's bottom-left corner (wide screens). */
+export function SidebarPicker({ astronaut, onAstronaut, env, onEnv }) {
+  const where = META.environments[env];
+  return (
+    <div className="px-1 grid gap-1">
+      <p className="px-1 text-xs text-ink-2">Crew member</p>
+      <div className="grid grid-cols-3 gap-1" role="group" aria-label="Crew member">
+        {META.crew.map((c) => (
+          <SmallButton key={c.id} active={c.id === astronaut} onClick={() => onAstronaut(c.id)} title={c.display_name}>
+            {c.display_name.replace(/^Crew Member /, "")}
+          </SmallButton>
+        ))}
+      </div>
+      <p className="px-1 mt-1 text-xs text-ink-2">Where is the crew?</p>
+      <div className="grid grid-cols-2 gap-1" role="group" aria-label="Mission environment">
+        {Object.entries(META.environments).map(([id, e]) => (
+          <SmallButton key={id} active={id === env} onClick={() => onEnv(id)} title={e.name}
+                       className="flex items-center gap-1.5 px-2! text-left leading-tight">
+            <EnvIcon id={id} size={18} /><span>{ENV_SHORT[id] ?? e.name}</span>
+          </SmallButton>
+        ))}
+      </div>
+      <p className="px-1 text-xs text-ink-2" aria-live="polite">Earth {where.one_way_delay_text} one way</p>
     </div>
   );
 }

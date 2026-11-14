@@ -13,8 +13,7 @@ import Body from "./screens/Body.jsx";
 import Trends from "./screens/Trends.jsx";
 import EarthLink from "./screens/EarthLink.jsx";
 import Emergency from "./screens/Emergency.jsx";
-import { DemoControls, EnvIcon } from "./screens/Settings.jsx";
-import { TapButton } from "./components/ui.jsx";
+import { DemoControls, SidebarPicker } from "./screens/Settings.jsx";
 import HowWeKnow from "./screens/HowWeKnow.jsx";
 import MissionTimeline from "./components/MissionTimeline.jsx";
 import HelpDialog from "./components/HelpDialog.jsx";
@@ -46,8 +45,7 @@ function NavButton({ screen, active, onClick, vertical = false }) {
 }
 
 /** Floating glass sidebar for wide screens (like a native app's source list). */
-function Sidebar({ screen, onScreen, onHelp, astronaut, onAstronaut, env }) {
-  const where = META.environments[env];
+function Sidebar({ screen, onScreen, onHelp, astronaut, onAstronaut, env, onEnv }) {
   return (
     <aside className="panel hidden lg:flex flex-col gap-1 p-3 w-64 shrink-0 sticky top-4 h-[calc(100vh-2rem)] ml-4 my-4"
            aria-label="Baseline">
@@ -67,25 +65,8 @@ function Sidebar({ screen, onScreen, onHelp, astronaut, onAstronaut, env }) {
       </nav>
       <div className="mt-auto pt-3 border-t border-line flex flex-col gap-2">
         <NavButton screen={{ label: "Help", icon: "nav_help" }} active={false} onClick={onHelp} vertical />
-        {/* Crew switch in the bottom-left corner, with where the selected member is. */}
-        <div className="px-1">
-          <p className="px-1 text-sm text-ink-2">Crew member</p>
-          <div className="grid grid-cols-3 gap-1 mt-1" role="group" aria-label="Crew member">
-            {META.crew.map((c) => (
-              <TapButton key={c.id} active={c.id === astronaut} onClick={() => onAstronaut(c.id)}
-                         title={c.display_name} className="text-center! px-1! text-base!">
-                {c.display_name.replace(/^Crew Member /, "")}
-              </TapButton>
-            ))}
-          </div>
-          <p className="mt-2 flex items-center gap-2 px-1 text-sm text-ink-2" aria-live="polite">
-            <span className="text-ink"><EnvIcon id={env} size={24} /></span>
-            <span>
-              <span className="block text-ink font-semibold">{where.name}</span>
-              Earth {where.one_way_delay_text} one way
-            </span>
-          </p>
-        </div>
+        {/* Crew member and where the crew is, in the bottom-left corner. */}
+        <SidebarPicker astronaut={astronaut} onAstronaut={onAstronaut} env={env} onEnv={onEnv} />
       </div>
     </aside>
   );
@@ -127,7 +108,7 @@ export default function App() {
 
   return (
     <div className="lg:flex lg:items-start">
-      <Sidebar screen={screen} onScreen={setScreen} onHelp={() => setHelp(true)} astronaut={astronaut} onAstronaut={setAstronaut} env={env} />
+      <Sidebar screen={screen} onScreen={setScreen} onHelp={() => setHelp(true)} astronaut={astronaut} onAstronaut={setAstronaut} env={env} onEnv={setEnv} />
 
       <div className="flex-1 min-w-0 max-w-7xl mx-auto p-4 md:p-6">
       {/* Floating glass header: the Emergency button is always visible and never covers content. */}
