@@ -2,17 +2,18 @@
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
 import { useState } from "react";
-import { META, checkinStreak, recentDirection } from "../data.js";
+import { INDICATORS, META, checkinStreak, recentDirection } from "../data.js";
 import { ESCALATION_TEXT, EVENT_TEXT, PROMPTS } from "../content/texts.js";
 import Gauge from "../components/Gauge.jsx";
 import BodyMap from "../components/BodyMap.jsx";
 import HazardStrip from "../components/HazardStrip.jsx";
 import { StatusIcon } from "../components/icons.jsx";
-import { Panel, SourceLink, Text } from "../components/ui.jsx";
+import { Panel, SourceLink, TapButton, Text } from "../components/ui.jsx";
 
 // ===== Today: SAI, body figure, what moved, actions, hazards, streak =====
-export default function Today({ record, records, env, onOpenSystem }) {
+export default function Today({ record, records, env, onOpenSystem, onOpenCheckin }) {
   const moved = Object.entries(record.contributions).filter(([f]) => f !== "other");
+  const missing = INDICATORS.filter((f) => record.values[f] == null);
   const streak = checkinStreak(records, record.day);
   const [openPrompt, setOpenPrompt] = useState(null);
 
@@ -39,6 +40,19 @@ export default function Today({ record, records, env, onOpenSystem }) {
             <StatusIcon status={record.level} /> {ESCALATION_TEXT[record.escalation]}
           </div>
           <p className="text-ink-2">Check-in streak: <span className="font-semibold text-ink">{streak} days</span></p>
+          {/* Daily reminder (challenge: prompt measurements as part of the routine). */}
+          <div>
+            <p className="flex items-center gap-3">
+              <StatusIcon status={missing.length ? "info" : "green"} />
+              Today’s measurements: <span className="font-semibold">{INDICATORS.length - missing.length} of {INDICATORS.length}</span>
+            </p>
+            {missing.length > 0 && (
+              <>
+                <p className="text-ink-2 text-base mt-1">Still to do: {missing.map((f) => META.features[f].name).join(", ")}</p>
+                <TapButton onClick={onOpenCheckin} className="mt-2 w-full text-center">Open check-in</TapButton>
+              </>
+            )}
+          </div>
         </div>
       </Gauge>
       <BodyMap record={record} selected={null} onSelect={onOpenSystem} compact />
