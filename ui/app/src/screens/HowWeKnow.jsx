@@ -5,8 +5,9 @@ import { EVIDENCE } from "../content/texts.js";
 import { SourcesList } from "./Settings.jsx";
 
 // ===== How we know: what Baseline does and the evidence for it, limits included =====
-// Reads top-down: the answer in four numbers, how it works in four steps, the limits (always
-// visible), then the details folded (contest, confirmation, one-time test, sources).
+// Reads top-down: the answer in four numbers, how it works in four steps, then the details
+// folded (contest, confirmation, one-time test, sources). The synthetic-data label stays under
+// the numbers; the full limitations are in README → Limitations.
 
 /** Horizontal bars, one per method, directly labelled (value in text, never colour alone). */
 function BenchmarkBars({ rows }) {
@@ -40,7 +41,7 @@ function Fold({ title, children }) {
 }
 
 export default function HowWeKnow() {
-  const { question, answer, headline, steps, benchmark, confirmation, holdout, limits, label } = EVIDENCE;
+  const { question, answer, headline, steps, benchmark, confirmation, holdout, label } = EVIDENCE;
   return (
     <div className="grid gap-4">
       {/* 1. The answer in four numbers. */}
@@ -77,15 +78,7 @@ export default function HowWeKnow() {
         </ol>
       </section>
 
-      {/* 3. Honest limits, always visible. */}
-      <section className="panel p-5">
-        <h2 className="text-xl font-semibold">{limits.title}</h2>
-        <ul className="grid gap-2 list-disc ml-6 text-lg mt-2">
-          {limits.items.map((t) => <li key={t}>{t}</li>)}
-        </ul>
-      </section>
-
-      {/* 4. The details, folded. */}
+      {/* 3. The details, folded. */}
       <Fold title={benchmark.title}>
         <p className="text-lg">{benchmark.note}</p>
         <BenchmarkBars rows={benchmark.rows} />

@@ -57,11 +57,7 @@ function ReplaySummary({ records, scenario, onClose }) {
           </li>
         ))}
       </ul>
-      <p className="mt-2 text-ink-2 text-base">
-        One synthetic crew member. Across the one-time test on an unseen change (infection onset), Baseline was a median
-        5 days earlier than clinical limits and 7.5 days earlier than single-value limits, with more false alarms.
-        Proof of concept, not clinical validation.
-      </p>
+      <p className="mt-2 text-ink-2 text-sm">Synthetic demo data — proof of concept, not clinical validation.</p>
       <button type="button" onClick={onClose} className="tap mt-2 px-4 rounded-xl bg-panel-2">Close summary</button>
     </div>
   );
@@ -98,64 +94,57 @@ export default function MissionTimeline({ records, day, onDay, astronaut, contro
   const stop = () => { clearInterval(timer.current); setPlaying(false); setSummary(true); };
 
   return (
-    <div className="panel px-4 py-2 md:p-4 mb-3 md:mb-4">
-      <div className="flex flex-wrap items-center gap-3">
-        <label htmlFor="day" className="text-base md:text-lg whitespace-nowrap">
-          Mission day <span className="font-bold text-2xl tabular-nums">{day}</span>
-          <span className="text-muted text-sm ml-1">/ {days}</span>
+    <div className="panel px-4 py-3 md:px-5 mb-3 md:mb-4">
+      {/* Row 1: the day, one-day steps, replay. */}
+      <div className="flex items-center gap-2">
+        <button type="button" onClick={() => step(-1)} aria-label="Previous day" className="tap px-3 rounded-xl bg-panel-2 text-lg">◀</button>
+        <label htmlFor="day" className="flex-1 text-center">
+          <span className="block text-sm text-ink-2 whitespace-nowrap">Mission day</span>
+          <span className="whitespace-nowrap"><span className="text-3xl font-bold tabular-nums">{day}</span><span className="text-ink-2"> / {days}</span></span>
         </label>
-        <span className="text-muted text-sm hidden sm:inline">synthetic demo mission</span>
-        <div className="ml-auto flex gap-2">
-          <button type="button" onClick={playing ? stop : replay} aria-pressed={playing}
-                  className="tap px-4 rounded-xl bg-model text-on-status font-semibold">
-            {playing ? "■ Stop" : "▶ Replay mission"}
-          </button>
-          <button type="button" onClick={() => step(-1)} aria-label="Previous day"
-                  className="tap px-3 rounded-xl bg-panel-2 text-lg">◀</button>
-          <button type="button" onClick={() => step(1)} aria-label="Next day"
-                  className="tap px-3 rounded-xl bg-panel-2 text-lg">▶</button>
-        </div>
+        <button type="button" onClick={() => step(1)} aria-label="Next day" className="tap px-3 rounded-xl bg-panel-2 text-lg">▶</button>
+        <button type="button" onClick={playing ? stop : replay} aria-pressed={playing}
+                aria-label={playing ? "Stop replay" : "Replay the whole mission"}
+                className="tap px-4 rounded-xl bg-model text-on-status font-semibold">
+          {playing ? "■" : "▶"}<span className="hidden sm:inline">{playing ? " Stop" : " Replay"}</span>
+        </button>
       </div>
 
-      <div className="relative mt-2">
-        {/* Solar particle events (NASA DONKI): tap to jump to the day. */}
-        <div className="relative h-7" aria-label="Solar particle events from NASA DONKI">
-          {sep.map((d) => (
-            <button key={d} type="button" onClick={() => onDay(d)} title={`Day ${d}: solar particle event (NASA DONKI)`}
-                    aria-label={`Day ${d}: solar particle event`}
-                    className="absolute top-0 -translate-x-1/2 text-warning hover:text-ink" style={{ left: at(d) }}>
-              <Glyph name="radiation" size={20} className="" />
-            </button>
-          ))}
-        </div>
-        {/* Daily status of this crew member (shape + word are on the Today screen). */}
-        <div className="relative">
-          <div className="flex h-3 rounded overflow-hidden" aria-hidden="true">
+      {/* Row 2: one track — status strip, slider on top, solar events above. */}
+      <div className="relative mt-3 pt-5">
+        {sep.map((d) => (
+          <button key={d} type="button" onClick={() => onDay(d)} title={`Day ${d}: solar particle event (NASA DONKI)`}
+                  aria-label={`Day ${d}: solar particle event`}
+                  className="absolute top-0 -translate-x-1/2 text-warning hover:text-ink" style={{ left: at(d) }}>
+            <Glyph name="radiation" size={16} className="" />
+          </button>
+        ))}
+        <div className="relative h-8">
+          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex h-2.5 rounded-full overflow-hidden" aria-hidden="true">
             {records.map((r) => (
               <div key={r.day} className="flex-1"
                    style={{ background: r.level === "green" ? "var(--color-panel-2)" : STATUS_COLOR[r.level], opacity: r.day > day ? 0.35 : 1 }} />
             ))}
           </div>
           {scenario && (
-            <span className="absolute -top-1 h-5 border-l-2 border-dashed border-ink" style={{ left: at(scenario.start_day) }}
-                  title={`Day ${scenario.start_day}: simulated ${scenario.name.toLowerCase()} begins`} aria-hidden="true" />
+            <span className="absolute top-0 h-8 border-l-2 border-dotted border-ink" style={{ left: at(scenario.start_day) }}
+                  title={`Day ${scenario.start_day}: simulated change begins`} aria-hidden="true" />
           )}
+          <input id="day" type="range" min="1" max={days} value={day} onChange={(e) => onDay(+e.target.value)}
+                 className="track-range absolute inset-0 w-full h-8" />
         </div>
-        <input id="day" type="range" min="1" max={days} value={day} onChange={(e) => onDay(+e.target.value)}
-               className="w-full mt-1" />
       </div>
 
-      {today.length > 0 && (
-        <p className="text-sm text-ink-2">
-          <Glyph name="radiation" size={14} className="inline text-warning" /> Day {day}:{" "}
-          {today.length === 1 ? "solar particle event" : `${today.length} solar particle event records`},{" "}
-          {today[0].time.slice(0, 10)} from {today[0].time.slice(11, 16)} UTC ·{" "}
-          <a href={today[0].link} target="_blank" rel="noreferrer" className="underline underline-offset-2">NASA DONKI record</a>
-        </p>
-      )}
-      <p className="text-muted text-sm hidden md:block">
-        Strip: this crew member’s daily status (grey = nominal){scenario && <> · dashed line: simulated change begins (day {scenario.start_day})</>} ·{" "}
-        <Glyph name="radiation" size={14} className="inline text-warning" /> real solar particle events from NASA DONKI ({META.mission.start_date} onward).
+      {/* Row 3: three-word legend, and the event of the day when there is one. */}
+      <p className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-sm text-ink-2">
+        <span className="flex items-center gap-1"><span className="inline-block w-3 h-2.5 rounded-sm" style={{ background: STATUS_COLOR.orange }} />status</span>
+        <span className="flex items-center gap-1"><Glyph name="radiation" size={12} className="text-warning" />solar event</span>
+        {scenario && <span className="flex items-center gap-1"><span className="inline-block h-3 border-l-2 border-dotted border-ink" />change starts</span>}
+        {today.length > 0 && (
+          <a href={today[0].link} target="_blank" rel="noreferrer" className="underline underline-offset-2 text-warning">
+            Solar event today · NASA DONKI ↗
+          </a>
+        )}
       </p>
       {controls}
       {summary && !playing && <ReplaySummary records={records} scenario={scenario} onClose={() => setSummary(false)} />}

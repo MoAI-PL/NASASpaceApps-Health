@@ -70,39 +70,41 @@ export default function Trends({ records, day, astronaut, onAbout }) {
     ...row,
     first: records.find((r) => r.day <= day && (!scenario || r.day >= scenario.start_day) && row.test(r))?.day ?? null,
   }));
+  const lead = firsts[0].first && firsts[1].first ? firsts[1].first - firsts[0].first : 0; // vs clinical limits
 
   return (
     <section className="panel p-5">
-      <div className="flex gap-2 mb-3 overflow-x-auto md:flex-wrap md:overflow-visible" role="group" aria-label="Series">
-        <TapButton active={isSai} onClick={() => setSeries("sai")} className="shrink-0">Index (all values)</TapButton>
-        {INDICATORS.map((f) => (
-          <TapButton key={f} active={f === series} onClick={() => setSeries(f)} className="text-base shrink-0 whitespace-nowrap">
-            {META.features[f].name}
-          </TapButton>
-        ))}
+      {/* 1. The answer first: who noticed the change, and when. */}
+      <div className="flex flex-wrap items-baseline gap-x-3">
+        <h2 className="text-2xl font-semibold">Who noticed first?</h2>
+        {scenario && <span className="text-ink-2">change starts day {scenario.start_day}</span>}
       </div>
-      {/* Plain summary first: who noticed the change, and when. */}
-      <h2 className="text-2xl font-semibold">Who noticed first?</h2>
-      <p className="mt-1 text-lg text-ink-2">
-        {scenario
-          ? `Simulated ${scenario.name.toLowerCase()} starts on day ${scenario.start_day}. First alert after that, up to day ${day}:`
-          : `No health change was simulated for this crew member. First alert up to day ${day}:`}
-      </p>
       <div className="grid grid-cols-3 gap-2 mt-3">
-        {firsts.map((m) => (
-          <div key={m.label} className="p-3 rounded-2xl bg-panel-2">
-            <p className="flex items-center gap-2 text-base text-ink-2">
+        {firsts.map((m, i) => (
+          <div key={m.label} className={`p-3 rounded-2xl ${i === 0 ? "glass-active" : "bg-panel-2"}`}>
+            <p className="flex items-center gap-2 text-sm sm:text-base text-ink-2">
               <span className="inline-block w-3 h-3 rounded-sm shrink-0" style={{ background: m.color }} aria-hidden="true" />{m.label}
             </p>
-            <p className="text-2xl font-semibold mt-1">{m.first ? `Day ${m.first}` : "—"}</p>
+            <p className={`font-semibold mt-1 ${i === 0 ? "text-3xl" : "text-2xl"}`}>{m.first ? <><span className="text-base font-normal text-ink-2">Day </span>{m.first}</> : "—"}</p>
           </div>
         ))}
       </div>
+      {lead > 0 && <p className="mt-2 text-lg"><span className="font-semibold text-model">{lead} days earlier</span> than clinical limits.</p>}
 
-      <h3 className="mt-6 text-xl font-semibold">{name}{unit && <span className="text-ink-2 font-normal"> ({unit})</span>}</h3>
-      <p className="mt-1 text-base text-ink-2">
-        White line: {isSai ? "the index each day" : "your value each day"} · grey band: {isSai ? "watch zone" : "your normal range"} ·
-        coloured marks: days a method raised an alert · dashed line: today{scenario ? " · dotted line: change starts" : ""}.
+      {/* 2. The chart: one control to pick what to show, a one-line legend. */}
+      <div className="mt-6 flex flex-wrap items-center gap-3">
+        <label htmlFor="series" className="text-xl font-semibold">Show</label>
+        <select id="series" value={series} onChange={(e) => setSeries(e.target.value)}
+                className="tap px-4 rounded-2xl bg-panel-2 glass-control text-lg text-ink">
+          <option value="sai">Index (all values together)</option>
+          {INDICATORS.map((f) => <option key={f} value={f}>{META.features[f].name} ({META.features[f].unit})</option>)}
+        </select>
+      </div>
+      <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-ink-2">
+        <span className="flex items-center gap-1"><span className="inline-block w-5 h-0.5 bg-ink" />{isSai ? "index" : "your value"}</span>
+        <span className="flex items-center gap-1"><span className="inline-block w-4 h-3 rounded-sm bg-line" />{isSai ? "watch zone" : "your normal"}</span>
+        <span className="flex items-center gap-1"><span className="inline-block w-1 h-3 bg-model" />alert day</span>
+        {scenario && <span className="flex items-center gap-1"><span className="inline-block h-3 border-l-2 border-dotted border-ink" />change starts</span>}
       </p>
       <div ref={boxRef} className="mt-2 w-full">
         <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} className="block max-w-full" role="img"
@@ -146,8 +148,8 @@ export default function Trends({ records, day, astronaut, onAbout }) {
         </svg>
       </div>
       {onAbout && (
-        <button type="button" onClick={onAbout} className="tap mt-3 px-5 rounded-2xl bg-panel-2 glass-control text-lg">
-          Why trust this? Method, evidence and limits ▶
+        <button type="button" onClick={onAbout} className="mt-3 text-lg underline underline-offset-4 text-ink-2 hover:text-ink">
+          Why trust this? See the evidence ▶
         </button>
       )}
     </section>

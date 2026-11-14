@@ -213,3 +213,16 @@ input[type="range"] {
   outline: 3px solid var(--color-model);
   outline-offset: 2px;
 }
+
+/* Mission-day slider drawn on top of the status strip: transparent track, one clear thumb. */
+.track-range { -webkit-appearance: none; appearance: none; background: transparent; cursor: pointer; }
+.track-range::-webkit-slider-runnable-track { background: transparent; height: 100%; }
+.track-range::-moz-range-track { background: transparent; }
+.track-range::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 22px; height: 22px; margin-top: 5px; border-radius: 9999px;
+  background: var(--color-ink); border: 3px solid var(--color-model); box-shadow: 0 0 10px rgb(86 180 233 / 0.7);
+}
+.track-range::-moz-range-thumb {
+  width: 18px; height: 18px; border-radius: 9999px;
+  background: var(--color-ink); border: 3px solid var(--color-model); box-shadow: 0 0 10px rgb(86 180 233 / 0.7);
+}
