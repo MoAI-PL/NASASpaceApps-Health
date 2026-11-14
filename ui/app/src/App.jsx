@@ -131,7 +131,7 @@ export default function App() {
         </span>
         <div className="flex-1 min-w-0">
           {/* Phones: brand + call sign; wide screens (brand is in the sidebar): screen title + crew. */}
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight truncate">
+          <h1 className="text-lg sm:text-2xl md:text-3xl font-bold tracking-tight truncate">
             <span className="lg:hidden">Astrobalance</span>
             <span className="hidden lg:inline">{current?.label}</span>
           </h1>

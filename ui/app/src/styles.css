@@ -174,11 +174,22 @@ main .panel:nth-child(n + 5) { animation-delay: 240ms; }
   100% { transform: translateY(470px); opacity: 0; }
 }
 
-/* Large tap targets for gloves and microgravity (PLAN.md UI brief: >= 64 px). */
+/* Large tap targets for gloves and microgravity (PLAN.md UI brief: >= 64 px) on touch screens.
+   With a mouse or trackpad (precise pointer, no gloves) they shrink to 52 px, still above the
+   WCAG 2.2 minimum, so the screen looks less crowded. */
 @utility tap {
   min-height: 64px;
   min-width: 64px;
+  @media (pointer: fine) {
+    min-height: 52px;
+    min-width: 52px;
+  }
 }
+
+/* Slightly denser layout: text, spacing and panels are all sized in rem, so a 15 px root
+   (browser default 16 px) scales the whole app down by about 6 % in one place. It follows the
+   user's own browser font setting (93.75 % of it), so zoom and accessibility settings still work. */
+html { font-size: 93.75%; }
 
 /* ===== Fallbacks: never trade readability for the glass look ===== */
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
