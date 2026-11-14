@@ -9,29 +9,32 @@ import { TapButton } from "../components/ui.jsx";
 // DemoControls (crew member, mission environment) sits in the mission-timeline panel: it sets up
 // the demo, it is not a daily task for the crew. SourcesList is shown in the "About" dialog.
 
-/** Crew member and mission environment, folded away under one summary line. */
+/** Crew member always visible (one tap to switch between the three demo cases); the mission
+ *  environment folded under one line. */
 export function DemoControls({ astronaut, onAstronaut, env, onEnv }) {
-  const crew = META.crew.find((c) => c.id === astronaut)?.display_name;
   return (
-    <details className="mt-2">
-      <summary className="cursor-pointer text-ink-2 text-base py-2">
-        Demo: {crew} · {META.environments[env].name} — change
-      </summary>
-      <div className="grid gap-3 pt-2">
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Crew member">
-          {META.crew.map((c) => (
-            <TapButton key={c.id} active={c.id === astronaut} onClick={() => onAstronaut(c.id)}>{c.display_name}</TapButton>
-          ))}
-        </div>
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Mission environment">
+    <div className="mt-3">
+      <div className="grid grid-cols-3 gap-2" role="group" aria-label="Crew member">
+        {META.crew.map((c) => (
+          <TapButton key={c.id} active={c.id === astronaut} onClick={() => onAstronaut(c.id)} className="text-center! px-2!">
+            <span className="hidden sm:inline">{c.display_name}</span>
+            <span className="sm:hidden">{c.display_name.replace(/^Crew Member /, "")}</span>
+          </TapButton>
+        ))}
+      </div>
+      <details className="mt-1">
+        <summary className="cursor-pointer text-ink-2 text-base py-2">
+          Mission environment: {META.environments[env].name} — change
+        </summary>
+        <div className="flex flex-wrap gap-2 pt-1" role="group" aria-label="Mission environment">
           {Object.entries(META.environments).map(([id, e]) => (
             <TapButton key={id} active={id === env} onClick={() => onEnv(id)}>
               {e.name} <span className="text-ink-2 text-base">· {e.one_way_delay_text}</span>
             </TapButton>
           ))}
         </div>
-      </div>
-    </details>
+      </details>
+    </div>
   );
 }
 
