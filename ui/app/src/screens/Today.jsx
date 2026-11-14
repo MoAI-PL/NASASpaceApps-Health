@@ -40,7 +40,7 @@ export default function Today({ record, records, env, onOpenSystem }) {
           <p className="text-ink-2">Check-in streak: <span className="font-semibold text-ink">{streak} days</span></p>
         </div>
       </Gauge>
-      <BodyMap record={record} selected={null} onSelect={onOpenSystem} />
+      <BodyMap record={record} selected={null} onSelect={onOpenSystem} compact />
 
       <Panel title="What moved away from your normal">
         {record.sai == null ? (
