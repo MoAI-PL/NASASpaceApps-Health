@@ -64,18 +64,46 @@ export default function Trends({ records, day, astronaut, onAbout }) {
   const line = records.filter((r) => value(r) != null && r.day <= day).map((r) => `${X(r.day)},${Y(value(r))}`).join(" ");
   const name = isSai ? META.index.name : META.features[series].name;
   const unit = isSai ? "" : META.features[series].unit;
+  // First alert of each method so far, and the start of the simulated change (meta.crew).
+  const scenario = META.crew.find((c) => c.id === astronaut)?.scenario ?? null;
+  const firsts = ALERT_ROWS.map((row) => ({
+    ...row,
+    first: records.find((r) => r.day <= day && (!scenario || r.day >= scenario.start_day) && row.test(r))?.day ?? null,
+  }));
 
   return (
     <section className="panel p-5">
       <div className="flex gap-2 mb-3 overflow-x-auto md:flex-wrap md:overflow-visible" role="group" aria-label="Series">
-        <TapButton active={isSai} onClick={() => setSeries("sai")} className="shrink-0">Index</TapButton>
+        <TapButton active={isSai} onClick={() => setSeries("sai")} className="shrink-0">Index (all values)</TapButton>
         {INDICATORS.map((f) => (
           <TapButton key={f} active={f === series} onClick={() => setSeries(f)} className="text-base shrink-0 whitespace-nowrap">
             {META.features[f].name}
           </TapButton>
         ))}
       </div>
-      <h2 className="text-xl font-semibold">{name}{unit && <span className="text-ink-2 font-normal"> ({unit})</span>}</h2>
+      {/* Plain summary first: who noticed the change, and when. */}
+      <h2 className="text-2xl font-semibold">Who noticed first?</h2>
+      <p className="mt-1 text-lg text-ink-2">
+        {scenario
+          ? `Simulated ${scenario.name.toLowerCase()} starts on day ${scenario.start_day}. First alert after that, up to day ${day}:`
+          : `No health change was simulated for this crew member. First alert up to day ${day}:`}
+      </p>
+      <div className="grid grid-cols-3 gap-2 mt-3">
+        {firsts.map((m) => (
+          <div key={m.label} className="p-3 rounded-2xl bg-panel-2">
+            <p className="flex items-center gap-2 text-base text-ink-2">
+              <span className="inline-block w-3 h-3 rounded-sm shrink-0" style={{ background: m.color }} aria-hidden="true" />{m.label}
+            </p>
+            <p className="text-2xl font-semibold mt-1">{m.first ? `Day ${m.first}` : "—"}</p>
+          </div>
+        ))}
+      </div>
+
+      <h3 className="mt-6 text-xl font-semibold">{name}{unit && <span className="text-ink-2 font-normal"> ({unit})</span>}</h3>
+      <p className="mt-1 text-base text-ink-2">
+        White line: {isSai ? "the index each day" : "your value each day"} · grey band: {isSai ? "watch zone" : "your normal range"} ·
+        coloured marks: days a method raised an alert · dashed line: today{scenario ? " · dotted line: change starts" : ""}.
+      </p>
       <div ref={boxRef} className="mt-2 w-full">
         <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} className="block max-w-full" role="img"
              aria-label={`${name} trend up to day ${day}`}>
@@ -112,9 +140,11 @@ export default function Trends({ records, day, astronaut, onAbout }) {
                   textAnchor={i === 0 ? "start" : i === dayTicks.length - 1 ? "end" : "middle"}>Day {d}</text>
           ))}
           <line x1={X(day)} x2={X(day)} y1={ROW_Y} y2={BOTTOM} stroke="var(--color-ink-2)" strokeDasharray="4 4" />
+          {scenario && (
+            <line x1={X(scenario.start_day)} x2={X(scenario.start_day)} y1={ROW_Y} y2={BOTTOM} stroke="var(--color-ink)" strokeDasharray="1 4" strokeWidth="2" />
+          )}
         </svg>
       </div>
-      <p className="mt-3 text-base text-ink-2">Each mark is a day on which that method raised an alert.</p>
       {onAbout && (
         <button type="button" onClick={onAbout} className="tap mt-3 px-5 rounded-2xl bg-panel-2 glass-control text-lg">
           Why trust this? Method, evidence and limits ▶

@@ -14,7 +14,7 @@ import Trends from "./screens/Trends.jsx";
 import EarthLink from "./screens/EarthLink.jsx";
 import Emergency from "./screens/Emergency.jsx";
 import { DemoControls } from "./screens/Settings.jsx";
-import AboutDialog from "./components/AboutDialog.jsx";
+import HowWeKnow from "./screens/HowWeKnow.jsx";
 import MissionTimeline from "./components/MissionTimeline.jsx";
 import HelpDialog from "./components/HelpDialog.jsx";
 import Welcome from "./components/Welcome.jsx";
@@ -25,6 +25,7 @@ const SCREENS = [
   { id: "checkin", label: "Check-in", icon: "nav_checkin" },
   { id: "body", label: "Body", icon: "nav_body" },
   { id: "trends", label: "Trends", icon: "nav_trends" },
+  { id: "how", label: "How we know", short: "Evidence", icon: "nav_how" },
 ];
 
 // ===== Navigation =====
@@ -37,7 +38,8 @@ function NavButton({ screen, active, onClick, vertical = false }) {
                         ${vertical ? "w-full gap-3 px-4 text-lg" : "flex-col sm:flex-row justify-center gap-1 sm:gap-3 px-1 sm:px-4 text-sm sm:text-base"}
                         ${active ? "glass-active font-semibold text-ink" : "border-transparent! shadow-none! text-ink-2"}`}>
       <Glyph name={screen.icon} size={vertical ? 26 : 22} className={active ? "text-model drop-shadow-[0_0_6px_rgb(86_180_233/0.85)]" : "text-ink-2"} />
-      {screen.label}
+      {/* Phones: a short word so five tabs fit side by side. */}
+      {screen.short && !vertical ? (<><span className="sm:hidden">{screen.short}</span><span className="hidden sm:inline">{screen.label}</span></>) : screen.label}
     </button>
   );
 }
@@ -96,7 +98,6 @@ export default function App() {
   const [system, setSystem] = useState("heart");
   const [emergency, setEmergency] = useState(false);
   const [help, setHelp] = useState(false);
-  const [about, setAbout] = useState(false);
   const [welcomed, setWelcomed] = usePersisted("intro", "show", (v) => v === "show" || v === "seen");
   const [queued, setQueued] = useState([]);
 
@@ -143,14 +144,14 @@ export default function App() {
 
       {/* Phones and tablets: one row of glass pills that scrolls sideways inside the bar (the page
           itself never does). Wide screens use the sidebar instead. */}
-      <nav className="lg:hidden grid grid-cols-4 gap-2 mb-4" aria-label="Screens">
+      <nav className="lg:hidden grid grid-cols-5 gap-1 sm:gap-2 mb-4" aria-label="Screens">
         {SCREENS.map((s) => (
           <NavButton key={s.id} screen={s} active={s.id === screen} onClick={() => setScreen(s.id)} />
         ))}
       </nav>
 
       <main>
-        {/* Four tabs only. Earth link lives on Today; How we know and sources open from "?" and from
+        {/* Five tabs. Earth link lives on Today; How we know (with the sources) opens from "?" and from
             Trends; crew member and environment are demo controls in the timeline panel. */}
         {screen === "today" && (
           <div className="grid gap-4">
@@ -162,14 +163,14 @@ export default function App() {
         )}
         {screen === "checkin" && <CheckIn record={record} onEmergency={() => setEmergency(true)} />}
         {screen === "body" && <Body record={record} records={records} system={system} onSelect={setSystem} />}
-        {screen === "trends" && <Trends records={records} day={record.day} astronaut={astronaut} onAbout={() => setAbout(true)} />}
+        {screen === "trends" && <Trends records={records} day={record.day} astronaut={astronaut} onAbout={() => setScreen("how")} />}
+        {screen === "how" && <HowWeKnow />}
       </main>
 
       <footer className="mt-8 mb-8 text-sm text-muted">{META.disclaimer}</footer>
       </div>
       {help && <HelpDialog onClose={() => setHelp(false)} onIntro={() => { setHelp(false); setWelcomed("show"); }}
-                            onAbout={() => { setHelp(false); setAbout(true); }} />}
-      {about && <AboutDialog onClose={() => setAbout(false)} />}
+                            onAbout={() => { setHelp(false); setScreen("how"); }} />}
       {welcomed === "show" && !emergency && <Welcome onClose={() => setWelcomed("seen")} />}
       {emergency && <Emergency env={env} record={record} onClose={() => setEmergency(false)} />}
     </div>

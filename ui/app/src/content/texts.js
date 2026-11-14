@@ -273,11 +273,20 @@ export const SYSTEM_TEXT = {
 // update them if those files are regenerated.
 export const EVIDENCE = {
   label: "Synthetic data calibrated on published sources — proof of concept, not clinical validation.",
+  // The four numbers a reader sees first (same sources as below).
+  question: "Can you trust Baseline?",
+  answer: "We tested it like a scientist would: a fair contest against other methods, then one test on a health change it had never seen.",
+  headline: [
+    { value: "10 of 10", caption: "infections caught in the one-time test on an unseen change", compare: "clinical limits: 7 of 10" },
+    { value: "+5 days", caption: "earlier than clinical limits (median)", compare: "3 cases only Baseline caught" },
+    { value: "+7.5 days", caption: "earlier than single-value limits (median)", compare: "all 10 caught by both" },
+    { value: "82%", caption: "of changes caught within 21 days in the fair contest", compare: "clinical limits: 39%" },
+  ],
   steps: [
-    { title: "1. Your personal normal", body: "Days 1–21 of the mission teach Baseline what is normal for you: each indicator becomes a distance from your own average." },
-    { title: "2. Drift over 7 days", body: "Every day, the last 7 days of all indicators are looked at together. Several small shifts in the same direction count, even when no single value crosses a limit." },
-    { title: "3. One index", body: "The Systemic Anomaly Index says how unusual that drift is compared with healthy days (0–100). The parts add up exactly, so the app can say which indicators moved." },
-    { title: "Safety net", body: "Critical limits and the Emergency mode work without the model." },
+    { title: "1. Your personal normal", body: "The first 21 days teach Baseline what is normal for you." },
+    { title: "2. Drift over 7 days", body: "It watches all values move together, not one at a time." },
+    { title: "3. One index", body: "0–100: how unusual your week is, and which values caused it." },
+    { title: "Safety net", body: "Critical limits and Emergency work even without the model." },
   ],
   benchmark: {
     title: "1 · Chosen in a fair contest",

@@ -2,11 +2,11 @@
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
 import { EVIDENCE } from "../content/texts.js";
-import { Panel } from "../components/ui.jsx";
+import { SourcesList } from "./Settings.jsx";
 
 // ===== How we know: what Baseline does and the evidence for it, limits included =====
-// One honest page: method in plain words, then model selection → confirmation → one-time
-// hold-out test, then what the results do not show. All text lives in content/texts.js.
+// Reads top-down: the answer in four numbers, how it works in four steps, the limits (always
+// visible), then the details folded (contest, confirmation, one-time test, sources).
 
 /** Horizontal bars, one per method, directly labelled (value in text, never colour alone). */
 function BenchmarkBars({ rows }) {
@@ -27,28 +27,71 @@ function BenchmarkBars({ rows }) {
   );
 }
 
-export default function HowWeKnow() {
-  const { steps, benchmark, confirmation, holdout, limits, label } = EVIDENCE;
+/** A folded section: one line closed, details when opened. */
+function Fold({ title, children }) {
   return (
-    <div className="grid gap-4 lg:grid-cols-2 lg:items-start">
-      <Panel title="How Baseline works" className="lg:col-span-2">
-        <ol className="grid gap-4 md:grid-cols-4">
-          {steps.map((s) => (
-            <li key={s.title}>
-              <h3 className="text-lg font-semibold">{s.title}</h3>
-              <p className="mt-1 text-ink-2">{s.body}</p>
+    <details className="group panel">
+      <summary className="tap flex items-center gap-3 px-5 cursor-pointer text-lg list-none">
+        <span aria-hidden="true" className="transition-transform group-open:rotate-90">▶</span> {title}
+      </summary>
+      <div className="px-5 pb-5">{children}</div>
+    </details>
+  );
+}
+
+export default function HowWeKnow() {
+  const { question, answer, headline, steps, benchmark, confirmation, holdout, limits, label } = EVIDENCE;
+  return (
+    <div className="grid gap-4">
+      {/* 1. The answer in four numbers. */}
+      <section className="panel p-5">
+        <h2 className="text-3xl font-bold">{question}</h2>
+        <p className="mt-2 text-lg text-ink-2 max-w-3xl">{answer}</p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-5">
+          {headline.map((h) => (
+            <div key={h.value} className="p-4 rounded-2xl glass-active">
+              <p className="text-4xl font-bold text-model">{h.value}</p>
+              <p className="mt-2 text-base">{h.caption}</p>
+              <p className="mt-1 text-sm text-ink-2">{h.compare}</p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-4 text-sm text-ink-2">{label}</p>
+      </section>
+
+      {/* 2. How it works in four short steps. */}
+      <section className="panel p-5">
+        <h2 className="text-xl font-semibold">How it works</h2>
+        <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mt-3">
+          {steps.map((s, n) => (
+            <li key={s.title} className="flex gap-3">
+              <span className="grid place-items-center w-10 h-10 shrink-0 rounded-full glass-active text-lg font-bold" aria-hidden="true">
+                {n < 3 ? n + 1 : "!"}
+              </span>
+              <span>
+                <span className="block text-lg font-semibold">{s.title.replace(/^\d\.\s*/, "")}</span>
+                <span className="block mt-1 text-ink-2">{s.body}</span>
+              </span>
             </li>
           ))}
         </ol>
-      </Panel>
+      </section>
 
-      <Panel title={benchmark.title}>
+      {/* 3. Honest limits, always visible. */}
+      <section className="panel p-5">
+        <h2 className="text-xl font-semibold">{limits.title}</h2>
+        <ul className="grid gap-2 list-disc ml-6 text-lg mt-2">
+          {limits.items.map((t) => <li key={t}>{t}</li>)}
+        </ul>
+      </section>
+
+      {/* 4. The details, folded. */}
+      <Fold title={benchmark.title}>
         <p className="text-lg">{benchmark.note}</p>
         <BenchmarkBars rows={benchmark.rows} />
         <p className="mt-3 text-ink-2 text-base">{benchmark.footnote}</p>
-      </Panel>
-
-      <Panel title={confirmation.title}>
+      </Fold>
+      <Fold title={confirmation.title}>
         <p className="text-lg">{confirmation.note}</p>
         <table className="w-full mt-3 text-lg">
           <thead>
@@ -64,9 +107,8 @@ export default function HowWeKnow() {
             ))}
           </tbody>
         </table>
-      </Panel>
-
-      <Panel title={holdout.title}>
+      </Fold>
+      <Fold title={holdout.title}>
         <p className="text-lg">{holdout.note}</p>
         <dl className="mt-3 grid gap-3">
           {holdout.facts.map(([k, v]) => (
@@ -76,15 +118,10 @@ export default function HowWeKnow() {
             </div>
           ))}
         </dl>
-      </Panel>
-
-      <Panel title={limits.title}>
-        <ul className="grid gap-2 list-disc ml-6 text-lg">
-          {limits.items.map((t) => <li key={t}>{t}</li>)}
-        </ul>
-      </Panel>
-
-      <p className="lg:col-span-2 text-ink-2">{label}</p>
+      </Fold>
+      <Fold title="Sources">
+        <SourcesList />
+      </Fold>
     </div>
   );
 }
