@@ -37,7 +37,7 @@ function NavButton({ screen, active, onClick, vertical = false }) {
             className={`tap shrink-0 flex items-center gap-3 rounded-2xl whitespace-nowrap glass-control
                         ${vertical ? "w-full px-4 text-lg" : "px-4 text-base"}
                         ${active ? "glass-active font-semibold text-ink" : "border-transparent! shadow-none! text-ink-2"}`}>
-      <Glyph name={screen.icon} size={vertical ? 26 : 22} className={active ? "text-model" : "text-ink-2"} />
+      <Glyph name={screen.icon} size={vertical ? 26 : 22} className={active ? "text-model drop-shadow-[0_0_6px_rgb(86_180_233/0.85)]" : "text-ink-2"} />
       {screen.label}
     </button>
   );

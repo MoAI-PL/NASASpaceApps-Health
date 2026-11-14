@@ -138,6 +138,32 @@ body::after {
   transition: stroke-dasharray 700ms cubic-bezier(0.22, 1, 0.36, 1), stroke 300ms ease;
 }
 
+/* Screen change: panels rise softly into place, one after another (runs on mount only, so
+   scrubbing the mission day does not re-trigger it). */
+main .panel {
+  animation: panel-rise 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+main .panel:nth-child(2) { animation-delay: 60ms; }
+main .panel:nth-child(3) { animation-delay: 120ms; }
+main .panel:nth-child(4) { animation-delay: 180ms; }
+main .panel:nth-child(n + 5) { animation-delay: 240ms; }
+@keyframes panel-rise {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Polygonal body (PolyBody.jsx): blueprint wire colour and the slow scan line. */
+:root { --body-wire: #7cc8f2; }
+.poly-body-scan {
+  animation: body-scan 5.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+@keyframes body-scan {
+  0%   { transform: translateY(0); opacity: 0; }
+  10%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateY(460px); opacity: 0; }
+}
+
 /* Large tap targets for gloves and microgravity (PLAN.md UI brief: >= 64 px). */
 @utility tap {
   min-height: 64px;
