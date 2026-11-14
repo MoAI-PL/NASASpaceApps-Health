@@ -37,8 +37,8 @@ const mirrorPath = (d) => mapPath(d, ([x, y]) => [mx(x), y]);
 const both = (list, mirror) => [...list, ...list.map(mirror)];
 const mirrorEllipse = ([x, ...r]) => [mx(x), ...r];
 
-// Arms hang a little away from the body: everything on the arm turns about the shoulder.
-const PIVOT = [84, 80], TURN = (12 * Math.PI) / 180;
+// A-pose: the arms hang away from the body; everything on the arm turns about the shoulder.
+const PIVOT = [84, 80], TURN = (18 * Math.PI) / 180;
 const arm = ([x, y, ...r]) => {
   const dx = x - PIVOT[0], dy = y - PIVOT[1];
   return [PIVOT[0] + dx * Math.cos(TURN) - dy * Math.sin(TURN), PIVOT[1] + dx * Math.sin(TURN) + dy * Math.cos(TURN), ...r];
@@ -155,14 +155,14 @@ const MUSCLES = [
   "M130 110 L130 182",
 ];
 
-// ===== Wire grid on the body: rings that wrap around each part + long lines =====
+// ===== Wire grid (the main visual): rings that wrap around each part + long lines; faint on the face =====
 const TUBES = [
-  { id: "arm_l", system: "immune_temp", cols: 6, stations: [[84, 76, 8], [82.4, 88, 10.4], [82.6, 100, 11], [83, 112, 10.6], [83, 124, 10.6], [83.4, 136, 9.6], [83.2, 146, 8.8], [82.6, 156, 9], [82.6, 168, 8], [83, 180, 6.4], [83, 190, 5.6], [83.6, 200, 7.6], [84.4, 212, 7.6], [85, 222, 5.6]].map(arm) },
-  { id: "leg_l", system: "immune_temp", cols: 7, stations: [[114, 204, 16.5], [114, 220, 15.5], [114.6, 236, 14], [115.4, 252, 12.6], [116, 266, 11], [116, 280, 10], [115.6, 292, 10.6], [115.4, 306, 10.8], [116.4, 322, 9.6], [116.6, 340, 7.6], [116.6, 356, 6.4], [116.4, 366, 6], [114.6, 378, 8.8], [115, 390, 8.6]] },
-  { id: "neck", system: "immune_temp", cols: 7, stations: [[CX, 55, 14.6], [CX, 60, 16.4], [CX, 66, 18]] },
-  { id: "belly", system: "metabolism", cols: 11, stations: [[CX, 140, 31.5], [CX, 150, 26.6], [CX, 160, 26.8], [CX, 172, 28], [CX, 184, 29.4], [CX, 196, 29.6], [CX, 205, 26]] },
-  { id: "chest", system: "heart", cols: 11, stations: [[CX, 62, 14], [CX, 68, 26], [CX, 74, 40], [CX, 82, 48], [CX, 92, 50], [CX, 100, 46], [CX, 112, 40], [CX, 126, 35], [CX, 140, 31.5]] },
-  { id: "head", system: "mind_sleep", cols: 9, stations: [[CX, 8, 2], [CX, 12, 10], [CX, 18, 15], [CX, 26, 18], [CX, 34, 18.2], [CX, 42, 17], [CX, 48, 15], [CX, 53, 9], [CX, 55, 4]], noGrid: true },
+  { id: "arm_l", system: "immune_temp", cols: 9, stations: [[84, 76, 8], [82.4, 88, 10.4], [82.6, 100, 11], [83, 112, 10.6], [83, 124, 10.6], [83.4, 136, 9.6], [83.2, 146, 8.8], [82.6, 156, 9], [82.6, 168, 8], [83, 180, 6.4], [83, 190, 5.6], [83.6, 200, 7.6], [84.4, 212, 7.6], [85, 222, 5.6]].map(arm) },
+  { id: "leg_l", system: "immune_temp", cols: 10, stations: [[114, 204, 16.5], [114, 220, 15.5], [114.6, 236, 14], [115.4, 252, 12.6], [116, 266, 11], [116, 280, 10], [115.6, 292, 10.6], [115.4, 306, 10.8], [116.4, 322, 9.6], [116.6, 340, 7.6], [116.6, 356, 6.4], [116.4, 366, 6], [114.6, 378, 8.8], [115, 390, 8.6]] },
+  { id: "neck", system: "immune_temp", cols: 9, stations: [[CX, 55, 14.6], [CX, 60, 16.4], [CX, 66, 18]] },
+  { id: "belly", system: "metabolism", cols: 17, stations: [[CX, 140, 31.5], [CX, 150, 26.6], [CX, 160, 26.8], [CX, 172, 28], [CX, 184, 29.4], [CX, 196, 29.6], [CX, 205, 26]] },
+  { id: "chest", system: "heart", cols: 17, stations: [[CX, 62, 14], [CX, 68, 26], [CX, 74, 40], [CX, 82, 48], [CX, 92, 50], [CX, 100, 46], [CX, 112, 40], [CX, 126, 35], [CX, 140, 31.5]] },
+  { id: "head", system: "mind_sleep", cols: 13, stations: [[CX, 8, 2], [CX, 12, 10], [CX, 18, 15], [CX, 26, 18], [CX, 34, 18.2], [CX, 42, 17], [CX, 48, 15], [CX, 53, 9], [CX, 55, 4]], faint: true },
 ];
 const PARTS = [
   ...TUBES,
@@ -201,7 +201,7 @@ function grid(part, step) {
   const left = R.map((r) => r[0]), right = R.map((r) => r[r.length - 1]).reverse();
   return { ...part, path: part.noGrid ? "" : rings + longs, outline: [...left, ...right].map(([x, y]) => `${f(x)} ${f(y)}`).join(" ") };
 }
-const GRIDS = { fine: PARTS.map((p) => grid(p, 5.5)), light: PARTS.map((p) => grid({ ...p, cols: Math.max(5, p.cols - 2) }, 8.5)) };
+const GRIDS = { fine: PARTS.map((p) => grid(p, 3.6)), light: PARTS.map((p) => grid({ ...p, cols: Math.max(7, p.cols - 4) }, 5.5)) };
 
 // ===== Joints that glow (left side, mirrored) =====
 const JOINTS = both([arm([80, 86]), arm([83.2, 148]), arm([83, 190]), [101, 190], [116, 280], [116.6, 366]], ([x, y]) => [mx(x), y]);
@@ -238,9 +238,9 @@ export default function PolyBody({ systems, selected = null, onSelect, width = 2
           <stop offset="1" stopColor="rgb(20 120 210 / 0)" />
         </radialGradient>
         <radialGradient id={id("skin")} gradientUnits="userSpaceOnUse" cx={CX} cy="140" r="250">
-          <stop offset="0" stopColor="rgb(40 170 210 / 0.52)" />
-          <stop offset="0.5" stopColor="rgb(20 110 170 / 0.6)" />
-          <stop offset="1" stopColor="rgb(10 60 120 / 0.72)" />
+          <stop offset="0" stopColor="rgb(40 170 210 / 0.32)" />
+          <stop offset="0.5" stopColor="rgb(20 110 170 / 0.4)" />
+          <stop offset="1" stopColor="rgb(10 60 120 / 0.55)" />
         </radialGradient>
         <radialGradient id={id("platform")} cx="0.5" cy="0.5" r="0.5">
           <stop offset="0" stopColor="rgb(80 220 255 / 0.5)" />
@@ -319,7 +319,8 @@ export default function PolyBody({ systems, selected = null, onSelect, width = 2
           return (
             <g key={g.id} style={{ color: colour }} mask={zone ? url(`zone-${g.system}`) : undefined}>
               {off(g.system) && !zone && <polygon points={g.outline} fill="currentColor" fillOpacity="0.26" />}
-              {g.path && <path d={g.path} fill="none" stroke="currentColor" strokeWidth={(lit ? 0.55 : 0.4) * k} strokeOpacity={lit ? 0.7 : 0.36} />}
+              {g.path && <path d={g.path} fill="none" stroke="currentColor" strokeWidth={(lit ? 0.5 : 0.38) * k}
+                                strokeOpacity={(lit ? 0.85 : 0.62) * (g.faint ? 0.4 : 1)} />}
               {selected === g.system && <polygon points={g.outline} fill="none" stroke="var(--color-ink)" strokeWidth={1.2 * k} strokeOpacity="0.8" />}
             </g>
           );
