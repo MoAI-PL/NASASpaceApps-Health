@@ -13,8 +13,8 @@ A milestone is done only when all its AC pass. If a milestone overruns its timeb
 | Model (updated after benchmark, 2026-11-13) | ONE unsupervised model: multivariate personal-drift model — Mahalanobis distance of the weighted 7-day mean of personal z-scores from a Gaussian fitted on 300 healthy astronauts (`src/drift.py`). It won the benchmark (`outputs/results/benchmark.md`) against 9 autoencoders, ensembles, fine-tuning and hybrids. The autoencoder stays available as `detector: autoencoder`. Persistence 3 days, P_yellow 92 tuned on the `bench` split |
 | Anomaly score (updated in M2) | reconstruction error + latent Mahalanobis distance, each normalised by its healthy-training mean (v1 = reconstruction only missed 40 % of S2 on dev; see README → Results) |
 | Explanation (updated in M2) | share of each indicator in the window's weighted squared personal z-score ("what moved"); the model decides whether the combination is anomalous |
-| Why AE | Per-feature reconstruction error gives the explanation the UI needs (body-map colours, "what changed"); learns non-linear correlations between indicators; windows capture trends |
-| Small-data fix | One AE trained on healthy windows pooled from many simulated astronauts; personalisation = each astronaut normalised against their OWN calibration period (days 1–21) |
+| Why AE *(superseded by the drift model)* | Per-feature reconstruction error gives the explanation the UI needs (body-map colours, "what changed"); learns non-linear correlations between indicators; windows capture trends |
+| Small-data fix *(autoencoder only — superseded)* | One AE trained on healthy windows pooled from many simulated astronauts; personalisation = each astronaut normalised against their OWN calibration period (days 1–21) |
 | Baselines (not models) | B1 fixed clinical thresholds; B2 personal univariate thresholds (any feature \|z\| > 3). Both use the same 2-day persistence as the AE |
 | Indicators | sys, dia (mmHg), hr (bpm, resting), glucose (mg/dL, fasting), temp (°C), sleep_h (h), mood (1–5), reaction_ms (ms) |
 | Context inputs | exercise_min (fed to AE). radiation_mGy and cabin_co2_mmHg are hazard-exposure context for the UI and rules only, NOT fed to the AE (an exposure is not a physiological deviation) |
@@ -196,12 +196,12 @@ AC
 - Missing values: z = 0 and a mask; masked features contribute 0 to reconstruction error and contributions.
 - Windows: for day t ≥ 7, input = z-scores of the 9 AE features (8 indicators + exercise_min) for days t−6…t, flattened → 63 values.
 
-### M2.2 `src/model.py` + `src/train.py` (`config/model.yaml`)
+### M2.2 `src/model.py` + `src/train.py` (`config/model.yaml`) — *superseded: production uses `src/drift.py` (see section 0); the autoencoder remains as `detector: autoencoder` for the benchmark*
 - Dense AE: 63 → 32 → 8 → 32 → 63, ReLU, dropout 0.1, MSE loss with the missing-value mask.
 - Adam lr 1e-3, batch 64, max 200 epochs, early stopping (patience 10) on val loss. Fixed seed.
 - Train on all train-split windows (healthy only). Save `outputs/models/ae.pt`.
 
-### M2.3 `src/scoring.py`
+### M2.3 `src/scoring.py` — *score definition superseded: SAI is now the percentile of the drift model's Mahalanobis distance; levels, persistence (3 days) and P_yellow (92) as in section 0*
 - Day score = weighted reconstruction error over the window, weights 1…7 (latest day heaviest), normalised to sum 1.
 - Per-feature contribution = that feature's weighted error / total (8 indicators; exercise folded into "other").
 - Reference distribution = day scores of the val split → `outputs/models/reference_scores.npy`.
@@ -316,3 +316,6 @@ AC: a teammate can reproduce all results from a clean clone using the Commands s
 | 2026-11-13 | `events` may contain `possible_sensor_fault` (one indicator \|z\| > 5, all others \|z\| < 2) | ML (Claude) |
 | 2026-11-13 | system status: on a green day all systems are green (the M2.3 rule otherwise coloured systems on healthy days) | ML (Claude) |
 | 2026-11-13 | `contributions` = share of deviation from the personal normal (top 4 indicators + `other`) | ML (Claude) |
+| 2026-11-14 | `meta.json`: new `rules` {critical, b1} copied from `config/rules.yaml` (feature, op, value, persistence_days, source, assumption) — J1 | ML (Claude) |
+| 2026-11-14 | `meta.crew[i].scenario` {id, name, start_day} or null (synthetic ground truth for the demo replay) — J2 | ML (Claude) |
+| 2026-11-14 | `meta.space_weather.events` [{day, time, id, link}] from the cached NASA DONKI SEP events — J3 | ML (Claude) |

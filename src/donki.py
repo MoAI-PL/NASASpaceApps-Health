@@ -79,6 +79,24 @@ def sep_event_days(start_date: str, days: int) -> tuple[list[int], str]:
     return sorted(hit_days), "cached"
 
 
+def sep_events(start_date: str, days: int) -> list[dict]:
+    """Cached SEP events inside the mission window: mission day, time, DONKI id and link (for the UI)."""
+    cache = load_cache()
+    if cache is None:
+        return []
+    start = dt.date.fromisoformat(start_date)
+    out = []
+    for event in cache.get("events", []):
+        stamp = str(event.get("eventTime", ""))
+        try:
+            day = (dt.date.fromisoformat(stamp[:10]) - start).days + 1
+        except ValueError:
+            continue
+        if 1 <= day <= days:
+            out.append({"day": day, "time": stamp, "id": event.get("sepID"), "link": event.get("link")})
+    return sorted(out, key=lambda e: (e["day"], e["time"]))
+
+
 # ===== Main =====
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Cache NASA DONKI SEP events for the mission window.")

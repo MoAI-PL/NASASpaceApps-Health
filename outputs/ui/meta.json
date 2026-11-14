@@ -173,15 +173,26 @@
   "crew": [
     {
       "id": "A1",
-      "display_name": "Crew Member Alpha"
+      "display_name": "Crew Member Alpha",
+      "scenario": null
     },
     {
       "id": "A2",
-      "display_name": "Crew Member Bravo"
+      "display_name": "Crew Member Bravo",
+      "scenario": {
+        "id": "S1",
+        "name": "Cardiovascular deconditioning",
+        "start_day": 50
+      }
     },
     {
       "id": "A3",
-      "display_name": "Crew Member Charlie"
+      "display_name": "Crew Member Charlie",
+      "scenario": {
+        "id": "S2",
+        "name": "Isolation and stress",
+        "start_day": 70
+      }
     }
   ],
   "normal_bands": {
@@ -314,6 +325,342 @@
       84,
       92,
       97
+    ],
+    "events": [
+      {
+        "day": 9,
+        "time": "2024-05-09T13:59Z",
+        "id": "2024-05-09T13:59:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30609/-1"
+      },
+      {
+        "day": 9,
+        "time": "2024-05-09T14:25Z",
+        "id": "2024-05-09T14:25:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30610/-1"
+      },
+      {
+        "day": 10,
+        "time": "2024-05-10T12:59Z",
+        "id": "2024-05-10T12:59:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30675/-1"
+      },
+      {
+        "day": 10,
+        "time": "2024-05-10T13:02Z",
+        "id": "2024-05-10T13:02:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30676/-1"
+      },
+      {
+        "day": 10,
+        "time": "2024-05-10T13:35Z",
+        "id": "2024-05-10T13:35:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30677/-1"
+      },
+      {
+        "day": 10,
+        "time": "2024-05-10T14:50Z",
+        "id": "2024-05-10T14:50:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30684/-1"
+      },
+      {
+        "day": 11,
+        "time": "2024-05-11T02:10Z",
+        "id": "2024-05-11T02:10:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30714/-1"
+      },
+      {
+        "day": 11,
+        "time": "2024-05-11T04:07Z",
+        "id": "2024-05-11T04:07:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30717/-1"
+      },
+      {
+        "day": 13,
+        "time": "2024-05-13T12:44Z",
+        "id": "2024-05-13T12:44:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30811/-1"
+      },
+      {
+        "day": 13,
+        "time": "2024-05-13T13:10Z",
+        "id": "2024-05-13T13:10:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30807/-1"
+      },
+      {
+        "day": 13,
+        "time": "2024-05-13T14:00Z",
+        "id": "2024-05-13T14:00:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30817/-1"
+      },
+      {
+        "day": 13,
+        "time": "2024-05-13T16:19Z",
+        "id": "2024-05-13T16:19:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30820/-1"
+      },
+      {
+        "day": 13,
+        "time": "2024-05-13T18:07Z",
+        "id": "2024-05-13T18:07:00-SEP-002",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30825/-1"
+      },
+      {
+        "day": 13,
+        "time": "2024-05-13T18:07Z",
+        "id": "2024-05-13T18:07:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/30824/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T02:25Z",
+        "id": "2024-06-08T02:25:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31338/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T02:55Z",
+        "id": "2024-06-08T02:55:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31343/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T03:09Z",
+        "id": "2024-06-08T03:09:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31359/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T03:34Z",
+        "id": "2024-06-08T03:34:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31348/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T03:36Z",
+        "id": "2024-06-08T03:36:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31349/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T04:14Z",
+        "id": "2024-06-08T04:14:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31351/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T04:14Z",
+        "id": "2024-06-08T04:14:00-SEP-002",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31360/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T04:20Z",
+        "id": "2024-06-08T04:20:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31357/-1"
+      },
+      {
+        "day": 39,
+        "time": "2024-06-08T04:48Z",
+        "id": "2024-06-08T04:48:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31358/-1"
+      },
+      {
+        "day": 43,
+        "time": "2024-06-12T00:21Z",
+        "id": "2024-06-12T00:21:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31435/-1"
+      },
+      {
+        "day": 43,
+        "time": "2024-06-12T00:30Z",
+        "id": "2024-06-12T00:30:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31437/-1"
+      },
+      {
+        "day": 43,
+        "time": "2024-06-12T02:58Z",
+        "id": "2024-06-12T02:58:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31441/-1"
+      },
+      {
+        "day": 43,
+        "time": "2024-06-12T04:03Z",
+        "id": "2024-06-12T04:03:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/31452/-1"
+      },
+      {
+        "day": 84,
+        "time": "2024-07-23T01:20Z",
+        "id": "2024-07-23T01:20:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32110/-1"
+      },
+      {
+        "day": 84,
+        "time": "2024-07-23T02:05Z",
+        "id": "2024-07-23T02:05:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32115/-1"
+      },
+      {
+        "day": 84,
+        "time": "2024-07-23T02:28Z",
+        "id": "2024-07-23T02:28:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32122/-1"
+      },
+      {
+        "day": 84,
+        "time": "2024-07-23T02:32Z",
+        "id": "2024-07-23T02:32:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32121/-1"
+      },
+      {
+        "day": 84,
+        "time": "2024-07-23T02:47Z",
+        "id": "2024-07-23T02:47:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32114/-1"
+      },
+      {
+        "day": 84,
+        "time": "2024-07-23T02:55Z",
+        "id": "2024-07-23T02:55:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32138/-1"
+      },
+      {
+        "day": 84,
+        "time": "2024-07-23T03:00Z",
+        "id": "2024-07-23T03:00:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32118/-1"
+      },
+      {
+        "day": 92,
+        "time": "2024-07-31T20:10Z",
+        "id": "2024-07-31T20:10:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32396/-1"
+      },
+      {
+        "day": 92,
+        "time": "2024-07-31T20:10Z",
+        "id": "2024-07-31T20:10:00-SEP-002",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32397/-1"
+      },
+      {
+        "day": 97,
+        "time": "2024-08-05T17:26Z",
+        "id": "2024-08-05T17:26:00-SEP-001",
+        "link": "https://ccmc.gsfc.nasa.gov/DONKI/view/SEP/32560/-1"
+      }
+    ]
+  },
+  "rules": {
+    "critical": [
+      {
+        "feature": "temp",
+        "op": "ge",
+        "value": 39.5,
+        "source": null,
+        "assumption": true
+      },
+      {
+        "feature": "sys",
+        "op": "gt",
+        "value": 180,
+        "source": "American Heart Association — hypertensive crisis: systolic above 180 and/or diastolic above 120 mmHg. https://heart.org/bplevels",
+        "assumption": false
+      },
+      {
+        "feature": "dia",
+        "op": "gt",
+        "value": 120,
+        "source": "American Heart Association — hypertensive crisis. https://heart.org/bplevels",
+        "assumption": false
+      },
+      {
+        "feature": "glucose",
+        "op": "lt",
+        "value": 54,
+        "source": "American Diabetes Association — Level 2 hypoglycemia: glucose < 54 mg/dL. https://professional.diabetes.org/sites/dpro/files/2025-05/hypoglycemia-hcp-5-27-25.pdf",
+        "assumption": false
+      },
+      {
+        "feature": "hr",
+        "op": "gt",
+        "value": 130,
+        "source": null,
+        "assumption": true
+      },
+      {
+        "feature": "hr",
+        "op": "lt",
+        "value": 40,
+        "source": null,
+        "assumption": true
+      }
+    ],
+    "b1": [
+      {
+        "feature": "temp",
+        "op": "ge",
+        "value": 38.0,
+        "persistence_days": 2,
+        "source": "MedlinePlus (U.S. National Library of Medicine), Body temperature norms: a temperature over 100.4 °F (38 °C) most often means a fever. https://medlineplus.gov/ency/article/001982.htm",
+        "assumption": false
+      },
+      {
+        "feature": "hr",
+        "op": "gt",
+        "value": 100,
+        "persistence_days": 2,
+        "source": "Mayo Clinic, Heart rate: What's normal? — a normal resting heart rate for adults ranges from 60 to 100 beats per minute. https://www.mayoclinic.org/healthy-lifestyle/fitness/expert-answers/heart-rate",
+        "assumption": false
+      },
+      {
+        "feature": "sys",
+        "op": "ge",
+        "value": 140,
+        "persistence_days": 2,
+        "source": "American Heart Association, Understanding Blood Pressure Readings — Stage 2 hypertension: systolic >= 140 or diastolic >= 90 mmHg. https://heart.org/bplevels",
+        "assumption": false
+      },
+      {
+        "feature": "dia",
+        "op": "ge",
+        "value": 90,
+        "persistence_days": 2,
+        "source": "American Heart Association, Understanding Blood Pressure Readings — Stage 2 hypertension. https://heart.org/bplevels",
+        "assumption": false
+      },
+      {
+        "feature": "glucose",
+        "op": "ge",
+        "value": 126,
+        "persistence_days": 2,
+        "source": null,
+        "assumption": true
+      },
+      {
+        "feature": "glucose",
+        "op": "lt",
+        "value": 70,
+        "persistence_days": 2,
+        "source": "American Diabetes Association, Hypoglycemia (HCP) — Level 1 hypoglycemia: glucose < 70 mg/dL. https://professional.diabetes.org/sites/dpro/files/2025-05/hypoglycemia-hcp-5-27-25.pdf",
+        "assumption": false
+      },
+      {
+        "feature": "sleep_h",
+        "op": "lt",
+        "value": 5.0,
+        "persistence_days": 3,
+        "source": null,
+        "assumption": true
+      },
+      {
+        "feature": "mood",
+        "op": "le",
+        "value": 2,
+        "persistence_days": 3,
+        "source": null,
+        "assumption": true
+      }
     ]
   }
 }
