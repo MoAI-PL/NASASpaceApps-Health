@@ -21,8 +21,8 @@ Layout:
 |---|---|
 | `src/data.js` | The only file that reads ML output (`demo_crew.json`, `meta.json`, `earth_reports/`) + helpers |
 | `src/content/texts.js` | All crew-facing text: prompts, check-in cards, systems, events, emergency steps, sources |
-| `src/components/` | Status icons (colour + shape + glyph + word), hazard/system icons, gauge, body map, hazard strip, system detail |
-| `src/screens/` | Today · Check-in · Body · Trends · Earth link · Emergency · Settings |
+| `src/components/` | Status icons (colour + shape + glyph + word), hazard/system icons, gauge, body map, hazard strip, system detail, drift radar, mission timeline (NASA DONKI events) |
+| `src/screens/` | Today · Check-in · Body · Trends · Earth link · How we know · Emergency · Settings |
 | `src/styles.css` | Design tokens (all colours in one `@theme` block) and shared utilities (`panel`, `tap`) |
 
 Any text starting with `TODO(UI)` shows up in the app as a dashed "content gap", so missing
