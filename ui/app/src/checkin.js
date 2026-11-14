@@ -4,7 +4,7 @@
 // Check-in logic shared by the guided and the quick-entry modes: drafts and device storage,
 // plausibility checks and the comparison with the personal normal. No UI here.
 
-import { META, fmt } from "./data.js";
+import { META, fmt, fmtBand } from "./data.js";
 import { CHECKIN } from "./content/texts.js";
 
 // ===== Storage (optional: the app works without it) =====
@@ -62,7 +62,7 @@ export function versusNormal(record, f, v) {
   const band = META.normal_bands[record.astronaut]?.[f];
   if (v == null || !band) return null;
   const [lo, hi] = band;
-  const range = `your normal ${fmt(f, lo)}–${fmt(f, hi)} ${META.features[f].unit}`;
+  const range = `your normal ${fmtBand(f, lo)}–${fmtBand(f, hi)} ${META.features[f].unit}`;
   if (v < lo) return { status: "yellow", text: `▼ Below your normal (${range})` };
   if (v > hi) return { status: "yellow", text: `▲ Above your normal (${range})` };
   return { status: "green", text: `Within your normal (${range})` };

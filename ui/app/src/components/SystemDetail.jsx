@@ -1,7 +1,7 @@
 // Baseline — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
-import { META, fmt, offNormalSince } from "../data.js";
+import { META, fmt, fmtBand, offNormalSince } from "../data.js";
 import { PROMPTS, SYSTEM_TEXT } from "../content/texts.js";
 import { Glyph, StatusIcon } from "./icons.jsx";
 import { SourceLink, Text } from "./ui.jsx";
@@ -23,6 +23,8 @@ export default function SystemDetail({ record, records, system }) {
       <p className="mt-2 text-lg text-ink-2">
         {since == null ? "Within your normal." : `Away from your normal since day ${since} (${record.day - since + 1} days).`}
       </p>
+      <h3 className="mt-4 text-ink-2">What it does</h3>
+      <p className="mt-1 text-lg"><Text>{text.function}</Text></p>
 
       <table className="w-full mt-3 text-lg">
         <tbody>
@@ -34,11 +36,11 @@ export default function SystemDetail({ record, records, system }) {
                 <td className="py-2">{META.features[f].name}</td>
                 <td className="py-2 text-right font-semibold">
                   {v == null ? <span className="text-ink-2 font-normal">not recorded</span> : (
-                    <>{fmt(f, v)} <span className="text-muted text-base">{META.features[f].unit}</span></>
+                    <>{fmt(f, v)} <span className="text-muted text-base">{f === "mood" ? "of 5" : META.features[f].unit}</span></>
                   )}
                 </td>
                 <td className="py-2 text-right text-ink-2 text-base">
-                  your normal {fmt(f, lo)}–{fmt(f, hi)} {dir && <span className="ml-1 font-semibold text-ink">{dir}</span>}
+                  your normal {fmtBand(f, lo)}–{fmtBand(f, hi)} {dir && <span className="ml-1 font-semibold text-ink">{dir}</span>}
                 </td>
               </tr>
             );
@@ -47,8 +49,12 @@ export default function SystemDetail({ record, records, system }) {
       </table>
 
       <h3 className="mt-4 text-ink-2">Why it matters in space</h3>
-      <p className="mt-1"><Text>{text.whyInSpace}</Text></p>
-      <h3 className="mt-4 text-ink-2">What to do</h3>
+      <p className="mt-1 text-lg"><Text>{text.whyInSpace}</Text></p>
+      <h3 className="mt-4 text-ink-2">What helps</h3>
+      <ul className="mt-1 grid gap-1 text-lg list-disc ml-6">
+        {text.helps.map((h) => <li key={h}>{h}</li>)}
+      </ul>
+      <h3 className="mt-4 text-ink-2">To do today</h3>
       <p className="mt-1 text-lg">{promptOpen ? `▶ ${PROMPTS[promptId].title}` : "Routine measurements only."}</p>
       <div className="mt-3"><SourceLink id={text.source} /></div>
     </section>

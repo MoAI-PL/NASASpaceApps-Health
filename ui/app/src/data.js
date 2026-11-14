@@ -47,6 +47,12 @@ export function roundTripText(env) {
   return s < 120 ? `up to ~${Math.round(s)} s` : `up to ~${Math.round(s / 60)} min`;
 }
 
+/** Normal-band edge for display. Whole-number scales (mood) get one decimal, so a value that
+ *  is above the band never looks as if it were inside it (5 vs a band shown as "3–5"). */
+export function fmtBand(id, value) {
+  return id === "mood" ? Number(value).toFixed(1) : fmt(id, value);
+}
+
 /** Indicator ids the crew measures (exercise is context, not a health indicator). */
 export const INDICATORS = Object.keys(META.features).filter((f) => f !== "exercise_min");
 

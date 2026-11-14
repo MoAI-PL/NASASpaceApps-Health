@@ -36,6 +36,10 @@ export const SOURCES = {
   aha_heart_rate: { title: "American Heart Association — Target Heart Rates (resting heart rate, taking your pulse)", url: "https://www.heart.org/en/healthy-living/fitness/fitness-basics/target-heart-rates" },
   mlp_temp: { title: "MedlinePlus — Body temperature norms", url: "https://medlineplus.gov/ency/article/001982.htm" },
   mlp_glucose: { title: "MedlinePlus — Blood sugar test", url: "https://medlineplus.gov/ency/article/003482.htm" },
+  nhlbi_heart: { title: "NIH National Heart, Lung, and Blood Institute — How the Heart Works", url: "https://www.nhlbi.nih.gov/health/heart" },
+  nhlbi_sleep: { title: "NIH National Heart, Lung, and Blood Institute — Why Is Sleep Important?", url: "https://www.nhlbi.nih.gov/health/sleep/why-sleep-important" },
+  mlp_metabolism: { title: "MedlinePlus — Metabolic Disorders (what metabolism is)", url: "https://medlineplus.gov/metabolicdisorders.html" },
+  mlp_immune: { title: "MedlinePlus — Immune System and Disorders", url: "https://medlineplus.gov/immunesystemanddisorders.html" },
   tobin_2002: { title: "Tobin B.W. et al. (2002) — Insulin secretion and sensitivity in space flight: diabetogenic effects, Nutrition 18(10):842–8", url: "https://pubmed.ncbi.nlm.nih.gov/12361776/" },
 };
 
@@ -203,23 +207,50 @@ export const PROMPTS = {
   repeat_temperature_evening: { title: "Re-measure body temperature before your next sleep", ...CHECKIN.temp },
 };
 
-// ===== Body systems: why each matters in space (ids from meta.systems) =====
+// ===== Body systems (ids from meta.systems) =====
+// function = what the system does (challenge: a clickable body part shows "its function");
+// whyInSpace = how spaceflight affects it; helps = what the crew can do to stay well
+// (challenge: "guidance on treatments and health improvements", "actions to prevent a critical
+// health condition"). Every line is paraphrased from the listed sources.
 export const SYSTEM_TEXT = {
   heart: {
-    whyInSpace: "Without gravity, body fluids shift towards the head and the heart and blood vessels adapt. This can lead to blood clots, heart rhythm problems and low blood pressure with fainting when gravity returns. Exercise and a healthy diet help keep the heart fit.",
-    source: ["hrp_cardio", "hrp_gravity"],
+    function: "Your heart pumps blood through your body. The blood carries oxygen and nutrients to your organs and takes carbon dioxide to the lungs. The heart's electrical system sets the rate and rhythm of each beat.",
+    whyInSpace: "Without gravity, body fluids shift towards the head and the heart and blood vessels adapt. This can lead to blood clots, heart rhythm problems and low blood pressure with fainting when gravity returns.",
+    helps: [
+      "Do your daily exercise sessions and eat a balanced diet: both help keep the heart and blood vessels fit.",
+      "Before returning to gravity (landing): drink plenty of fluids and wear the lower-body compression garment — both help prevent low blood pressure and fainting.",
+      "Sleep enough: short or broken sleep is linked to high blood pressure.",
+    ],
+    source: ["nhlbi_heart", "hrp_cardio", "hrp_gravity", "nhlbi_sleep"],
   },
   metabolism: {
+    function: "Metabolism turns the food you eat into energy. Your body uses this fuel at once or stores it in the liver, muscles and body fat.",
     whyInSpace: "Spaceflight has been linked to reduced insulin sensitivity. On long missions the food system must stay nutritious and varied for years without resupply.",
-    source: ["tobin_2002", "hrp_nutrition"],
+    helps: [
+      "Eat your planned meals: good nutrition is essential for health and performance in space.",
+      "Sleep enough: too little sleep lowers the body's response to insulin.",
+    ],
+    source: ["mlp_metabolism", "tobin_2002", "hrp_nutrition", "nhlbi_sleep"],
   },
   mind_sleep: {
+    function: "Sleep keeps the brain and body working: how you think, react and get along with others while awake depends partly on it. Mood shapes sleep, morale and decisions.",
     whyInSpace: "Isolation, confinement, sleep loss, an irregular day–night cycle and heavy workload can wear down mood, alertness and teamwork. On a space station the crew sees about 16 sunrises a day.",
-    source: ["hrp_isolation", "hrp_sleep", "hrp_behavior"],
+    helps: [
+      "Follow the cabin lighting schedule: the lights imitate a day–night cycle to help you sleep.",
+      "Watch when you have caffeine: light and caffeine both affect your body clock.",
+      "Use your relaxation and self-care time — keep a journal, look out of a window, tend plants if you have them on board.",
+      "Tell a crew mate or the crew medical officer early if sleep or mood stay low.",
+    ],
+    source: ["nhlbi_sleep", "hrp_sleep", "hrp_behavior", "hrp_isolation"],
   },
   immune_temp: {
+    function: "Your immune system — skin, white blood cells and the lymph organs — fights germs. A fever is often its response to an infection.",
     whyInSpace: "Radiation, weightlessness and poor sleep can change the immune system and wake dormant viruses. In a closed habitat germs pass more easily between crew members.",
-    source: ["hrp_immune", "hrp_closed_env"],
+    helps: [
+      "Sleep enough: some immune cells work hardest during sleep, and people who sleep too little catch infections more easily.",
+      "Report a fever, cold sore or new rash early, so the crew can limit its spread in the closed habitat.",
+    ],
+    source: ["mlp_immune", "mlp_temp", "hrp_immune", "hrp_closed_env", "nhlbi_sleep"],
   },
 };
 
