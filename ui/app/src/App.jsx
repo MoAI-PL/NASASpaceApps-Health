@@ -57,9 +57,17 @@ export default function App() {
 
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-6">
-      <header className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4">
-        <h1 className="text-3xl font-bold">Baseline</h1>
-        <span className="text-lg text-ink-2">{crewName} · {META.environments[env].name}</span>
+      {/* Sticky header: the Emergency button is always visible and never covers content. */}
+      <header className="sticky top-0 z-40 -mx-4 md:-mx-6 px-4 md:px-6 py-3 mb-4 bg-bg/95 backdrop-blur border-b border-line
+                         flex items-center gap-4">
+        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 flex-1 min-w-0">
+          <h1 className="text-2xl md:text-3xl font-bold">Baseline</h1>
+          <span className="text-sm md:text-lg text-ink-2">{crewName} · {META.environments[env].name}</span>
+        </div>
+        <button type="button" onClick={() => setEmergency(true)}
+                className="tap shrink-0 px-5 md:px-8 rounded-2xl text-xl font-bold text-white flex items-center gap-3 bg-critical">
+          <StatusIcon status="red" size={30} /> Emergency
+        </button>
       </header>
 
       {/* Demo control: scrub through the precomputed 120-day mission. */}
@@ -93,11 +101,7 @@ export default function App() {
         {screen === "settings" && <Settings astronaut={astronaut} onAstronaut={setAstronaut} env={env} onEnv={setEnv} />}
       </main>
 
-      <button type="button" onClick={() => setEmergency(true)}
-              className="fixed bottom-6 right-6 tap px-8 rounded-2xl text-xl font-bold text-white shadow-lg flex items-center gap-3 bg-critical">
-        <StatusIcon status="red" size={30} /> Emergency
-      </button>
-      <footer className="mt-8 mb-28 text-sm text-muted">{META.disclaimer}</footer>
+      <footer className="mt-8 mb-8 text-sm text-muted">{META.disclaimer}</footer>
       {emergency && <Emergency env={env} onClose={() => setEmergency(false)} />}
     </div>
   );
