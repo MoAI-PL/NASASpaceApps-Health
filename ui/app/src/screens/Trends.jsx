@@ -1,7 +1,7 @@
 // Baseline — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { INDICATORS, META, fmt } from "../data.js";
 import { TapButton } from "../components/ui.jsx";
 
@@ -14,12 +14,24 @@ const ALERT_ROWS = [
   { label: "Single-indicator", color: "var(--color-b2)", test: (r) => r.univariate_alert },
 ];
 
-// ===== Chart geometry (viewBox units; the chart scrolls sideways on narrow screens) =====
-const W = 900, H = 390;
-const LEFT = 150, RIGHT = 24;          // left: room for alert-row labels and y-axis values
-const ROW_Y = 10, ROW_H = 12, ROW_GAP = 18;
-const TOP = ROW_Y + ALERT_ROWS.length * ROW_GAP + 18, BOTTOM = H - 40;
-const DAY_TICKS = [1, 20, 40, 60, 80, 100, 120];
+// ===== Chart geometry =====
+// The SVG is drawn in real pixels at the measured container width, so text keeps its size on a
+// phone and the page never scrolls sideways (review finding 2). Narrow screens get fewer ticks.
+// Wide: lane labels sit left of the lanes. Narrow: labels sit above full-width lanes.
+const ROW_H = 12, RIGHT = 16;
+
+/** Width of an element in CSS pixels, updated when it resizes. */
+function useWidth(fallback = 900) {
+  const ref = useRef(null);
+  const [width, setWidth] = useState(fallback);
+  useEffect(() => {
+    if (!ref.current) return undefined;
+    const ro = new ResizeObserver(([entry]) => setWidth(Math.round(entry.contentRect.width)));
+    ro.observe(ref.current);
+    return () => ro.disconnect();
+  }, []);
+  return [ref, width];
+}
 
 /** Round axis values (about `count` steps) whose range covers [lo, hi]. */
 function niceTicks(lo, hi, count = 4) {
@@ -33,6 +45,14 @@ function niceTicks(lo, hi, count = 4) {
 
 export default function Trends({ records, day, astronaut }) {
   const [series, setSeries] = useState("sai");
+  const [boxRef, boxWidth] = useWidth();
+  const narrow = boxWidth < 600;
+  const W = Math.max(280, boxWidth), H = narrow ? 380 : 390;
+  const LEFT = narrow ? 44 : 150, BOTTOM = H - 40;
+  const ROW_Y = narrow ? 16 : 10, ROW_GAP = narrow ? 30 : 18;
+  const TOP = ROW_Y + ALERT_ROWS.length * ROW_GAP + 18;
+  const dayTicks = narrow ? [1, 40, 80, 120] : [1, 20, 40, 60, 80, 100, 120];
+
   const isSai = series === "sai";
   const value = (r) => (isSai ? r.sai : r.values[series]);
   const vals = records.map(value).filter((v) => v != null);
@@ -54,48 +74,44 @@ export default function Trends({ records, day, astronaut }) {
         ))}
       </div>
       <h2 className="text-xl font-semibold">{name}{unit && <span className="text-ink-2 font-normal"> ({unit})</span>}</h2>
-
-      <div className="overflow-x-auto mt-2">
-        <svg viewBox={`0 0 ${W} ${H}`} className="w-full min-w-[720px]" role="img" aria-label={`${name} trend up to day ${day}`}>
+      <div ref={boxRef} className="mt-2 w-full">
+        <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} className="block max-w-full" role="img"
+             aria-label={`${name} trend up to day ${day}`}>
           {/* Alert rows: one labelled lane per method, a mark on each alert day. */}
           {ALERT_ROWS.map((row, i) => {
             const y = ROW_Y + i * ROW_GAP;
             return (
               <g key={row.label}>
-                <rect x={10} y={y + 1} width={10} height={10} fill={row.color} />
-                <text x={26} y={y + 10} fill="var(--color-ink-2)" fontSize="13">{row.label}</text>
+                <rect x={narrow ? LEFT : 0} y={narrow ? y - 13 : y + 1} width={10} height={10} fill={row.color} />
+                <text x={narrow ? LEFT + 16 : 16} y={narrow ? y - 4 : y + 10} fill="var(--color-ink-2)" fontSize="13">{row.label}</text>
                 <rect x={LEFT} y={y} width={W - LEFT - RIGHT} height={ROW_H} fill="var(--color-panel-2)" />
                 {records.filter((r) => r.day <= day && row.test(r)).map((r) => (
-                  <rect key={r.day} x={X(r.day) - 2} y={y} width="4" height={ROW_H} fill={row.color} />
+                  <rect key={r.day} x={X(r.day) - 1.5} y={y} width="3" height={ROW_H} fill={row.color} />
                 ))}
               </g>
             );
           })}
-
           {/* Y axis: gridlines and values. */}
           {yTicks.map((t) => (
             <g key={t}>
               <line x1={LEFT} x2={W - RIGHT} y1={Y(t)} y2={Y(t)} stroke="var(--color-line)" strokeWidth="1" />
-              <text x={LEFT - 10} y={Y(t) + 4} textAnchor="end" fill="var(--color-ink-2)" fontSize="13">{fmt(series, t)}</text>
+              <text x={LEFT - 8} y={Y(t) + 4} textAnchor="end" fill="var(--color-ink-2)" fontSize="13">{fmt(series, t)}</text>
             </g>
           ))}
-
           {/* Personal normal band (or the SAI watch zone). */}
           <rect x={LEFT} y={Y(hi)} width={W - LEFT - RIGHT} height={Math.max(0, Y(lo) - Y(hi))} fill="var(--color-line)" fillOpacity="0.55" />
           <text x={LEFT + 8} y={Math.max(Y(hi), TOP) + 16} fill="var(--color-ink-2)" fontSize="13">
             {isSai ? "Watch zone" : "Your normal range"}
           </text>
-
           <polyline points={line} fill="none" stroke="var(--color-ink)" strokeWidth="2.5" strokeLinejoin="round" />
-
           {/* X axis: mission days and today's marker. */}
-          {DAY_TICKS.map((d) => (
-            <text key={d} x={X(d)} y={H - 14} textAnchor="middle" fill="var(--color-ink-2)" fontSize="13">Day {d}</text>
+          {dayTicks.map((d, i) => (
+            <text key={d} x={X(d)} y={H - 14} fill="var(--color-ink-2)" fontSize="13"
+                  textAnchor={i === 0 ? "start" : i === dayTicks.length - 1 ? "end" : "middle"}>Day {d}</text>
           ))}
           <line x1={X(day)} x2={X(day)} y1={ROW_Y} y2={BOTTOM} stroke="var(--color-ink-2)" strokeDasharray="4 4" />
         </svg>
       </div>
-
       <p className="mt-3 text-base text-ink-2">Each mark is a day on which that method raised an alert.</p>
     </section>
   );
