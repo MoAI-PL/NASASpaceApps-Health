@@ -1,6 +1,6 @@
 {
-  "name": "Baseline — personal-baseline health monitoring for space crews",
-  "short_name": "Baseline",
+  "name": "Astrobalance — personal-baseline health monitoring for space crews",
+  "short_name": "Astrobalance",
   "description": "Prototype on synthetic data. Not a medical device.",
   "start_url": "./",
   "scope": "./",

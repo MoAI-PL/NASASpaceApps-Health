@@ -1,4 +1,4 @@
-// Baseline — NASA Space Apps Challenge 2026 — CONCEPT UI
+// Astrobalance — NASA Space Apps Challenge 2026 — CONCEPT UI
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 // Source of app.js. Rebuild after edits: see ui/README.md.
 const {
@@ -614,7 +614,7 @@ function App() {
     className: "flex flex-wrap items-center gap-3 mb-4"
   }, /*#__PURE__*/React.createElement("div", {
     className: "text-3xl font-bold mr-4"
-  }, "Baseline"), crew.map(c => /*#__PURE__*/React.createElement("button", {
+  }, "Astrobalance"), crew.map(c => /*#__PURE__*/React.createElement("button", {
     key: c.id,
     onClick: () => setAstronaut(c.id),
     className: `tap px-5 rounded-xl text-lg ${c.id === astronaut ? "bg-[var(--line)]" : "bg-[var(--panel)]"}`

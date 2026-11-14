@@ -1,4 +1,4 @@
-// Baseline — NASA Space Apps Challenge 2026
+// Astrobalance — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
 import { useEffect } from "react";
@@ -6,7 +6,7 @@ import { META } from "../data.js";
 import { Glyph, StatusIcon } from "./icons.jsx";
 import { TapButton } from "./ui.jsx";
 
-// ===== First-run intro: what Baseline does, in three steps =====
+// ===== First-run intro: what Astrobalance does, in three steps =====
 // Shown once per device (App.jsx remembers it; the app works without storage) and again from Help.
 
 const STEPS = [
@@ -17,7 +17,7 @@ const STEPS = [
   },
   {
     icon: <Glyph name="logo" size={40} className="text-ink" />,
-    title: `Baseline learns your normal`,
+    title: `Astrobalance learns your normal`,
     body: `In the first ${META.mission.calibration_days} days it learns what is normal for you, not for an average person.`,
   },
   {
@@ -38,7 +38,7 @@ export default function Welcome({ onClose }) {
     <div role="dialog" aria-modal="true" aria-labelledby="welcome-title"
          className="fixed inset-0 bg-black/55 backdrop-blur-md flex items-center justify-center p-4 z-50">
       <div className="panel p-6 md:p-8 max-w-3xl w-full max-h-full overflow-auto">
-        <p className="flex items-center gap-3 text-ink-2 text-lg"><Glyph name="logo" size={28} /> Baseline</p>
+        <p className="flex items-center gap-3 text-ink-2 text-lg"><Glyph name="logo" size={28} /> Astrobalance</p>
         <h2 id="welcome-title" className="mt-2 text-3xl md:text-4xl font-bold tracking-tight">Your health, measured against <em>you</em></h2>
 
         <ol className="mt-6 grid gap-3 md:grid-cols-3">

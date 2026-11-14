@@ -1,10 +1,10 @@
-// Baseline — NASA Space Apps Challenge 2026
+// Astrobalance — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
 import { EVIDENCE } from "../content/texts.js";
 import { SourcesList } from "./Settings.jsx";
 
-// ===== How we know: what Baseline does and the evidence for it, limits included =====
+// ===== How we know: what Astrobalance does and the evidence for it, limits included =====
 // Reads top-down: the answer in four numbers, how it works in four steps, then the details
 // folded (contest, confirmation, one-time test, sources). The synthetic-data label stays under
 // the numbers; the full limitations are in README → Limitations.

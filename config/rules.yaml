@@ -1,4 +1,4 @@
-# Baseline — fixed thresholds used by baseline B1 and by the critical (red) safety net.
+# Astrobalance — fixed thresholds used by baseline B1 and by the critical (red) safety net.
 # `op`: ge (>=), gt (>), le (<=), lt (<). Every rule has a source or assumption: true.
 
 b1_rules:

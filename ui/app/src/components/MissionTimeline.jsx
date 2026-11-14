@@ -1,4 +1,4 @@
-// Baseline — NASA Space Apps Challenge 2026
+// Astrobalance — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
 import { useEffect, useRef, useState } from "react";
@@ -14,7 +14,7 @@ import { Glyph, STATUS_COLOR } from "./icons.jsx";
 
 const isModelAlert = (r) => r.level === "yellow" || r.level === "orange";
 const METHODS = [
-  { label: "Baseline model", color: "var(--color-model)", test: isModelAlert },
+  { label: "Astrobalance model", color: "var(--color-model)", test: isModelAlert },
   { label: "Single-value limits", color: "var(--color-b2)", test: (r) => r.univariate_alert },
   { label: "Clinical limits", color: "var(--color-b1)", test: (r) => r.rule_alert },
 ];
@@ -49,7 +49,7 @@ function ReplaySummary({ records, scenario, onClose }) {
               {scenario ? (r.first ? `day ${r.first}` : "no alert") : `${r.early.length} alert${r.early.length === 1 ? "" : "s"}`}
             </span>
             {scenario && model && r.first && r !== rows[0] && (
-              <span className="text-ink-2">({r.first - model > 0 ? `Baseline ${r.first - model} days earlier` : r.first === model ? "same day" : `Baseline ${model - r.first} days later`})</span>
+              <span className="text-ink-2">({r.first - model > 0 ? `Astrobalance ${r.first - model} days earlier` : r.first === model ? "same day" : `Astrobalance ${model - r.first} days later`})</span>
             )}
             {scenario && r.early.length > 0 && (
               <span className="text-ink-2 text-base">· false alarm before the change: day {r.early.join(", ")}</span>

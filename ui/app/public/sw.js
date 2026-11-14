@@ -1,4 +1,4 @@
-// Baseline — NASA Space Apps Challenge 2026
+// Astrobalance — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 //
 // Offline-first service worker: a crew far from Earth has no reliable network. On install it
@@ -6,7 +6,7 @@
 // request is answered from the device first and refreshed in the background when a network
 // is there. All health data is bundled into the app, so nothing is ever sent anywhere.
 
-const CACHE = "baseline-v2";
+const CACHE = "astrobalance-v1";
 
 // ===== Install: store the app shell and its hashed assets =====
 self.addEventListener("install", (event) => {

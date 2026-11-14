@@ -1,4 +1,4 @@
-// Baseline — NASA Space Apps Challenge 2026
+// Astrobalance — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 //
 // All crew-facing text lives here, so it can be reviewed and sourced in one place.
@@ -332,16 +332,16 @@ export const HABITAT = {
 export const EVIDENCE = {
   label: "Synthetic data calibrated on published sources — proof of concept, not clinical validation.",
   // The four numbers a reader sees first (same sources as below).
-  question: "Can you trust Baseline?",
+  question: "Can you trust Astrobalance?",
   answer: "We tested it like a scientist would: a fair contest against other methods, then one test on a health change it had never seen.",
   headline: [
     { value: "10 of 10", caption: "infections caught in the one-time test on an unseen change", compare: "clinical limits: 7 of 10" },
-    { value: "+5 days", caption: "earlier than clinical limits (median)", compare: "3 cases only Baseline caught" },
+    { value: "+5 days", caption: "earlier than clinical limits (median)", compare: "3 cases only Astrobalance caught" },
     { value: "+7.5 days", caption: "earlier than single-value limits (median)", compare: "all 10 caught by both" },
     { value: "82%", caption: "of changes caught within 21 days in the fair contest", compare: "clinical limits: 39%" },
   ],
   steps: [
-    { title: "1. Your personal normal", body: "The first 21 days teach Baseline what is normal for you." },
+    { title: "1. Your personal normal", body: "The first 21 days teach Astrobalance what is normal for you." },
     { title: "2. Drift over 7 days", body: "It watches all values move together, not one at a time." },
     { title: "3. One index", body: "0–100: how unusual your week is, and which values caused it." },
     { title: "Safety net", body: "Critical limits and Emergency work even without the model." },
@@ -350,7 +350,7 @@ export const EVIDENCE = {
     title: "1 · Chosen in a fair contest",
     note: "38 configurations, all tuned to the same false-alarm budget (at most 0.05 per crew member per week). Share of simulated health changes caught within 21 days:",
     rows: [
-      { label: "Baseline drift model (chosen)", value: 82, color: "var(--color-model)" },
+      { label: "Astrobalance drift model (chosen)", value: 82, color: "var(--color-model)" },
       { label: "Autoencoder ensemble (deep learning)", value: 68, color: "var(--color-ink-2)", outline: true },
       { label: "Your single-value limits (each indicator alone)", value: 64, color: "var(--color-b2)" },
       { label: "Standard clinical limits*", value: 39, color: "var(--color-b1)" },
@@ -360,7 +360,7 @@ export const EVIDENCE = {
   confirmation: {
     title: "2 · Confirmed with frozen settings",
     note: "Median days from the start of a change to the first alert:",
-    head: ["Change", "Baseline", "Clinical limits", "Single-value limits"],
+    head: ["Change", "Astrobalance", "Clinical limits", "Single-value limits"],
     rows: [
       ["Cardiovascular", "11", "29", "18.5"],
       ["Isolation & stress", "13", "16", "13.5"],
@@ -372,7 +372,7 @@ export const EVIDENCE = {
     note: "Infection onset was kept aside during development and evaluated a single time.",
     facts: [
       ["Caught", "10 of 10 (clinical limits: 7 of 10)"],
-      ["Earlier than clinical limits", "+5 days (median); 3 cases only Baseline caught"],
+      ["Earlier than clinical limits", "+5 days (median); 3 cases only Astrobalance caught"],
       ["Earlier than single-value limits", "+7.5 days (median)"],
     ],
   },
@@ -380,7 +380,7 @@ export const EVIDENCE = {
     title: "What it does not show",
     items: [
       "More false alarms than the simple methods: about one per crew member every 14 weeks (0.071 per week, vs 0.044 and 0.016).",
-      "For isolation & stress, Baseline was not earlier: compared crew member by crew member, it alerted about a day later than the other methods (median).",
+      "For isolation & stress, Astrobalance was not earlier: compared crew member by crew member, it alerted about a day later than the other methods (median).",
       "All data are synthetic. Real crews may behave differently; this is not clinical validation and not a medical device.",
     ],
   },

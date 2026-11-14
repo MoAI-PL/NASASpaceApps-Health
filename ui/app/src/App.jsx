@@ -1,4 +1,4 @@
-// Baseline — NASA Space Apps Challenge 2026
+// Astrobalance — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 //
 // App shell: header, demo mission-day control, screen navigation, always-visible Emergency
@@ -48,14 +48,14 @@ function NavButton({ screen, active, onClick, vertical = false }) {
 function Sidebar({ screen, onScreen, onHelp, astronaut, onAstronaut, env, onEnv }) {
   return (
     <aside className="panel hidden lg:flex flex-col gap-1 p-3 w-64 shrink-0 sticky top-4 h-[calc(100vh-2rem)] ml-4 my-4"
-           aria-label="Baseline">
+           aria-label="Astrobalance">
       <div className="flex items-center gap-3 px-2 py-3 mb-2">
         <span className="grid place-items-center w-12 h-12 rounded-2xl glass-active">
           <Glyph name="logo" size={30} className="text-ink" />
         </span>
         <span>
-          <span className="block text-2xl font-bold tracking-tight">Baseline</span>
-          <span className="block text-sm text-ink-2">Your personal normal</span>
+          <span className="block text-2xl font-bold tracking-tight">Astrobalance</span>
+          <span className="block text-sm text-ink-2">Your health and beyond</span>
         </span>
       </div>
       <nav className="flex flex-col gap-1" aria-label="Screens">
@@ -132,7 +132,7 @@ export default function App() {
         <div className="flex-1 min-w-0">
           {/* Phones: brand + call sign; wide screens (brand is in the sidebar): screen title + crew. */}
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight truncate">
-            <span className="lg:hidden">Baseline</span>
+            <span className="lg:hidden">Astrobalance</span>
             <span className="hidden lg:inline">{current?.label}</span>
           </h1>
           <p className="text-sm md:text-base text-ink-2 truncate">
@@ -147,7 +147,7 @@ export default function App() {
             <span>Offline<span className="hidden md:inline"> · all data on board</span></span>
           </span>
         )}
-        <button type="button" onClick={() => setHelp(true)} aria-label="Help: how to read Baseline"
+        <button type="button" onClick={() => setHelp(true)} aria-label="Help: how to read Astrobalance"
                 className="tap shrink-0 rounded-2xl bg-panel-2 glass-control text-2xl font-bold lg:hidden">?</button>
         <button type="button" onClick={() => setEmergency(true)}
                 className="tap shrink-0 px-3 md:px-7 rounded-2xl text-base sm:text-lg md:text-xl font-bold text-white flex items-center gap-2 md:gap-3 bg-critical

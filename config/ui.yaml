@@ -1,4 +1,4 @@
-# Baseline — UI-facing configuration: systems, hazards, prompts, environments, escalation.
+# Astrobalance — UI-facing configuration: systems, hazards, prompts, environments, escalation.
 
 systems:
   heart: {name: "Heart & circulation", features: [sys, dia, hr], hazard: gravity}

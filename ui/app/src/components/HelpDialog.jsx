@@ -1,4 +1,4 @@
-// Baseline — NASA Space Apps Challenge 2026
+// Astrobalance — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
 import { useEffect } from "react";
@@ -7,7 +7,7 @@ import { STATUS_HELP, STATUS_LABEL } from "../content/texts.js";
 import { Glyph, StatusIcon } from "./icons.jsx";
 import { TapButton } from "./ui.jsx";
 
-// ===== Help: how to read Baseline (status shapes, the index, hazard icons) =====
+// ===== Help: how to read Astrobalance (status shapes, the index, hazard icons) =====
 // Opened from the "?" button in the header, so the legend is one tap away on every screen.
 
 export default function HelpDialog({ onClose, onIntro, onAbout }) {
@@ -21,7 +21,7 @@ export default function HelpDialog({ onClose, onIntro, onAbout }) {
     <div role="dialog" aria-modal="true" aria-labelledby="help-title"
          className="fixed inset-0 bg-black/55 backdrop-blur-md flex items-center justify-center p-4 z-50">
       <div className="panel p-6 max-w-2xl w-full max-h-full overflow-auto">
-        <h2 id="help-title" className="text-2xl font-bold">How to read Baseline</h2>
+        <h2 id="help-title" className="text-2xl font-bold">How to read Astrobalance</h2>
 
         <h3 className="mt-5 text-ink-2 text-lg">Status — always a shape, a word and a colour</h3>
         <ul className="mt-2 grid gap-3">

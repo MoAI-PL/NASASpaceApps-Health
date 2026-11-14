@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/baseline-spaceapps/schemas/day_record.schema.json",
-  "title": "Baseline day record",
+  "title": "Astrobalance day record",
   "description": "One record per crew member per mission day. Contract between the ML pipeline and the UI (see PLAN.md, M0).",
   "type": "object",
   "additionalProperties": false,

@@ -1,4 +1,4 @@
-# Baseline UI
+# Astrobalance UI
 
 Owned by the UI team. Read `../PLAN.md` → "UI team brief" first.
 

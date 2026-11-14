@@ -1,4 +1,4 @@
-// Baseline — NASA Space Apps Challenge 2026
+// Astrobalance — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
 import { useEffect, useRef, useState } from "react";
@@ -9,7 +9,7 @@ import { TapButton } from "../components/ui.jsx";
 // Row 1 = model (Prevent path), row 2 = fixed clinical thresholds (B1), row 3 = personal
 // single-indicator thresholds (B2). This is where the demo shows the model alerting earlier.
 const ALERT_ROWS = [
-  { label: "Baseline model", color: "var(--color-model)", test: (r) => r.level === "yellow" || r.level === "orange" },
+  { label: "Astrobalance model", color: "var(--color-model)", test: (r) => r.level === "yellow" || r.level === "orange" },
   { label: "Clinical limits", color: "var(--color-b1)", test: (r) => r.rule_alert },
   { label: "Single-value limits", color: "var(--color-b2)", test: (r) => r.univariate_alert },
 ];

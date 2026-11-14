@@ -1,4 +1,4 @@
-# Baseline — personal-baseline health monitoring for deep-space crews
+# Astrobalance — personal-baseline health monitoring for deep-space crews
 
 **NASA Space Apps Challenge 2026 · Challenge: _Create Health Monitoring Software for Astronauts on Space Missions_ (author: Brazilian Space Agency)**
 
@@ -10,14 +10,14 @@
 
 Halfway to Mars, “your fellow crew mate feels a sharp pain in the chest and collapses” — the scenario set by the challenge author, the Brazilian Space Agency, in the [challenge video](https://www.youtube.com/watch?v=RERG3gEmdC8) (0:43). Our addition: there is no doctor on board, and a message to Earth takes up to ~22 minutes one way.
 
-Baseline lets astronauts assess their own health on long missions along two paths:
+Astrobalance lets astronauts assess their own health on long missions along two paths:
 
 - **Prevent** — an unsupervised model of the **personal normal** (a multivariate personal-drift model, chosen in a benchmark against autoencoder variants) turns each day's self-measurements into a single **Systemic Anomaly Index (SAI, 0–100)**, with an explanation of which indicators moved and a prompt for the next measurement.
 - **Respond** — fixed critical thresholds and an emergency mode that work **independently of the model**, with an escalation ladder that accounts for the communication delay to Earth.
 
 Every NASA Human Research Program hazard is visible in the product:
 
-| NASA HRP hazard | How Baseline covers it | Data |
+| NASA HRP hazard | How Astrobalance covers it | Data |
 |---|---|---|
 | Space radiation | daily and cumulative absorbed dose, alerts on solar particle events | real NASA DONKI SEP events + assumed dose model |
 | Isolation & confinement | mind & sleep system (sleep, mood, reaction time); the model detects joint drift | synthetic |
@@ -45,7 +45,7 @@ The one-time hold-out test is **not** part of `run_all`: `python -m src.evaluate
 
 ## 3. How it works
 
-1. **Daily check-in** — blood pressure, resting heart rate, fasting glucose, temperature, sleep, mood (1–5), reaction time; exercise minutes as context. The six indicators named in the challenge statement are all included. Image-based indicators (camera, ultrasound), which the challenge also allows, are out of scope: Baseline uses daily self-measurements only.
+1. **Daily check-in** — blood pressure, resting heart rate, fasting glucose, temperature, sleep, mood (1–5), reaction time; exercise minutes as context. The six indicators named in the challenge statement are all included. Image-based indicators (camera, ultrasound), which the challenge also allows, are out of scope: Astrobalance uses daily self-measurements only.
 2. **Personal normalisation** — each indicator is converted to a z-score against that astronaut's own calibration period (mission days 1–21). The model therefore sees *deviation from this person's normal*, not absolute values.
 3. **Drift summary** — for each day, the last 7 days are summarised as a weighted mean of the personal z-scores (latest day heaviest), one value per feature.
 4. **Personal-drift model (unsupervised)** — a Gaussian model of that 9-dimensional summary is learned from 300 healthy simulated astronauts, with no illness labels. The anomaly score is the squared Mahalanobis distance of today's summary from the healthy model (a Hotelling T²-type statistic): it rises when several indicators drift together, even if each one alone still looks normal.

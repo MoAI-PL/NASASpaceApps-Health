@@ -1,4 +1,4 @@
-# CLAUDE.md — Baseline (NASA Space Apps 2026)
+# CLAUDE.md — Astrobalance (NASA Space Apps 2026)
 
 Read this file and `PLAN.md` before doing anything. `PLAN.md` is the source of truth for tasks,
 order and acceptance criteria. Work milestone by milestone; do not start a milestone before the
@@ -6,7 +6,7 @@ previous one meets its acceptance criteria.
 
 ## What we are building
 
-**Baseline** — health-monitoring software that lets astronauts assess their own health on long
+**Astrobalance** — health-monitoring software that lets astronauts assess their own health on long
 missions. Challenge: "Create Health Monitoring Software for Astronauts on Space Missions"
 (NASA Space Apps Challenge 2026, challenge author: Brazilian Space Agency).
 
@@ -52,7 +52,7 @@ including for a scenario type it never saw during development (hold-out S5).*
 File header (Python):
 
 ```python
-# Baseline — NASA Space Apps Challenge 2026
+# Astrobalance — NASA Space Apps Challenge 2026
 # AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 ```
 

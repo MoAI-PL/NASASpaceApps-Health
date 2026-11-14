@@ -21,7 +21,7 @@ Terms (pages dated Nov 2026) and the challenge author's video (https://www.youtu
 - **Mission timeline** — daily status strip + real NASA DONKI solar particle events (tap to jump).
 - **Body** — status figure, system detail, **drift radar** (shape of the last 7 days vs the personal normal; on
   Bravo's day 58 no single value is out of range but the shape has moved).
-- **Trends** — phone-friendly chart with the three methods' alert rows (Baseline model / Clinical limits /
+- **Trends** — phone-friendly chart with the three methods' alert rows (Astrobalance model / Clinical limits /
   Single-value limits).
 - **Earth link** — what each report contains, one-way delay, earliest reply; queue today's summary.
 - **How we know** — method in plain words, benchmark → confirmation → one-time hold-out, and the limits.
@@ -39,7 +39,7 @@ After each contract change: add a row to "Contract changes log" in `PLAN.md`, ru
 | **J1 (blocks UI)** | In `src/export.py` → `build_meta()`, add `"rules": {"critical": [...], "b1": [...]}` copied from `config/rules.yaml` (feature, op, value, persistence_days, source or null, assumption) | Red "critical value → open Emergency" banner in the check-in; shows Respond works without the model | ~20 min |
 | **J2 (blocks UI)** | Add to each `meta.crew[i]`: `"scenario": {"id": "S1", "name": "Cardiovascular deconditioning", "start_day": 50}` (A2), S2 from day 70 (A3), `null` for A1 — from `data/synthetic/demo/A*.csv` | Mission Replay end card: start day 50 · model 58 · single-value 60 · clinical 76 | ~15 min |
 | J3 | In `meta.space_weather` add `"events": [{"day", "time", "id", "link"}]` from `data/raw/donki_sep.json` | Timeline links each solar event to NASA DONKI (Relevance criterion) | ~15 min |
-| J4 | GitHub repo "About" description in English (now "wajbkodyn'"), e.g. *Baseline — offline personal-baseline health monitoring for deep-space crews (NASA Space Apps 2026). Synthetic data, not a medical device.* | All linked material must be in English | 1 min |
+| J4 | GitHub repo "About" description in English (now "wajbkodyn'"), e.g. *Astrobalance — offline personal-baseline health monitoring for deep-space crews (NASA Space Apps 2026). Synthetic data, not a medical device.* | All linked material must be in English | 1 min |
 | J5 | `config/rules.yaml`: sources for `assumption: true` values — fever ≥ 38.0 °C → MedlinePlus Body temperature norms (001982); resting HR > 100 → AHA Target Heart Rates. Others (glucose ≥ 126, 39.5 °C, HR > 130 / < 40) stay assumptions unless a source is found. Add the AI header line to the generated `ui/concept/data.js`. Mark the autoencoder sections of `PLAN.md` as superseded. | Validity; compliance | ~20 min |
 | J6 (optional) | "Antarctic station" and "rover" environments in `config/ui.yaml` (delay only with a source or `assumption: true`); OSDR descriptive check (PLAN M6, ≤ 90 min, no tuning) — the challenge video recommends OSDR | Earth spin-off; NASA data as a core component | 30–90 min |
 
@@ -63,7 +63,7 @@ After each contract change: add a row to "Contract changes log" in `PLAN.md`, ru
 
 ## 5. Project page (team, Sunday) — fields and what goes in
 
-- Name + tagline: "Baseline — early warning from your personal normal".
+- Name + tagline: "Astrobalance — early warning from your personal normal".
 - Summary / Description: Prevent (personal multivariate drift, SAI) + Respond (emergency mode and critical limits
   without the model); offline; Earth spin-off.
 - **NASA Data**: NASA DONKI solar particle events; NASA HRP Hazards, Risks and risk pages; NASA OCHMO TB-004 (CO₂);
