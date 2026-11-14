@@ -10,7 +10,7 @@ import { TapButton } from "./ui.jsx";
 // ===== Help: how to read Baseline (status shapes, the index, hazard icons) =====
 // Opened from the "?" button in the header, so the legend is one tap away on every screen.
 
-export default function HelpDialog({ onClose }) {
+export default function HelpDialog({ onClose, onIntro }) {
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
@@ -50,7 +50,10 @@ export default function HelpDialog({ onClose }) {
         </ul>
 
         <p className="mt-5 text-ink-2">{META.disclaimer}</p>
-        <TapButton onClick={onClose} className="mt-5 bg-line!">Close</TapButton>
+        <div className="mt-5 flex flex-wrap gap-2">
+          <TapButton onClick={onClose} className="bg-line!">Close</TapButton>
+          {onIntro && <TapButton onClick={onIntro}>Show the 3-step intro</TapButton>}
+        </div>
       </div>
     </div>
   );

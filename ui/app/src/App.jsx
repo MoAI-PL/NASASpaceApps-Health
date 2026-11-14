@@ -17,6 +17,7 @@ import Settings from "./screens/Settings.jsx";
 import HowWeKnow from "./screens/HowWeKnow.jsx";
 import MissionTimeline from "./components/MissionTimeline.jsx";
 import HelpDialog from "./components/HelpDialog.jsx";
+import Welcome from "./components/Welcome.jsx";
 
 // ===== Screens (order = navigation order) =====
 const SCREENS = [
@@ -97,6 +98,7 @@ export default function App() {
   const [system, setSystem] = useState("heart");
   const [emergency, setEmergency] = useState(false);
   const [help, setHelp] = useState(false);
+  const [welcomed, setWelcomed] = usePersisted("intro", "show", (v) => v === "show" || v === "seen");
   const [queued, setQueued] = useState([]);
 
   const records = useMemo(() => recordsFor(astronaut), [astronaut]);
@@ -123,7 +125,7 @@ export default function App() {
             <span className="hidden lg:inline">{current?.label}</span>
           </h1>
           <p className="text-sm md:text-base text-ink-2 truncate">
-            <span className="sm:hidden">{crewName?.replace(/^Crew Member /, "")} · day {record.day}</span>
+            <span className="sm:hidden">{crewName?.replace(/^Crew Member /, "")}</span>
             <span className="hidden sm:inline">{crewName} · {META.environments[env].name} · mission day {record.day}</span>
           </p>
         </div>
@@ -148,7 +150,8 @@ export default function App() {
       </nav>
 
       <main>
-        {screen === "today" && <Today record={record} records={records} env={env} onOpenSystem={openSystem} onOpenCheckin={() => setScreen("checkin")} />}
+        {screen === "today" && <Today record={record} records={records} env={env} onOpenSystem={openSystem} onOpenCheckin={() => setScreen("checkin")}
+                                         onEmergency={() => setEmergency(true)} />}
         {screen === "checkin" && <CheckIn record={record} />}
         {screen === "body" && <Body record={record} records={records} system={system} onSelect={setSystem} />}
         {screen === "trends" && <Trends records={records} day={record.day} astronaut={astronaut} />}
@@ -162,7 +165,8 @@ export default function App() {
 
       <footer className="mt-8 mb-8 text-sm text-muted">{META.disclaimer}</footer>
       </div>
-      {help && <HelpDialog onClose={() => setHelp(false)} />}
+      {help && <HelpDialog onClose={() => setHelp(false)} onIntro={() => { setHelp(false); setWelcomed("show"); }} />}
+      {welcomed === "show" && !emergency && <Welcome onClose={() => setWelcomed("seen")} />}
       {emergency && <Emergency env={env} record={record} onClose={() => setEmergency(false)} />}
     </div>
   );

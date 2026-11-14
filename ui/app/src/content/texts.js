@@ -91,7 +91,7 @@ export const EVENT_TEXT = {
 const BP = {
   how: "No exercise or caffeine in the last 30 minutes. Keep still and quiet for 5 minutes first — in weightlessness, anchor your feet; with gravity, sit. Cuff on the bare upper arm, arm supported at heart level. Take two readings one minute apart, at the same point of your daily schedule.",
   why: "Weightlessness shifts body fluids towards the head and changes how the heart and blood vessels work; this can lead to heart rhythm problems and low blood pressure with fainting.",
-  ifAbnormal: "One high reading is not an emergency: measure again. Above 180/120 mmHg, wait one minute and measure again; if it stays that high, tell the crew medical officer at once — with chest pain or shortness of breath, open Emergency.",
+  ifAbnormal: "One high reading is not an emergency: measure again. Systolic above 180 or diastolic above 120 mmHg: wait one minute and measure again; if it stays that high, tell the crew medical officer at once — with chest pain or shortness of breath, open Emergency.",
   source: ["aha_bp_home", "hrp_cardio", "hrp_gravity"],
 };
 export const CHECKIN = {
@@ -269,6 +269,8 @@ export const SYSTEM_TEXT = {
 // Numbers copied by hand on 2026-11-14 from the ML results, which the README also reports:
 // outputs/results/benchmark.md, dev_metrics.json, final_test.json (hold-out, run once).
 // The UI contract reads only outputs/ui/, so if those results change, update these numbers.
+// Numbers below are copied from outputs/results/benchmark.md, dev_metrics.md and final_test.json;
+// update them if those files are regenerated.
 export const EVIDENCE = {
   label: "Synthetic data calibrated on published sources — proof of concept, not clinical validation.",
   steps: [
@@ -383,7 +385,7 @@ export const EMERGENCY = {
     steps: [
       "Treat it as an emergency: tell the crew medical officer now. Do not wait to see if it passes.",
       "Warning signs of a heart attack: pressure, squeezing or pain in the centre of the chest; pain spreading to an arm, the back, neck or jaw; shortness of breath; cold sweat, nausea or light-headedness.",
-      "Measure blood pressure now. Above 180/120 mmHg together with chest pain is a hypertensive emergency.",
+      "Measure blood pressure now. Systolic above 180 or diastolic above 120 mmHg together with chest pain is a hypertensive emergency.",
       "If they stop responding or stop breathing normally, start CPR.",
     ],
     source: ["aha_heart_attack", "mlp_chest_pain", "aha_bp_home", "mlp_cpr"],
