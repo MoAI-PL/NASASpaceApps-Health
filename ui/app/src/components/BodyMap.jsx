@@ -17,7 +17,7 @@ export default function BodyMap({ record, selected, onSelect, compact = false })
     <section className="panel p-5">
       <h2 className="text-ink-2 text-lg mb-2">Body systems</h2>
       {/* Figure on top (arms out needs the width), the labelled system buttons below it. */}
-      <PolyBody systems={st} selected={selected} onSelect={onSelect} width={compact ? 240 : 320}
+      <PolyBody systems={st} selected={selected} onSelect={onSelect} width={compact ? 220 : 300}
                 label={`Body map: ${ORDER.map((id) => `${META.systems[id].name} ${st[id]}`).join(", ")}`} />
       <div className={`grid gap-2 mt-3 ${compact ? "grid-cols-1" : "sm:grid-cols-2"}`}>
         {ORDER.map((id) => (
