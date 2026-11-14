@@ -274,24 +274,17 @@ export const SYSTEM_TEXT = {
 export const READINESS = {
   title: "Ready for critical tasks?",
   verdict: {
-    go: "Ready — your reactions are within your normal",
+    go: "Alertness as usual",
     blindSpot: "Feels fine ≠ is fine",
-    both: "You feel it, and the test shows it",
-    noData: "Do the reaction test to know",
-    learning: "Still learning your normal",
+    both: "Slower, and you feel it",
+    noData: "Do the reaction test",
+    learning: "Learning your normal",
   },
-  body: {
-    go: "Your alertness is as usual. This checks alertness only — follow any other steps above.",
-    learning: "The check starts once Baseline knows your normal reaction time.",
-    blindSpot: "You rate your mood as usual, but your reactions are slower than your normal. Tiredness can hide from your own judgement.",
-    both: "Your mood is lower and your reactions are slower than your normal.",
-    noData: "No reaction test in the last 7 days.",
-  },
-  advice: [
-    "Before a spacewalk, docking or robotic-arm work: ask a crewmate to check each step with you, or rest first.",
-    "Sleep, then repeat the reaction test.",
+  advice: "Spacewalk, docking or robotic arm: a crewmate checks each step — or rest first.",
+  how: [
+    "Compares your mood rating with your reaction test over the last 7 days. Tiredness often hides from your own judgement.",
+    "Slower = 1.5 SD or more above your normal; \"as usual\" = mood within 0.5 SD. Team thresholds — an assumption, not validated. The cited study used sleepiness ratings; here mood is the self-rating.",
   ],
-  rule: "Slower = 7-day reaction time 1.5 SD or more above your normal; \"as usual\" = mood within 0.5 SD. Team thresholds — an assumption, not validated. The cited study used sleepiness ratings; here mood is the self-rating.",
   source: ["van_dongen_2003", "nasa_pvt", "hrp_sleep"],
 };
 
@@ -301,14 +294,15 @@ export const READINESS = {
 // rule is a team assumption, not validated: the synthetic demo crew has no shared scenario.
 export const HABITAT = {
   title: "Is it me or the habitat?",
-  rule: "Same body system away from normal in 2 or more crew members on the same day. Crewmates are counted, never named. Team rule — an assumption, not validated.",
   verdict: {
-    shared: "Shared by the crew — check the habitat first",
-    personal: "Only you — likely personal, not the habitat",
-    clear: "No shared change in the crew today",
+    shared: "Shared by the crew — check the habitat",
+    personal: "Only you — likely personal",
+    clear: "Nothing shared in the crew",
   },
-  personalBody: "No one else on the crew shows the same change. Follow the steps for you above.",
-  clearBody: "Everyone is within their normal, or changes are in different body systems.",
+  how: [
+    "Compares today's body systems across the crew. The same system away from normal in 2 or more crew members points to the habitat, not to one person.",
+    "Crewmates are counted, never named. Team rule — an assumption, not validated.",
+  ],
   checks: {
     heart: {
       items: ["Cabin CO₂ above its usual level", "Cabin temperature and the exercise schedule"],

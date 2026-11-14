@@ -70,8 +70,11 @@ export default function Today({ record, records, env, onOpenSystem, onOpenChecki
         )}
       </Panel>
 
-      <div className="md:col-span-3"><Readiness records={records} astronaut={record.astronaut} day={record.day} /></div>
-      <div className="md:col-span-3"><HabitatCheck astronaut={record.astronaut} day={record.day} /></div>
+      {/* Two short checks side by side: alertness (me) and shared drift (the habitat). */}
+      <div className="md:col-span-3 grid gap-4 md:grid-cols-2 md:items-stretch">
+        <Readiness records={records} astronaut={record.astronaut} day={record.day} />
+        <HabitatCheck astronaut={record.astronaut} day={record.day} />
+      </div>
       <div className="md:col-span-3"><HazardStrip record={record} env={env} /></div>
     </div>
   );

@@ -4,7 +4,7 @@
 import { META, fmt, fmtBand, offNormalSince } from "../data.js";
 import { PROMPTS, STATUS_LABEL, SYSTEM_TEXT } from "../content/texts.js";
 import { Glyph, StatusIcon } from "./icons.jsx";
-import { SourceLink, Text } from "./ui.jsx";
+import { Fold, SourceLink, Text } from "./ui.jsx";
 
 // ===== One body system, essentials first =====
 // Visible at once: status and since when, one card per value against the personal normal, and
@@ -28,18 +28,6 @@ function ValueCard({ f, v, band }) {
         normal {fmtBand(f, lo)}–{fmtBand(f, hi)}
       </p>
     </div>
-  );
-}
-
-/** A folded explanation: one line closed, the text when opened. */
-function Fold({ title, children }) {
-  return (
-    <details className="group rounded-2xl bg-panel-2">
-      <summary className="tap flex items-center gap-3 px-4 cursor-pointer text-lg list-none">
-        <span aria-hidden="true" className="transition-transform group-open:rotate-90">▶</span> {title}
-      </summary>
-      <div className="px-4 pb-4 text-lg">{children}</div>
-    </details>
   );
 }
 
