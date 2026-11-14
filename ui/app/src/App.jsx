@@ -44,7 +44,7 @@ function usePersisted(key, fallback, valid) {
 export default function App() {
   const [astronaut, setAstronaut] = usePersisted("astronaut", "A2", (v) => META.crew.some((c) => c.id === v));
   const [env, setEnv] = usePersisted("env", META.default_environment, (v) => v in META.environments);
-  const [day, setDay] = useState(70); // demo story: Crew Member Bravo, days 45 → 80
+  const [day, setDay] = useState(80); // demo story: Bravo — model alert day 58, fixed thresholds day 76
   const [screen, setScreen] = useState("today");
   const [system, setSystem] = useState("heart");
   const [emergency, setEmergency] = useState(false);
