@@ -33,7 +33,9 @@ export default function SystemDetail({ record, records, system }) {
               <tr key={f} className="border-t border-line">
                 <td className="py-2">{META.features[f].name}</td>
                 <td className="py-2 text-right font-semibold">
-                  {fmt(f, v) ?? "missing"} <span className="text-muted text-base">{META.features[f].unit}</span>
+                  {v == null ? <span className="text-ink-2 font-normal">not recorded</span> : (
+                    <>{fmt(f, v)} <span className="text-muted text-base">{META.features[f].unit}</span></>
+                  )}
                 </td>
                 <td className="py-2 text-right text-ink-2 text-base">
                   your normal {fmt(f, lo)}–{fmt(f, hi)} {dir && <span className="ml-1 font-semibold text-ink">{dir}</span>}
