@@ -16,6 +16,7 @@ import Emergency from "./screens/Emergency.jsx";
 import Settings from "./screens/Settings.jsx";
 import HowWeKnow from "./screens/HowWeKnow.jsx";
 import MissionTimeline from "./components/MissionTimeline.jsx";
+import HelpDialog from "./components/HelpDialog.jsx";
 
 // ===== Screens (order = navigation order) =====
 const SCREENS = [
@@ -51,6 +52,7 @@ export default function App() {
   const [screen, setScreen] = useState("today");
   const [system, setSystem] = useState("heart");
   const [emergency, setEmergency] = useState(false);
+  const [help, setHelp] = useState(false);
   const [queued, setQueued] = useState([]);
 
   const records = useMemo(() => recordsFor(astronaut), [astronaut]);
@@ -62,15 +64,19 @@ export default function App() {
     <div className="max-w-7xl mx-auto p-4 md:p-6">
       {/* Sticky header: the Emergency button is always visible and never covers content. */}
       <header className="sticky top-0 z-40 -mx-4 md:-mx-6 px-4 md:px-6 py-3 mb-4 bg-bg/95 backdrop-blur border-b border-line
-                         flex items-center gap-4">
-        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 flex-1 min-w-0">
+                         flex items-center gap-2 md:gap-4">
+        <div className="flex flex-wrap items-baseline gap-x-4 flex-1 min-w-0">
           <h1 className="text-2xl md:text-3xl font-bold">Baseline</h1>
-          <span className="text-sm md:text-lg text-ink-2">
-            {crewName}<span className="hidden sm:inline"> · {META.environments[env].name}</span>
+          <span className="text-sm md:text-lg text-ink-2 truncate max-w-full">
+            {/* Phones show the call sign only ("Bravo"); wider screens the full name and environment. */}
+            <span className="sm:hidden">{crewName?.replace(/^Crew Member /, "")}</span>
+            <span className="hidden sm:inline">{crewName} · {META.environments[env].name}</span>
           </span>
         </div>
+        <button type="button" onClick={() => setHelp(true)} aria-label="Help: how to read Baseline"
+                className="tap shrink-0 rounded-2xl bg-panel-2 border border-line text-2xl font-bold">?</button>
         <button type="button" onClick={() => setEmergency(true)}
-                className="tap shrink-0 px-5 md:px-8 rounded-2xl text-xl font-bold text-white flex items-center gap-3 bg-critical">
+                className="tap shrink-0 px-3 md:px-8 rounded-2xl text-lg md:text-xl font-bold text-white flex items-center gap-2 md:gap-3 bg-critical">
           <StatusIcon status="red" size={30} /> Emergency
         </button>
       </header>
@@ -103,6 +109,7 @@ export default function App() {
       </main>
 
       <footer className="mt-8 mb-8 text-sm text-muted">{META.disclaimer}</footer>
+      {help && <HelpDialog onClose={() => setHelp(false)} />}
       {emergency && <Emergency env={env} record={record} onClose={() => setEmergency(false)} />}
     </div>
   );

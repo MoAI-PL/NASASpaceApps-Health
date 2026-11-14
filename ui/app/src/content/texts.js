@@ -46,6 +46,17 @@ export const SOURCES = {
 // ===== Status vocabulary: colour + shape + word, never colour alone =====
 export const STATUS_LABEL = { green: "Nominal", yellow: "Watch", orange: "Act", red: "Critical", info: "Info" };
 
+// ===== Legend: what each status means and what to do (Help dialog) =====
+// Matches the app logic: Watch/Act come from the index held for several days, Critical only
+// from critical limits (meta.index; PLAN.md M2.3–M2.4).
+export const STATUS_HELP = [
+  { status: "green", meaning: "Within your normal.", action: "Keep your daily routine." },
+  { status: "yellow", meaning: "Drifting away from your normal for several days.", action: "Do today’s actions and re-measure." },
+  { status: "orange", meaning: "Clearly away from your normal, or several systems at once.", action: "Inform the crew medical officer." },
+  { status: "red", meaning: "A critical limit was crossed.", action: "Open Emergency and follow the steps." },
+  { status: "info", meaning: "Information only, not a health status.", action: "" },
+];
+
 // ===== Escalation ladder (ids from the contract) =====
 export const ESCALATION_TEXT = {
   monitor: "Keep the daily routine",
