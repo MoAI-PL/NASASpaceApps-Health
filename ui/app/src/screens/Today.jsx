@@ -26,6 +26,7 @@ export default function Today({ record, records, env, onOpenSystem }) {
               <div>
                 <div className="text-lg font-semibold">{EVENT_TEXT[e].title}</div>
                 <Text className="text-ink-2">{EVENT_TEXT[e].body}</Text>
+                {EVENT_TEXT[e].source && <div className="mt-1"><SourceLink id={EVENT_TEXT[e].source} /></div>}
               </div>
             </div>
           ))}

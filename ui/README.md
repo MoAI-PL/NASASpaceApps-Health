@@ -30,9 +30,10 @@ content is visible in the demo until it is written.
 
 ### TODO for the UI team
 
-- [ ] Write every `TODO(UI)` text in `src/content/texts.js` from cited sources (NASA HRP pages or
+- [x] Write every `TODO(UI)` text in `src/content/texts.js` from cited sources (NASA HRP pages or
       other public guidance) and add each source to `SOURCES`.
-- [ ] Emergency steps: replace the DRAFT steps with a protocol from cited sources, set `draft: false`.
+- [x] Emergency: a step-by-step flow for a crew mate (responsive? breathing? → CPR / recovery /
+      chest pain / breathing difficulty) from cited sources (`EMERGENCY` in `texts.js`).
 - [x] Final body figure (own SVG) in `src/components/BodyMap.jsx`.
 - [x] Check contrast (WCAG AA) and colour-blind safety of the palette in `src/styles.css`
       (Okabe–Ito based; ratios listed next to the tokens). Shapes + words already carry every state.

@@ -23,6 +23,20 @@ export const SOURCES = {
     url: "https://link.springer.com/article/10.1186/s13049-020-00793-y",
   },
   ochmo_co2: { title: "NASA OCHMO Technical Brief OCHMO-TB-004 — Carbon Dioxide", url: "https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-004-carbon-dioxide.pdf" },
+  hrp_cardio: { title: "NASA HRP — Risk of Cardiovascular Adaptations", url: "https://www.nasa.gov/reference/risk-of-cardiovascular-adaptations/" },
+  hrp_gravity: { title: "NASA HRP — Hazard: Gravity Fields", url: "https://www.nasa.gov/hrp/hazard-gravity-fields/" },
+  hrp_immune: { title: "NASA HRP — Risk of Altered Immune System Responses", url: "https://www.nasa.gov/reference/risk-of-altered-immune-system-responses/" },
+  hrp_closed_env: { title: "NASA HRP — Hazard: Hostile/Closed Environments", url: "https://www.nasa.gov/hrp/hazard-hostile-closed-environments/" },
+  hrp_sleep: { title: "NASA HRP — Risk from Inadequate Sleep and Irregular Schedules", url: "https://www.nasa.gov/reference/risk-from-inadequate-sleep-and-irregular-schedules/" },
+  hrp_behavior: { title: "NASA HRP — Risk of Behavioral Changes and Psychiatric Disorders", url: "https://www.nasa.gov/reference/risk-of-behavioral-conditions-and-psychiatric-disorders/" },
+  hrp_isolation: { title: "NASA HRP — Hazard: Isolation and Confinement", url: "https://www.nasa.gov/hrp/hazard-isolation-and-confinement/" },
+  hrp_nutrition: { title: "NASA HRP — Risk of Inadequate Food and Nutrition", url: "https://www.nasa.gov/reference/risk-of-inadequate-food-and-nutrition/" },
+  nasa_pvt: { title: "NASA Human Research Roadmap — Psychomotor Vigilance Test (Reaction Self-Test) on ISS", url: "https://humanresearchroadmap.nasa.gov/Tasks/task.aspx?i=1651" },
+  nasa_radiation: { title: "NASA — Space Radiation Won’t Stop NASA’s Human Exploration", url: "https://www.nasa.gov/humans-in-space/space-radiation-wont-stop-nasas-human-exploration/" },
+  aha_heart_rate: { title: "American Heart Association — Target Heart Rates (resting heart rate, taking your pulse)", url: "https://www.heart.org/en/healthy-living/fitness/fitness-basics/target-heart-rates" },
+  mlp_temp: { title: "MedlinePlus — Body temperature norms", url: "https://medlineplus.gov/ency/article/001982.htm" },
+  mlp_glucose: { title: "MedlinePlus — Blood sugar test", url: "https://medlineplus.gov/ency/article/003482.htm" },
+  tobin_2002: { title: "Tobin B.W. et al. (2002) — Insulin secretion and sensitivity in space flight: diabetogenic effects, Nutrition 18(10):842–8", url: "https://pubmed.ncbi.nlm.nih.gov/12361776/" },
 };
 
 // ===== Status vocabulary: colour + shape + word, never colour alone =====
@@ -38,55 +52,118 @@ export const ESCALATION_TEXT = {
 
 // ===== Events (ids from the contract) =====
 export const EVENT_TEXT = {
-  sep_event: { title: "Solar particle event", body: "Radiation is higher today. TODO(UI): shelter guidance with source." },
-  co2_high: { title: "Cabin CO₂ above limit", body: "TODO(UI): what to do about high CO₂, with source." },
+  sep_event: {
+    title: "Solar particle event",
+    body: "Radiation is higher today (solar particle event recorded by NASA DONKI). NASA protects crews from these events by having them shelter in an area with extra shielding: follow the radiation alert procedure.",
+    source: "nasa_radiation",
+  },
+  co2_high: {
+    title: "Cabin CO₂ above limit",
+    body: "Cabin CO₂ is above the 3 mmHg NASA limit. Headache is the most common symptom. Report it so the CO₂ scrubbers can be checked or backup CO₂ removal started.",
+    source: "ochmo_co2",
+  },
   possible_sensor_fault: { title: "Possible sensor fault", body: "One reading is far from your normal while the others are not. Re-measure before acting." },
 };
 
 // ===== Prompts: the model asks for a follow-up measurement (ids from the contract) =====
-export const PROMPTS = {
-  repeat_bp_hr_rest: {
-    title: "Re-measure blood pressure and resting heart rate",
-    how: "TODO(UI): how to measure (rest 5 min, seated, cuff position…).",
-    why: "TODO(UI): why it matters in space (fluid shift, deconditioning).",
-    ifAbnormal: "TODO(UI): what to do if still off your normal.",
-    source: "hrp_risks",
+// ===== Check-in cards: one per indicator (ids from meta.features) =====
+// How = how to measure, Why = why it matters in space, If abnormal = what to do when the value is
+// off your normal. Paraphrased from SOURCES (listed per card).
+// `range`: input plausibility limits that catch typos (e.g. 1200 instead of 120). Team assumption,
+// deliberately wide; NOT clinical thresholds and never shown as medical advice.
+const BP = {
+  how: "Sit and rest quietly for 5 minutes first: no exercise or caffeine in the last 30 minutes, no talking. Upper-arm cuff on bare skin, arm supported at heart level. Take two readings one minute apart, at the same time every day.",
+  why: "Weightlessness shifts body fluids towards the head and changes how the heart and blood vessels work; this can lead to heart rhythm problems and low blood pressure with fainting.",
+  ifAbnormal: "One high reading is not an emergency: measure again. Above 180/120 mmHg, wait one minute and measure again; if it stays that high, tell the crew medical officer at once — with chest pain or shortness of breath, open Emergency.",
+  source: ["aha_bp_home", "hrp_cardio", "hrp_gravity"],
+};
+export const CHECKIN = {
+  sys: { ...BP, step: 1, range: [60, 250] },
+  dia: { ...BP, step: 1, range: [30, 150] },
+  hr: {
+    how: "Measure in the morning after sleep, before getting up or drinking coffee. Two fingertips (not the thumb) on the thumb side of the inner wrist; count the beats for 30 seconds and multiply by 2.",
+    why: "Spaceflight changes the heart and blood vessels and can bring heart rhythm problems. On Earth, a higher resting heart rate goes with lower physical fitness.",
+    ifAbnormal: "Re-measure at rest. For most adults 60–100 beats per minute is normal at rest, but compare with your own normal. With chest discomfort, shortness of breath or light-headedness, open Emergency.",
+    source: ["aha_heart_rate", "hrp_cardio", "aha_heart_attack"],
+    step: 1, range: [25, 220],
   },
-  repeat_glucose_fasting: {
-    title: "Re-measure fasting blood glucose",
-    how: "TODO(UI)", why: "TODO(UI)", ifAbnormal: "TODO(UI)", source: "hrp_risks",
+  glucose: {
+    how: "Measure fasting: nothing to eat for at least 8 hours before the test.",
+    why: "Spaceflight has been linked to reduced insulin sensitivity and changes in glucose tolerance, and the space diet must keep the crew well fed for years without resupply.",
+    ifAbnormal: "A normal fasting value is 70–99 mg/dL. Re-measure fasting the next morning and tell the crew medical officer if it stays outside your normal. If someone feels faint from low blood sugar, give something sweet only once they are conscious.",
+    source: ["mlp_glucose", "tobin_2002", "hrp_nutrition", "mlp_unconscious"],
+    step: 1, range: [20, 600],
   },
-  reaction_test_mood_checkin: {
-    title: "Do the reaction test and mood check-in",
-    how: "TODO(UI)", why: "TODO(UI)", ifAbnormal: "TODO(UI)", source: "hrp_hazards",
+  temp: {
+    how: "Measure at the same time each day. Body temperature is lowest in the early morning and changes during the day.",
+    why: "Radiation, weightlessness and poor sleep can weaken the immune system and wake up dormant viruses, and germs pass more easily between people in a closed habitat.",
+    ifAbnormal: "Above 38 °C usually means fever from an infection or illness. Re-measure in the evening and tell the crew medical officer about a fever or any new rash.",
+    source: ["mlp_temp", "hrp_immune", "hrp_closed_env"],
+    step: 0.1, range: [32, 43],
   },
-  repeat_temperature_evening: {
-    title: "Re-measure body temperature this evening",
-    how: "TODO(UI)", why: "TODO(UI)", ifAbnormal: "TODO(UI)", source: "hrp_risks",
+  sleep_h: {
+    how: "Enter the hours you actually slept in your last sleep period, not the time you spent in your sleep station.",
+    why: "Irregular light–dark cycles, sleep disruption and heavy workload are known spaceflight stressors that harm health and performance.",
+    ifAbnormal: "Keep a regular schedule, use the cabin lighting schedule and watch caffeine timing. Tell the crew medical officer if short sleep continues for several days.",
+    source: ["hrp_sleep", "hrp_isolation"],
+    step: 0.1, range: [0, 24],
+  },
+  mood: {
+    how: "Rate how you feel today, from 1 (very low) to 5 (very good). Answer quickly — there is no right answer.",
+    why: "Long isolation and confinement can increase anxiety and depression, which affect sleep, morale and decisions. Far from Earth, talking to family and support teams gets harder.",
+    ifAbnormal: "Use your self-care time — for example, keep a journal. Tell a crew mate or the crew medical officer if low mood lasts several days.",
+    source: ["hrp_behavior", "hrp_isolation"],
+    step: 1, scale: [1, 2, 3, 4, 5],
+  },
+  reaction_ms: {
+    how: "Do the short reaction test at the same time each day: tap as soon as the signal appears. Enter your average reaction time.",
+    why: "A reaction-time test has been used on the space station as an objective measure of fatigue from sleep loss and workload.",
+    ifAbnormal: "Slower than your normal can mean fatigue. Check your sleep and workload, and re-test tomorrow; tell the crew medical officer if it stays slow.",
+    source: ["nasa_pvt", "hrp_sleep"],
+    step: 1, range: [100, 2000],
   },
 };
 
-// ===== Check-in cards: one per indicator (ids from meta.features) =====
-const todoCard = { how: "TODO(UI)", why: "TODO(UI)", ifAbnormal: "TODO(UI)", source: "hrp_risks" };
-// `range`: input plausibility limits that catch typos (e.g. 1200 instead of 120). Team assumption,
-// deliberately wide; NOT clinical thresholds and never shown as medical advice.
-export const CHECKIN = {
-  sys: { ...todoCard, step: 1, range: [60, 250] },
-  dia: { ...todoCard, step: 1, range: [30, 150] },
-  hr: { ...todoCard, step: 1, range: [25, 220] },
-  glucose: { ...todoCard, step: 1, range: [20, 600] },
-  temp: { ...todoCard, step: 0.1, range: [32, 43] },
-  sleep_h: { ...todoCard, step: 0.1, range: [0, 24] },
-  mood: { ...todoCard, step: 1, scale: [1, 2, 3, 4, 5] },
-  reaction_ms: { ...todoCard, step: 1, range: [100, 2000] },
+// ===== Prompts: the model asks for a follow-up measurement (ids from the contract) =====
+// Each prompt reuses the How / Why / If abnormal of the indicators it asks for; a prompt for two
+// indicators labels each part ("Blood pressure: …  Heart rate: …").
+const merge = ([la, a], [lb, b]) => ({
+  how: `${la}: ${a.how}  ${lb}: ${b.how}`,
+  why: `${la}: ${a.why}  ${lb}: ${b.why}`,
+  ifAbnormal: `${la}: ${a.ifAbnormal}  ${lb}: ${b.ifAbnormal}`,
+  source: [...new Set([...a.source, ...b.source])],
+});
+export const PROMPTS = {
+  repeat_bp_hr_rest: {
+    title: "Re-measure blood pressure and resting heart rate",
+    ...merge(["Blood pressure", BP], ["Heart rate", CHECKIN.hr]),
+  },
+  repeat_glucose_fasting: { title: "Re-measure fasting blood glucose", ...CHECKIN.glucose },
+  reaction_test_mood_checkin: {
+    title: "Do the reaction test and mood check-in",
+    ...merge(["Reaction test", CHECKIN.reaction_ms], ["Mood", CHECKIN.mood]),
+  },
+  repeat_temperature_evening: { title: "Re-measure body temperature this evening", ...CHECKIN.temp },
 };
 
 // ===== Body systems: why each matters in space (ids from meta.systems) =====
 export const SYSTEM_TEXT = {
-  heart: { whyInSpace: "TODO(UI): fluid shift and cardiovascular deconditioning in weightlessness.", source: "hrp_hazards" },
-  metabolism: { whyInSpace: "TODO(UI)", source: "hrp_risks" },
-  mind_sleep: { whyInSpace: "TODO(UI): isolation, confinement and disrupted sleep.", source: "hrp_hazards" },
-  immune_temp: { whyInSpace: "TODO(UI): closed environment and immune changes.", source: "hrp_hazards" },
+  heart: {
+    whyInSpace: "Without gravity, body fluids shift towards the head and the heart and blood vessels adapt. This can lead to blood clots, heart rhythm problems and low blood pressure with fainting when gravity returns. Exercise and a healthy diet help keep the heart fit.",
+    source: ["hrp_cardio", "hrp_gravity"],
+  },
+  metabolism: {
+    whyInSpace: "Spaceflight has been linked to reduced insulin sensitivity. On long missions the food system must stay nutritious and varied for years without resupply.",
+    source: ["tobin_2002", "hrp_nutrition"],
+  },
+  mind_sleep: {
+    whyInSpace: "Isolation, confinement, sleep loss, an irregular day–night cycle and heavy workload can wear down mood, alertness and teamwork. On a space station the crew sees about 16 sunrises a day.",
+    source: ["hrp_isolation", "hrp_sleep", "hrp_behavior"],
+  },
+  immune_temp: {
+    whyInSpace: "Radiation, weightlessness and poor sleep can change the immune system and wake dormant viruses. In a closed habitat germs pass more easily between crew members.",
+    source: ["hrp_immune", "hrp_closed_env"],
+  },
 };
 
 // ===== Emergency (Respond path; works without the model) =====
