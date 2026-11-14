@@ -166,6 +166,58 @@ export const SYSTEM_TEXT = {
   },
 };
 
+// ===== How we know: method and evidence (screen "How we know") =====
+// Numbers copied by hand on 2026-11-14 from the ML results, which the README also reports:
+// outputs/results/benchmark.md, dev_metrics.json, final_test.json (hold-out, run once).
+// The UI contract reads only outputs/ui/, so if those results change, update these numbers.
+export const EVIDENCE = {
+  label: "Synthetic data calibrated on published sources — proof of concept, not clinical validation.",
+  steps: [
+    { title: "1. Your personal normal", body: "Days 1–21 of the mission teach Baseline what is normal for you: each indicator becomes a distance from your own average." },
+    { title: "2. Drift over 7 days", body: "Every day, the last 7 days of all indicators are looked at together. Several small shifts in the same direction count, even when no single value crosses a limit." },
+    { title: "3. One index", body: "The Systemic Anomaly Index says how unusual that drift is compared with healthy days (0–100). The parts add up exactly, so the app can say which indicators moved." },
+    { title: "Safety net", body: "Critical limits and the Emergency mode work without the model." },
+  ],
+  benchmark: {
+    title: "1 · Chosen in a fair contest",
+    note: "38 configurations, all tuned to the same false-alarm budget (at most 0.05 per crew member per week). Share of simulated health changes caught within 21 days:",
+    rows: [
+      { label: "Baseline drift model (chosen)", value: 82, color: "var(--color-model)" },
+      { label: "Autoencoder ensemble (deep learning)", value: 68, color: "var(--color-ink-2)", outline: true },
+      { label: "Personal single-indicator thresholds", value: 64, color: "var(--color-b2)" },
+      { label: "Fixed clinical thresholds*", value: 39, color: "var(--color-b1)" },
+    ],
+    footnote: "* Fixed thresholds cannot be tuned; their own false-alarm rate was 0.084.",
+  },
+  confirmation: {
+    title: "2 · Confirmed with frozen settings",
+    note: "Median days from the start of a change to the first alert:",
+    head: ["Change", "Baseline", "Fixed", "Single-indicator"],
+    rows: [
+      ["Cardiovascular", "11", "29", "18.5"],
+      ["Isolation & stress", "13", "16", "13.5"],
+      ["Metabolic", "8.5", "18.5", "15"],
+    ],
+  },
+  holdout: {
+    title: "3 · Tested once on a change it never saw",
+    note: "Infection onset was kept aside during development and evaluated a single time.",
+    facts: [
+      ["Caught", "10 of 10 (fixed thresholds: 7 of 10)"],
+      ["Earlier than fixed thresholds", "+5 days (median); 3 cases only Baseline caught"],
+      ["Earlier than single-indicator thresholds", "+7.5 days (median)"],
+    ],
+  },
+  limits: {
+    title: "What it does not show",
+    items: [
+      "More false alarms than the simple methods: about one per crew member every 14 weeks (0.071 per week, vs 0.044 and 0.016).",
+      "For isolation & stress, Baseline was not earlier: compared crew member by crew member, it alerted about a day later than the other methods (median).",
+      "All data are synthetic. Real crews may behave differently; this is not clinical validation and not a medical device.",
+    ],
+  },
+};
+
 // ===== Emergency (Respond path; works without the model) =====
 // A crew mate helps the person in trouble (challenge video: "your fellow crew mate … collapses"),
 // so the flow starts with responsiveness and breathing, then branches. Nodes are either a

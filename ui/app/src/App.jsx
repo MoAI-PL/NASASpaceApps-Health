@@ -14,6 +14,7 @@ import Trends from "./screens/Trends.jsx";
 import EarthLink from "./screens/EarthLink.jsx";
 import Emergency from "./screens/Emergency.jsx";
 import Settings from "./screens/Settings.jsx";
+import HowWeKnow from "./screens/HowWeKnow.jsx";
 
 // ===== Screens (order = navigation order) =====
 const SCREENS = [
@@ -22,6 +23,7 @@ const SCREENS = [
   { id: "body", label: "Body" },
   { id: "trends", label: "Trends" },
   { id: "earth", label: "Earth link" },
+  { id: "how", label: "How we know" },
   { id: "settings", label: "Settings" },
 ];
 
@@ -102,6 +104,7 @@ export default function App() {
           <EarthLink astronaut={astronaut} day={record.day} env={env} queued={queued}
                      onQueue={() => setQueued([...queued, { astronaut, day: record.day }])} />
         )}
+        {screen === "how" && <HowWeKnow />}
         {screen === "settings" && <Settings astronaut={astronaut} onAstronaut={setAstronaut} env={env} onEnv={setEnv} />}
       </main>
 
