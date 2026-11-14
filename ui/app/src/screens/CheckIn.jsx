@@ -8,6 +8,8 @@ import { StatusIcon } from "../components/icons.jsx";
 import { Panel, SourceLink, TapButton, Text } from "../components/ui.jsx";
 
 // ===== Check-in: the 8 daily self-measurements, each with How / Why / If abnormal =====
+// Each entry is compared at once with the crew member's personal normal band, so the check-in
+// gives feedback without the model.
 // The demo runs on precomputed model output, so entries do not change the SAI. They are kept on
 // this device (localStorage, per crew member and mission day) when the browser allows it.
 
@@ -31,6 +33,18 @@ function problem(f, v) {
   if (!Number.isFinite(v)) return "Enter a number.";
   const [lo, hi] = range;
   return v < lo || v > hi ? `Check the value: expected ${lo}–${hi} ${META.features[f].unit}.` : null;
+}
+
+// ===== Comparison with the personal normal =====
+/** Where a valid entry sits against this crew member's normal band (meta.normal_bands). */
+function versusNormal(record, f, v) {
+  const band = META.normal_bands[record.astronaut]?.[f];
+  if (v == null || !band) return null;
+  const [lo, hi] = band;
+  const range = `your normal ${fmt(f, lo)}–${fmt(f, hi)} ${META.features[f].unit}`;
+  if (v < lo) return { status: "yellow", text: `▼ Below your normal (${range})` };
+  if (v > hi) return { status: "yellow", text: `▲ Above your normal (${range})` };
+  return { status: "green", text: `Within your normal (${range})` };
 }
 
 export default function CheckIn({ record }) {
@@ -76,7 +90,18 @@ export default function CheckIn({ record }) {
                 <StatusIcon status="red" size={22} /> {bad}
               </p>
             )}
-            <p className="mt-2 text-ink-2">Recorded today: {fmt(f, record.values[f]) ?? "missing"}</p>
+            {!bad && (() => {
+              const cmp = versusNormal(record, f, entries[f]);
+              return cmp && (
+                <p role="status" className="mt-2 flex items-center gap-2 text-lg">
+                  <StatusIcon status={cmp.status} size={22} /> {cmp.text}
+                </p>
+              );
+            })()}
+            <p className="mt-2 text-ink-2">
+              Mission data (demo), day {record.day}: {fmt(f, record.values[f]) ?? "not recorded"}
+              {record.values[f] != null && ` ${META.features[f].unit}`}
+            </p>
             {open === f && (
               <dl className="mt-3 grid gap-2 text-lg">
                 <dt className="text-ink-2">How</dt><dd><Text>{card.how}</Text></dd>
