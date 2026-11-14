@@ -39,7 +39,7 @@ pytest -q
 
 The production detector fits in seconds on a laptop CPU; the benchmark trains nine autoencoders (about 30 s each on CPU, `--device cuda` in `src.train` for the alternative detector).
 
-UI app (in progress): `cd ui/app && npm install && npm run dev`, or `npm run build` for a self-contained static site in `ui/app/dist/`. UI concept: open `ui/concept/index.html` in a browser (works offline). See `ui/README.md`.
+UI app (in progress): `cd ui/app && npm install && npm run dev`, or `npm run build` for a self-contained static site in `ui/app/dist/`. The built app is installable and works fully offline after the first visit (own service worker `ui/app/public/sw.js`, no extra library); check it with `npm run preview`, then stop the server and reload. UI concept: open `ui/concept/index.html` in a browser (works offline). See `ui/README.md`.
 
 The one-time hold-out test is **not** part of `run_all`: `python -m src.evaluate --split test --final` (run once, after freezing `config/model.yaml` and `config/rules.yaml`).
 

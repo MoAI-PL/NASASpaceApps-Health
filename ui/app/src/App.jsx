@@ -4,7 +4,7 @@
 // App shell: header, demo mission-day control, screen navigation, always-visible Emergency
 // button and disclaimer. Screens live in src/screens/, crew-facing text in src/content/texts.js.
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { META, recordsFor } from "./data.js";
 import { Glyph, StatusIcon } from "./components/icons.jsx";
 import Today from "./screens/Today.jsx";
@@ -87,6 +87,18 @@ function usePersisted(key, fallback, valid) {
   return [value, set];
 }
 
+/** True while the device has no network. The app keeps working: all data is on board. */
+function useOffline() {
+  const [offline, setOffline] = useState(() => typeof navigator !== "undefined" && navigator.onLine === false);
+  useEffect(() => {
+    const update = () => setOffline(!navigator.onLine);
+    window.addEventListener("online", update);
+    window.addEventListener("offline", update);
+    return () => { window.removeEventListener("online", update); window.removeEventListener("offline", update); };
+  }, []);
+  return offline;
+}
+
 // ===== App =====
 export default function App() {
   const [astronaut, setAstronaut] = usePersisted("astronaut", "A2", (v) => META.crew.some((c) => c.id === v));
@@ -98,6 +110,7 @@ export default function App() {
   const [help, setHelp] = useState(false);
   const [welcomed, setWelcomed] = usePersisted("intro", "show", (v) => v === "show" || v === "seen");
   const [queued, setQueued] = useState([]);
+  const offline = useOffline();
 
   const records = useMemo(() => recordsFor(astronaut), [astronaut]);
   const record = records.find((r) => r.day === day) ?? records[records.length - 1];
@@ -127,6 +140,13 @@ export default function App() {
             <span className="hidden sm:inline">{crewName} · {META.environments[env].name} · mission day {record.day}</span>
           </p>
         </div>
+        {offline && (
+          <span role="status" title="No network: everything still works, all data is on board"
+                className="shrink-0 flex items-center gap-2 px-3 py-2 rounded-2xl bg-panel-2 text-sm text-ink-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-good" aria-hidden="true" />
+            <span>Offline<span className="hidden md:inline"> · all data on board</span></span>
+          </span>
+        )}
         <button type="button" onClick={() => setHelp(true)} aria-label="Help: how to read Baseline"
                 className="tap shrink-0 rounded-2xl bg-panel-2 glass-control text-2xl font-bold lg:hidden">?</button>
         <button type="button" onClick={() => setEmergency(true)}
