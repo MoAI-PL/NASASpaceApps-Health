@@ -147,12 +147,10 @@ export default function MissionTimeline({ records, day, onDay, astronaut }) {
 
       {today.length > 0 && (
         <p className="text-sm text-ink-2">
-          <Glyph name="radiation" size={14} className="inline text-warning" /> Day {day}: solar particle event
-          {today.map((e) => (
-            <span key={e.id}> · {e.time.replace("T", " ").replace("Z", " UTC")} ·{" "}
-              <a href={e.link} target="_blank" rel="noreferrer" className="underline underline-offset-2">NASA DONKI record</a>
-            </span>
-          ))}
+          <Glyph name="radiation" size={14} className="inline text-warning" /> Day {day}:{" "}
+          {today.length === 1 ? "solar particle event" : `${today.length} solar particle event records`},{" "}
+          {today[0].time.slice(0, 10)} from {today[0].time.slice(11, 16)} UTC ·{" "}
+          <a href={today[0].link} target="_blank" rel="noreferrer" className="underline underline-offset-2">NASA DONKI record</a>
         </p>
       )}
       <p className="text-muted text-sm hidden md:block">
