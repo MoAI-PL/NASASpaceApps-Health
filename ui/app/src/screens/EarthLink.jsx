@@ -56,13 +56,13 @@ export default function EarthLink({ astronaut, day, env, record, records, queued
           <div className="p-3 rounded-xl bg-panel-2"><div className="text-ink-2 text-base">Earliest possible reply</div>{roundTripText(env)} round trip, plus review time</div>
         </div>
         <TapButton onClick={() => onQueue(reportFromRecord(record, records))} className="mt-4 bg-model! text-on-status font-semibold">
-          Queue today’s summary for downlink
+          Send today’s summary to Earth
         </TapButton>
         <p className="mt-3 text-ink-2">Reports are stored on board and sent in the next communication window. Act on board first; do not wait for a reply in an emergency.</p>
         <div className="mt-1"><SourceLink id={["hrp_distance", "cpr_microgravity"]} /></div>
       </Panel>
 
-      <Panel title="Queued for downlink">
+      <Panel title="Waiting to be sent to Earth">
         {all.length === 0 && <p className="text-lg">None yet.</p>}
         <ul className="grid gap-2">
           {all.map((r) => {
@@ -75,7 +75,7 @@ export default function EarthLink({ astronaut, day, env, record, records, queued
                   <StatusIcon status={r.level} />
                   <span className="font-semibold">Day {r.day}</span>
                   <span>{ESCALATION_TEXT[r.escalation]}</span>
-                  <span className="text-ink-2">{r.manual ? "queued by crew" : "automatic (escalation)"}</span>
+                  <span className="text-ink-2">{r.manual ? "added by you" : "automatic, after an escalation"}</span>
                 </button>
                 {isOpen && <div className="px-4 pb-4"><ReportBody report={r} /></div>}
               </li>

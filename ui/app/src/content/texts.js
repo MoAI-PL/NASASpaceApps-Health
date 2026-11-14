@@ -283,15 +283,15 @@ export const EVIDENCE = {
     rows: [
       { label: "Baseline drift model (chosen)", value: 82, color: "var(--color-model)" },
       { label: "Autoencoder ensemble (deep learning)", value: 68, color: "var(--color-ink-2)", outline: true },
-      { label: "Personal single-indicator thresholds", value: 64, color: "var(--color-b2)" },
-      { label: "Fixed clinical thresholds*", value: 39, color: "var(--color-b1)" },
+      { label: "Your single-value limits (each indicator alone)", value: 64, color: "var(--color-b2)" },
+      { label: "Standard clinical limits*", value: 39, color: "var(--color-b1)" },
     ],
-    footnote: "* Fixed thresholds cannot be tuned; their own false-alarm rate was 0.084.",
+    footnote: "* Standard clinical limits are fixed values and cannot be tuned; their own false-alarm rate was 0.084.",
   },
   confirmation: {
     title: "2 · Confirmed with frozen settings",
     note: "Median days from the start of a change to the first alert:",
-    head: ["Change", "Baseline", "Fixed", "Single-indicator"],
+    head: ["Change", "Baseline", "Clinical limits", "Single-value limits"],
     rows: [
       ["Cardiovascular", "11", "29", "18.5"],
       ["Isolation & stress", "13", "16", "13.5"],
@@ -302,9 +302,9 @@ export const EVIDENCE = {
     title: "3 · Tested once on a change it never saw",
     note: "Infection onset was kept aside during development and evaluated a single time.",
     facts: [
-      ["Caught", "10 of 10 (fixed thresholds: 7 of 10)"],
-      ["Earlier than fixed thresholds", "+5 days (median); 3 cases only Baseline caught"],
-      ["Earlier than single-indicator thresholds", "+7.5 days (median)"],
+      ["Caught", "10 of 10 (clinical limits: 7 of 10)"],
+      ["Earlier than clinical limits", "+5 days (median); 3 cases only Baseline caught"],
+      ["Earlier than single-value limits", "+7.5 days (median)"],
     ],
   },
   limits: {

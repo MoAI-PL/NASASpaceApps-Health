@@ -39,7 +39,7 @@ export default function Today({ record, records, env, onOpenSystem, onOpenChecki
           <div className="flex items-center gap-3">
             <StatusIcon status={record.level} /> {ESCALATION_TEXT[record.escalation]}
           </div>
-          <p className="text-ink-2">Check-in streak: <span className="font-semibold text-ink">{streak} days</span></p>
+          <p className="text-ink-2">Full check-ins in a row: <span className="font-semibold text-ink">{streak} days</span></p>
           {/* Daily reminder (challenge: prompt measurements as part of the routine). */}
           <div>
             <p className="flex items-center gap-3">

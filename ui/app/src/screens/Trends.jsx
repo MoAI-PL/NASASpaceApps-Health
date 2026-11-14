@@ -9,9 +9,9 @@ import { TapButton } from "../components/ui.jsx";
 // Row 1 = model (Prevent path), row 2 = fixed clinical thresholds (B1), row 3 = personal
 // single-indicator thresholds (B2). This is where the demo shows the model alerting earlier.
 const ALERT_ROWS = [
-  { label: "Model", color: "var(--color-model)", test: (r) => r.level === "yellow" || r.level === "orange" },
-  { label: "Fixed thresholds", color: "var(--color-b1)", test: (r) => r.rule_alert },
-  { label: "Single-indicator", color: "var(--color-b2)", test: (r) => r.univariate_alert },
+  { label: "Baseline model", color: "var(--color-model)", test: (r) => r.level === "yellow" || r.level === "orange" },
+  { label: "Clinical limits", color: "var(--color-b1)", test: (r) => r.rule_alert },
+  { label: "Single-value limits", color: "var(--color-b2)", test: (r) => r.univariate_alert },
 ];
 
 // ===== Chart geometry =====
@@ -68,7 +68,7 @@ export default function Trends({ records, day, astronaut }) {
   return (
     <section className="panel p-5">
       <div className="flex gap-2 mb-3 overflow-x-auto md:flex-wrap md:overflow-visible" role="group" aria-label="Series">
-        <TapButton active={isSai} onClick={() => setSeries("sai")} className="shrink-0">{META.index.short}</TapButton>
+        <TapButton active={isSai} onClick={() => setSeries("sai")} className="shrink-0">Index</TapButton>
         {INDICATORS.map((f) => (
           <TapButton key={f} active={f === series} onClick={() => setSeries(f)} className="text-base shrink-0 whitespace-nowrap">
             {META.features[f].name}
