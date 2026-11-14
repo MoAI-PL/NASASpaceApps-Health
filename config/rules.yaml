@@ -2,8 +2,8 @@
 # `op`: ge (>=), gt (>), le (<=), lt (<). Every rule has a source or assumption: true.
 
 b1_rules:
-  - {feature: temp, op: ge, value: 38.0, persistence_days: 2, assumption: true, note: "Common clinical fever definition; verify against a guideline before quoting."}
-  - {feature: hr, op: gt, value: 100, persistence_days: 2, assumption: true, note: "Common resting tachycardia definition; verify."}
+  - {feature: temp, op: ge, value: 38.0, persistence_days: 2, source: "MedlinePlus (U.S. National Library of Medicine), Body temperature norms: a temperature over 100.4 °F (38 °C) most often means a fever. https://medlineplus.gov/ency/article/001982.htm"}
+  - {feature: hr, op: gt, value: 100, persistence_days: 2, source: "Mayo Clinic, Heart rate: What's normal? — a normal resting heart rate for adults ranges from 60 to 100 beats per minute. https://www.mayoclinic.org/healthy-lifestyle/fitness/expert-answers/heart-rate"}
   - {feature: sys, op: ge, value: 140, persistence_days: 2, source: "American Heart Association, Understanding Blood Pressure Readings — Stage 2 hypertension: systolic >= 140 or diastolic >= 90 mmHg. https://heart.org/bplevels"}
   - {feature: dia, op: ge, value: 90, persistence_days: 2, source: "American Heart Association, Understanding Blood Pressure Readings — Stage 2 hypertension. https://heart.org/bplevels"}
   - {feature: glucose, op: ge, value: 126, persistence_days: 2, assumption: true, note: "Fasting glucose diagnostic cut-off commonly attributed to the ADA; verify before quoting."}

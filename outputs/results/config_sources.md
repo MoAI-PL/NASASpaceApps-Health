@@ -33,8 +33,8 @@
 | `simulation.yaml` scenarios.S3 | ASSUMPTION |  |
 | `simulation.yaml` scenarios.S4 | ASSUMPTION |  |
 | `simulation.yaml` scenarios.S5 | ASSUMPTION |  |
-| `rules.yaml` b1_rules[temp ge 38.0] | ASSUMPTION | Common clinical fever definition; verify against a guideline before quoting. |
-| `rules.yaml` b1_rules[hr gt 100] | ASSUMPTION | Common resting tachycardia definition; verify. |
+| `rules.yaml` b1_rules[temp ge 38.0] | SOURCED | MedlinePlus (U.S. National Library of Medicine), Body temperature norms: a temperature over 100.4 °F (38 °C) most often means a fever. https://medlineplus.gov/ency/article/001982.htm |
+| `rules.yaml` b1_rules[hr gt 100] | SOURCED | Mayo Clinic, Heart rate: What's normal? — a normal resting heart rate for adults ranges from 60 to 100 beats per minute. https://www.mayoclinic.org/healthy-lifestyle/fitness/expert-answers/heart-rate |
 | `rules.yaml` b1_rules[sys ge 140] | SOURCED | American Heart Association, Understanding Blood Pressure Readings — Stage 2 hypertension: systolic >= 140 or diastolic >= 90 mmHg. https://heart.org/bplevels |
 | `rules.yaml` b1_rules[dia ge 90] | SOURCED | American Heart Association, Understanding Blood Pressure Readings — Stage 2 hypertension. https://heart.org/bplevels |
 | `rules.yaml` b1_rules[glucose ge 126] | ASSUMPTION | Fasting glucose diagnostic cut-off commonly attributed to the ADA; verify before quoting. |

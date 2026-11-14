@@ -33,3 +33,18 @@ def test_demo_crew_is_schema_valid():
 def test_no_real_names_in_ui_data():
     names = {r["display_name"] for r in read_json(UI_OUT_DIR / "sample.json")["records"]}
     assert names == {"Crew Member Alpha", "Crew Member Bravo", "Crew Member Charlie"}
+
+
+def test_meta_has_rules_scenarios_and_donki_events():
+    path = UI_OUT_DIR / "meta.json"
+    if not path.exists():
+        pytest.skip("meta.json not generated yet.")
+    meta = read_json(path)
+    critical = meta["rules"]["critical"]
+    assert critical and all({"feature", "op", "value", "source", "assumption"} <= set(r) for r in critical)
+    assert all((r["source"] is None) == r["assumption"] for r in critical + meta["rules"]["b1"])
+    scen = {c["id"]: c["scenario"] for c in meta["crew"]}
+    assert scen["A1"] is None and scen["A2"]["id"] == "S1" and scen["A2"]["start_day"] == 50
+    assert scen["A3"]["id"] == "S2" and scen["A3"]["start_day"] == 70
+    events = meta["space_weather"]["events"]
+    assert sorted({e["day"] for e in events}) == meta["space_weather"]["event_days"]
