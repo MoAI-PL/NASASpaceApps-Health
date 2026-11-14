@@ -15,6 +15,7 @@ import EarthLink from "./screens/EarthLink.jsx";
 import Emergency from "./screens/Emergency.jsx";
 import Settings from "./screens/Settings.jsx";
 import HowWeKnow from "./screens/HowWeKnow.jsx";
+import MissionTimeline from "./components/MissionTimeline.jsx";
 
 // ===== Screens (order = navigation order) =====
 const SCREENS = [
@@ -75,14 +76,7 @@ export default function App() {
       </header>
 
       {/* Demo control: scrub through the precomputed 120-day mission. */}
-      <div className="panel px-4 py-2 md:p-4 mb-3 md:mb-4 flex flex-wrap items-center gap-x-4">
-        <label htmlFor="day" className="text-base md:text-lg whitespace-nowrap">
-          Mission day <span className="font-bold text-2xl">{record.day}</span>
-          <span className="text-muted text-sm ml-2">demo</span>
-        </label>
-        <input id="day" type="range" min="1" max={META.mission.days} value={day}
-               onChange={(e) => setDay(+e.target.value)} className="flex-1 min-w-48" />
-      </div>
+      <MissionTimeline records={records} day={record.day} onDay={setDay} />
 
       {/* Phones: one row that scrolls sideways inside the bar (the page itself never does);
           wider screens: the buttons wrap. Review finding 3. */}
