@@ -56,6 +56,23 @@ export function problem(f, v) {
   return v < lo || v > hi ? `Check the value: expected ${lo}–${hi} ${META.features[f].unit}.` : null;
 }
 
+// ===== Critical limits (Respond path, independent of the model) =====
+// meta.rules.critical comes from config/rules.yaml via the export (feature, op, value, source or
+// null when the value is a team assumption).
+const OPS = { gt: (a, b) => a > b, ge: (a, b) => a >= b, lt: (a, b) => a < b, le: (a, b) => a <= b };
+const OP_WORD = { gt: "above", ge: "at or above", lt: "below", le: "at or below" };
+
+/** Entries that cross a critical limit: [{ f, value, rule, text }]. Implausible values are ignored. */
+export function criticalBreaches(entries) {
+  return (META.rules?.critical ?? []).flatMap((rule) => {
+    const v = entries[rule.feature];
+    if (v == null || problem(rule.feature, v) || !OPS[rule.op]?.(v, rule.value)) return [];
+    const unit = META.features[rule.feature].unit;
+    return [{ f: rule.feature, value: v, rule,
+      text: `${META.features[rule.feature].name} ${fmt(rule.feature, v)} ${unit} — critical limit: ${OP_WORD[rule.op]} ${rule.value} ${unit}` }];
+  });
+}
+
 // ===== Comparison with the personal normal =====
 /** Where a valid entry sits against this crew member's normal band (meta.normal_bands). */
 export function versusNormal(record, f, v) {

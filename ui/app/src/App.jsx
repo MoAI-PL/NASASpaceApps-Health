@@ -152,7 +152,7 @@ export default function App() {
       <main>
         {screen === "today" && <Today record={record} records={records} env={env} onOpenSystem={openSystem} onOpenCheckin={() => setScreen("checkin")}
                                          onEmergency={() => setEmergency(true)} />}
-        {screen === "checkin" && <CheckIn record={record} />}
+        {screen === "checkin" && <CheckIn record={record} onEmergency={() => setEmergency(true)} />}
         {screen === "body" && <Body record={record} records={records} system={system} onSelect={setSystem} />}
         {screen === "trends" && <Trends records={records} day={record.day} astronaut={astronaut} />}
         {screen === "earth" && (

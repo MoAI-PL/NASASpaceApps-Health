@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import { INDICATORS, META, fmt } from "../data.js";
 import { CHECKIN } from "../content/texts.js";
-import { hasDraft, keepDraft, loadEntries, problem, storeEntries, versusNormal } from "../checkin.js";
+import { criticalBreaches, hasDraft, keepDraft, loadEntries, problem, storeEntries, versusNormal } from "../checkin.js";
 import { StatusIcon } from "../components/icons.jsx";
 import { Panel, SourceLink, TapButton, Text } from "../components/ui.jsx";
 import GuidedCheckIn from "./GuidedCheckIn.jsx";
@@ -74,7 +74,7 @@ function QuickEntry({ record, entries, set }) {
   });
 }
 
-export default function CheckIn({ record }) {
+export default function CheckIn({ record, onEmergency }) {
   const [entries, setEntries] = useState(() => loadEntries(record));
   const [saved, setSaved] = useState(null); // null | "device" | "memory"
   const [mode, setMode] = useState("guided");
@@ -92,6 +92,7 @@ export default function CheckIn({ record }) {
   const count = INDICATORS.filter((f) => entries[f] != null).length;
   const canSave = count > 0 && INDICATORS.every((f) => !problem(f, entries[f]));
   const save = () => setSaved(storeEntries(record, entries) ? "device" : "memory");
+  const breaches = criticalBreaches(entries);
 
   const saveStatus = (
     <p role="status" className="text-lg">
@@ -111,6 +112,27 @@ export default function CheckIn({ record }) {
         <TapButton active={mode === "guided"} onClick={() => setMode("guided")}>Guided</TapButton>
         <TapButton active={mode === "quick"} onClick={() => setMode("quick")}>Quick entry</TapButton>
       </div>
+      {/* Respond path: a critical value opens the way to Emergency at once, without the model. */}
+      {breaches.length > 0 && (
+        <section role="alert" className="panel p-5 border-critical! border-2">
+          <h2 className="flex items-center gap-3 text-2xl font-bold"><StatusIcon status="red" size={34} /> Critical value</h2>
+          <ul className="mt-3 grid gap-1 text-lg">
+            {breaches.map((b) => (
+              <li key={b.f}>
+                {b.text}
+                <span className="block text-ink-2 text-base">
+                  {b.rule.source ? `Limit source: ${b.rule.source}` : "Limit: team assumption, not yet from a cited source."}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-3 text-lg">Measure again now. If the value is confirmed, or if anyone feels unwell, open Emergency and tell the crew medical officer.</p>
+          <button type="button" onClick={onEmergency}
+                  className="tap mt-4 w-full rounded-2xl text-xl font-bold text-white flex items-center justify-center gap-3 bg-critical">
+            <StatusIcon status="red" size={30} /> Open Emergency
+          </button>
+        </section>
+      )}
       {mode === "guided" ? (
         <GuidedCheckIn record={record} entries={entries} set={set} setMany={setMany} save={save} saveStatus={saveStatus} />
       ) : (
