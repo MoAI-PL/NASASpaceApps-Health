@@ -102,7 +102,7 @@ export default function App() {
       </main>
 
       <footer className="mt-8 mb-8 text-sm text-muted">{META.disclaimer}</footer>
-      {emergency && <Emergency env={env} onClose={() => setEmergency(false)} />}
+      {emergency && <Emergency env={env} record={record} onClose={() => setEmergency(false)} />}
     </div>
   );
 }

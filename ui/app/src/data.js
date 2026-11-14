@@ -39,6 +39,14 @@ export function fmt(id, value) {
   return value == null ? null : Number(value).toFixed(DECIMALS[id] ?? 0);
 }
 
+/** Longest round trip of a message to Earth and back for an environment, as short text
+ *  (2 × the maximum one-way delay in meta.environments; signal travel only, no reply time). */
+export function roundTripText(env) {
+  const s = 2 * (META.environments[env]?.one_way_delay_s?.[1] ?? 0);
+  if (s < 2) return "a few seconds or less";
+  return s < 120 ? `up to ~${Math.round(s)} s` : `up to ~${Math.round(s / 60)} min`;
+}
+
 /** Indicator ids the crew measures (exercise is context, not a health indicator). */
 export const INDICATORS = Object.keys(META.features).filter((f) => f !== "exercise_min");
 
