@@ -55,15 +55,17 @@ export const PROMPTS = {
 
 // ===== Check-in cards: one per indicator (ids from meta.features) =====
 const todoCard = { how: "TODO(UI)", why: "TODO(UI)", ifAbnormal: "TODO(UI)", source: "hrp_risks" };
+// `range`: input plausibility limits that catch typos (e.g. 1200 instead of 120). Team assumption,
+// deliberately wide; NOT clinical thresholds and never shown as medical advice.
 export const CHECKIN = {
-  sys: { ...todoCard, step: 1 },
-  dia: { ...todoCard, step: 1 },
-  hr: { ...todoCard, step: 1 },
-  glucose: { ...todoCard, step: 1 },
-  temp: { ...todoCard, step: 0.1 },
-  sleep_h: { ...todoCard, step: 0.1 },
+  sys: { ...todoCard, step: 1, range: [60, 250] },
+  dia: { ...todoCard, step: 1, range: [30, 150] },
+  hr: { ...todoCard, step: 1, range: [25, 220] },
+  glucose: { ...todoCard, step: 1, range: [20, 600] },
+  temp: { ...todoCard, step: 0.1, range: [32, 43] },
+  sleep_h: { ...todoCard, step: 0.1, range: [0, 24] },
   mood: { ...todoCard, step: 1, scale: [1, 2, 3, 4, 5] },
-  reaction_ms: { ...todoCard, step: 1 },
+  reaction_ms: { ...todoCard, step: 1, range: [100, 2000] },
 };
 
 // ===== Body systems: why each matters in space (ids from meta.systems) =====
