@@ -60,20 +60,26 @@ export function offNormalSince(records, day, system) {
   return since;
 }
 
-/** Direction an indicator moved over the last 7 days (+1 higher, −1 lower, 0 unknown).
- *  Mirrors the model's summary: weighted mean (weights 1…7, latest heaviest) of the deviation
- *  from the personal band centre; missing days are skipped. */
-export function recentDirection(records, astronaut, day, f) {
+/** 7-day drift of one indicator in personal standard deviations, or null without data.
+ *  Mirrors the model's summary: weighted mean (weights 1…7, latest heaviest) of the distance
+ *  from the personal band centre. The band is mean ± 2 sd, so sd = band width / 4. */
+export function driftZ(records, astronaut, day, f) {
   const band = META.normal_bands[astronaut]?.[f];
-  if (!band) return 0;
-  const mid = (band[0] + band[1]) / 2;
-  let sum = 0;
+  if (!band) return null;
+  const mid = (band[0] + band[1]) / 2, sd = (band[1] - band[0]) / 4 || 1;
+  let sum = 0, weights = 0;
   for (const r of records) {
     const w = r.day - (day - 7);
     if (w < 1 || w > 7 || r.values[f] == null) continue;
-    sum += w * (r.values[f] - mid);
+    sum += w * (r.values[f] - mid) / sd;
+    weights += w;
   }
-  return Math.sign(sum);
+  return weights ? sum / weights : null;
+}
+
+/** Direction an indicator moved over the last 7 days (+1 higher, −1 lower, 0 unknown). */
+export function recentDirection(records, astronaut, day, f) {
+  return Math.sign(driftZ(records, astronaut, day, f) ?? 0);
 }
 
 /** Consecutive days up to `day` with every indicator recorded (the check-in streak). */
