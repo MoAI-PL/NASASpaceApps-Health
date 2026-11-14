@@ -139,7 +139,7 @@ export default function App() {
       </header>
 
       {/* Demo control: scrub through the precomputed 120-day mission. */}
-      <MissionTimeline records={records} day={record.day} onDay={setDay} />
+      <MissionTimeline records={records} day={record.day} onDay={setDay} astronaut={astronaut} />
 
       {/* Phones and tablets: one row of glass pills that scrolls sideways inside the bar (the page
           itself never does). Wide screens use the sidebar instead. */}
