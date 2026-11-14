@@ -1,0 +1,13 @@
+{
+  "name": "Astrobalance — personal-baseline health monitoring for space crews",
+  "short_name": "Astrobalance",
+  "description": "Prototype on synthetic data. Not a medical device.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#05060b",
+  "theme_color": "#05060b",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

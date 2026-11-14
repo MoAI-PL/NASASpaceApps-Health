@@ -1,4 +1,4 @@
-# Baseline — NASA Space Apps Challenge 2026
+# Astrobalance — NASA Space Apps Challenge 2026
 # AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 """Fit the configured detector on healthy astronauts and build the healthy reference distribution.
 
@@ -92,7 +92,7 @@ def train_autoencoder(x_tr: np.ndarray, m_tr: np.ndarray, x_va: np.ndarray, m_va
 
 # ===== Main =====
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Train the Baseline autoencoder.")
+    parser = argparse.ArgumentParser(description="Train the Astrobalance autoencoder.")
     parser.add_argument("--config", default=str(CONFIG_DIR / "model.yaml"))
     parser.add_argument("--sim-config", default=str(CONFIG_DIR / "simulation.yaml"))
     parser.add_argument("--device", default=None, help="auto | cpu | cuda (overrides the config).")

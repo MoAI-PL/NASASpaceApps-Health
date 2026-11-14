@@ -1,4 +1,4 @@
-# Baseline — NASA Space Apps Challenge 2026
+# Astrobalance — NASA Space Apps Challenge 2026
 # AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 """Export day records for the UI (outputs/ui/*.json) following schemas/day_record.schema.json.
 
@@ -183,7 +183,7 @@ def build_meta(cfgs: dict, crew: list[dict], bands: dict, split_meta: dict, samp
     """Static information the UI needs: features, systems, hazards, environments, crew, bands."""
     ui_cfg, sim_cfg, sc = cfgs["ui"], cfgs["sim"], cfgs["model"]["scoring"]
     return {
-        "product": "Baseline",
+        "product": "Astrobalance",
         "sample": sample,
         "disclaimer": "Prototype — synthetic data — not medical advice. " + DISCLAIMER,
         "mission": {"start_date": val(sim_cfg["mission"]["start_date"]),

@@ -1,4 +1,4 @@
-// Baseline — NASA Space Apps Challenge 2026
+// Astrobalance — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
 import { META } from "../data.js";
@@ -17,7 +17,7 @@ export default function BodyMap({ record, selected, onSelect, compact = false })
     <section className="panel p-5">
       <h2 className="text-ink-2 text-lg mb-2">Body systems</h2>
       {/* Figure on top (arms out needs the width), the labelled system buttons below it. */}
-      <PolyBody systems={st} selected={selected} onSelect={onSelect} width={compact ? 220 : 300}
+      <PolyBody systems={st} selected={selected} onSelect={onSelect} width={compact ? 220 : 380}
                 label={`Body map: ${ORDER.map((id) => `${META.systems[id].name} ${st[id]}`).join(", ")}`} />
       <div className={`grid gap-2 mt-3 ${compact ? "grid-cols-1" : "sm:grid-cols-2"}`}>
         {ORDER.map((id) => (

@@ -1,4 +1,4 @@
-// Baseline — NASA Space Apps Challenge 2026
+// Astrobalance — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
 import { useState } from "react";
@@ -122,7 +122,7 @@ export default function NextStep({ record, records, onOpenCheckin, onOpenSystem,
                 <div className="h-3 rounded-full bg-model" style={{ width: `${(100 * Math.min(record.day, calDays)) / calDays}%` }} />
               </div>
               <p className="mt-2 text-base text-ink-2">
-                Check in every day. Baseline is learning what is normal for <em>you</em>. Critical limits protect you from day 1.
+                Check in every day. Astrobalance is learning what is normal for <em>you</em>. Critical limits protect you from day 1.
               </p>
             </div>
           ) : (

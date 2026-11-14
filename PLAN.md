@@ -1,4 +1,4 @@
-# PLAN.md — Baseline: build plan for Claude Code
+# PLAN.md — Astrobalance: build plan for Claude Code
 
 Event window: Sat 14 Nov 2026 09:00 → Sun 15 Nov 2026, submission target 22:00 (hard deadline 23:59 local).
 Work in milestone order. Each milestone lists tasks, files, and acceptance criteria (AC).
@@ -27,7 +27,7 @@ A milestone is done only when all its AC pass. If a milestone overruns its timeb
 
 ### 0.1 NASA HRP hazard coverage (used in README, UI and slides)
 
-| NASA HRP hazard | How Baseline covers it | Data |
+| NASA HRP hazard | How Astrobalance covers it | Data |
 |---|---|---|
 | Space radiation | daily and cumulative absorbed dose, alerts on solar particle events | real DONKI SEP events + assumed dose model |
 | Isolation & confinement | mind_sleep system (sleep, mood, reaction time); AE detects joint drift (S2) | synthetic |
@@ -319,3 +319,5 @@ AC: a teammate can reproduce all results from a clean clone using the Commands s
 | 2026-11-14 | `meta.json`: new `rules` {critical, b1} copied from `config/rules.yaml` (feature, op, value, persistence_days, source, assumption) — J1 | ML (Claude) |
 | 2026-11-14 | `meta.crew[i].scenario` {id, name, start_day} or null (synthetic ground truth for the demo replay) — J2 | ML (Claude) |
 | 2026-11-14 | `meta.space_weather.events` [{day, time, id, link}] from the cached NASA DONKI SEP events — J3 | ML (Claude) |
+| 2026-11-14 | meta.environments: new `mars_rover` (Mars surface rover, 0–22 min one way, ASCEND; relay via base/orbiter is an assumption). Additive; exported by Zuza's session with `src.simulate` → `src.train` → `src.export --sample/--crew demo` (no evaluate/tune); demo_crew.json content unchanged | UI (Claude) |
+| 2026-11-14 | Project renamed Baseline → Astrobalance: `meta.product` = "Astrobalance" (src/export.py), schema title "Astrobalance day record". Values only, no structural change; re-exported with `src.export --sample/--crew demo` (demo_crew.json unchanged) | UI (Claude) |

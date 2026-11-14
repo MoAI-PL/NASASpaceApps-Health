@@ -1,4 +1,4 @@
-# Baseline — detector, scoring and alert configuration
+# Astrobalance — detector, scoring and alert configuration
 # Detector chosen by the model-selection benchmark (python -m src.benchmark → outputs/results/benchmark.md):
 # the multivariate personal-drift model beat every autoencoder variant at an equal false-alarm budget.
 detector: drift          # drift (production) | autoencoder (alternative, kept for the benchmark)

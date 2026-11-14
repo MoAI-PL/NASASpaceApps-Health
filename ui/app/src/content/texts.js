@@ -1,4 +1,4 @@
-// Baseline — NASA Space Apps Challenge 2026
+// Astrobalance — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 //
 // All crew-facing text lives here, so it can be reviewed and sourced in one place.
@@ -40,6 +40,7 @@ export const SOURCES = {
   nhlbi_sleep: { title: "NIH National Heart, Lung, and Blood Institute — Why Is Sleep Important?", url: "https://www.nhlbi.nih.gov/health/sleep/why-sleep-important" },
   mlp_metabolism: { title: "MedlinePlus — Metabolic Disorders (what metabolism is)", url: "https://medlineplus.gov/metabolicdisorders.html" },
   mlp_immune: { title: "MedlinePlus — Immune System and Disorders", url: "https://medlineplus.gov/immunesystemanddisorders.html" },
+  van_dongen_2003: { title: "Van Dongen H.P.A. et al. (2003) — The cumulative cost of additional wakefulness, Sleep 26(2):117–26 (sleepiness ratings missed growing performance deficits)", url: "https://pubmed.ncbi.nlm.nih.gov/12683469/" },
   tobin_2002: { title: "Tobin B.W. et al. (2002) — Insulin secretion and sensitivity in space flight: diabetogenic effects, Nutrition 18(10):842–8", url: "https://pubmed.ncbi.nlm.nih.gov/12361776/" },
 };
 
@@ -265,6 +266,63 @@ export const SYSTEM_TEXT = {
   },
 };
 
+// ===== Ready for critical tasks? (Today) =====
+// Compares how the crew member feels (mood self-rating) with how they perform (reaction
+// self-test, like the PVT on the ISS). In sleep-restriction studies people largely missed
+// their own growing performance deficits, so a slower reaction with an unchanged self-rating
+// is flagged before critical tasks. Thresholds are team assumptions, not validated.
+export const READINESS = {
+  title: "Ready for critical tasks?",
+  verdict: {
+    go: "Alertness as usual",
+    blindSpot: "Feels fine ≠ is fine",
+    both: "Slower, and you feel it",
+    noData: "Do the reaction test",
+    learning: "Learning your normal",
+  },
+  advice: "Spacewalk, docking or robotic arm: a crewmate checks each step — or rest first.",
+  how: [
+    "Compares your mood rating with your reaction test over the last 7 days. Tiredness often hides from your own judgement.",
+    "Slower = 1.5 SD or more above your normal; \"as usual\" = mood within 0.5 SD. Team thresholds — an assumption, not validated. The cited study used sleepiness ratings; here mood is the self-rating.",
+  ],
+  source: ["van_dongen_2003", "nasa_pvt", "hrp_sleep"],
+};
+
+// ===== Is it me or the habitat? (Today) =====
+// When the same body system is away from normal in two or more crew members on the same day,
+// a shared cause in the closed habitat is worth checking before a personal one. The "2 or more"
+// rule is a team assumption, not validated: the synthetic demo crew has no shared scenario.
+export const HABITAT = {
+  title: "Is it me or the habitat?",
+  verdict: {
+    shared: "Shared by the crew — check the habitat",
+    personal: "Only you — likely personal",
+    clear: "Nothing shared in the crew",
+  },
+  how: [
+    "Compares today's body systems across the crew. The same system away from normal in 2 or more crew members points to the habitat, not to one person.",
+    "Crewmates are counted, never named. Team rule — an assumption, not validated.",
+  ],
+  checks: {
+    heart: {
+      items: ["Cabin CO₂ above its usual level", "Cabin temperature and the exercise schedule"],
+      source: ["ochmo_co2", "hrp_closed_env"],
+    },
+    metabolism: {
+      items: ["The same food or water batch for everyone", "Changes to the meal or exercise plan"],
+      source: ["hrp_nutrition", "hrp_closed_env"],
+    },
+    mind_sleep: {
+      items: ["Cabin CO₂ (headaches, poor sleep)", "Lighting schedule, noise and shift changes"],
+      source: ["ochmo_co2", "hrp_sleep"],
+    },
+    immune_temp: {
+      items: ["An infection passing between crew members", "A recent solar particle event (radiation)"],
+      source: ["hrp_immune", "hrp_closed_env", "nasa_radiation"],
+    },
+  },
+};
+
 // ===== How we know: method and evidence (screen "How we know") =====
 // Numbers copied by hand on 2026-11-14 from the ML results, which the README also reports:
 // outputs/results/benchmark.md, dev_metrics.json, final_test.json (hold-out, run once).
@@ -273,17 +331,26 @@ export const SYSTEM_TEXT = {
 // update them if those files are regenerated.
 export const EVIDENCE = {
   label: "Synthetic data calibrated on published sources — proof of concept, not clinical validation.",
+  // The four numbers a reader sees first (same sources as below).
+  question: "Can you trust Astrobalance?",
+  answer: "We tested it like a scientist would: a fair contest against other methods, then one test on a health change it had never seen.",
+  headline: [
+    { value: "10 of 10", caption: "infections caught in the one-time test on an unseen change", compare: "clinical limits: 7 of 10" },
+    { value: "+5 days", caption: "earlier than clinical limits (median)", compare: "3 cases only Astrobalance caught" },
+    { value: "+7.5 days", caption: "earlier than single-value limits (median)", compare: "all 10 caught by both" },
+    { value: "82%", caption: "of changes caught within 21 days in the fair contest", compare: "clinical limits: 39%" },
+  ],
   steps: [
-    { title: "1. Your personal normal", body: "Days 1–21 of the mission teach Baseline what is normal for you: each indicator becomes a distance from your own average." },
-    { title: "2. Drift over 7 days", body: "Every day, the last 7 days of all indicators are looked at together. Several small shifts in the same direction count, even when no single value crosses a limit." },
-    { title: "3. One index", body: "The Systemic Anomaly Index says how unusual that drift is compared with healthy days (0–100). The parts add up exactly, so the app can say which indicators moved." },
-    { title: "Safety net", body: "Critical limits and the Emergency mode work without the model." },
+    { title: "1. Your personal normal", body: "The first 21 days teach Astrobalance what is normal for you." },
+    { title: "2. Drift over 7 days", body: "It watches all values move together, not one at a time." },
+    { title: "3. One index", body: "0–100: how unusual your week is, and which values caused it." },
+    { title: "Safety net", body: "Critical limits and Emergency work even without the model." },
   ],
   benchmark: {
     title: "1 · Chosen in a fair contest",
     note: "38 configurations, all tuned to the same false-alarm budget (at most 0.05 per crew member per week). Share of simulated health changes caught within 21 days:",
     rows: [
-      { label: "Baseline drift model (chosen)", value: 82, color: "var(--color-model)" },
+      { label: "Astrobalance drift model (chosen)", value: 82, color: "var(--color-model)" },
       { label: "Autoencoder ensemble (deep learning)", value: 68, color: "var(--color-ink-2)", outline: true },
       { label: "Your single-value limits (each indicator alone)", value: 64, color: "var(--color-b2)" },
       { label: "Standard clinical limits*", value: 39, color: "var(--color-b1)" },
@@ -293,7 +360,7 @@ export const EVIDENCE = {
   confirmation: {
     title: "2 · Confirmed with frozen settings",
     note: "Median days from the start of a change to the first alert:",
-    head: ["Change", "Baseline", "Clinical limits", "Single-value limits"],
+    head: ["Change", "Astrobalance", "Clinical limits", "Single-value limits"],
     rows: [
       ["Cardiovascular", "11", "29", "18.5"],
       ["Isolation & stress", "13", "16", "13.5"],
@@ -305,7 +372,7 @@ export const EVIDENCE = {
     note: "Infection onset was kept aside during development and evaluated a single time.",
     facts: [
       ["Caught", "10 of 10 (clinical limits: 7 of 10)"],
-      ["Earlier than clinical limits", "+5 days (median); 3 cases only Baseline caught"],
+      ["Earlier than clinical limits", "+5 days (median); 3 cases only Astrobalance caught"],
       ["Earlier than single-value limits", "+7.5 days (median)"],
     ],
   },
@@ -313,7 +380,7 @@ export const EVIDENCE = {
     title: "What it does not show",
     items: [
       "More false alarms than the simple methods: about one per crew member every 14 weeks (0.071 per week, vs 0.044 and 0.016).",
-      "For isolation & stress, Baseline was not earlier: compared crew member by crew member, it alerted about a day later than the other methods (median).",
+      "For isolation & stress, Astrobalance was not earlier: compared crew member by crew member, it alerted about a day later than the other methods (median).",
       "All data are synthetic. Real crews may behave differently; this is not clinical validation and not a medical device.",
     ],
   },

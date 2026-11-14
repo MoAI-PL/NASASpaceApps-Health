@@ -1,9 +1,8 @@
-// Baseline — NASA Space Apps Challenge 2026
+// Astrobalance — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 //
-// Holographic human figure: an athletic body with classical proportions in translucent teal, a
-// calm mannequin head (soft light and shade, no drawn features), a contour-following wire grid
-// and glowing joints.
+// Wireframe human figure: an athletic body with classical proportions drawn as a dense,
+// contour-following wire grid in cyan over a dark, barely-filled body (blueprint look).
 // Our own geometry, drawn here in plain SVG: no 3D library, no third-party model or image.
 //
 // Anatomy: about 8.5 head-heights; shoulders two head-heights wide, V-taper to a narrow waist,
@@ -83,43 +82,6 @@ const LEFT = [...HEAD_SIDE, ...NECK_TRAPEZIUS, ...ARM_HAND, ...TORSO_LEG];
 const BODY = smooth([...LEFT, ...mirrorPts(LEFT).reverse().slice(1, -1)], true);
 
 // ===== Light and shade =====
-// Soft shadows: [cx, cy, rx, ry, opacity].
-const SHADE = [
-  ...both([
-    [122.6, 30.6, 5, 2.6, 0.2],     // soft eye area
-    [127.6, 36.4, 1.4, 5, 0.18],    // side of the nose
-    [120, 41.6, 2.6, 4, 0.16],      // under the cheekbone
-    [121.4, 52.4, 7.4, 2.4, 0.55],  // under the jaw, onto the neck
-    [113.6, 107.4, 15, 4.6, 0.5],   // under the pectoral
-    [100.6, 118, 3.4, 13, 0.35],    // under the lat / serratus
-    [122.8, 127.4, 5.6, 1.4, 0.32], // between abdominal blocks
-    [122.8, 141.4, 5.6, 1.4, 0.3],
-    [122.6, 155.4, 5.4, 1.4, 0.28],
-    [109, 170, 3, 12, 0.3],         // oblique edge
-    [121.6, 263, 4, 6, 0.3],        // above the knee
-  ], mirrorEllipse),
-  [CX, 120, 1.4, 34, 0.32],         // centre line of the abdomen
-  [CX, 218, 3, 14, 0.4],            // between the thighs
-];
-// Soft highlights: [cx, cy, rx, ry, opacity].
-const SHEEN = [
-  ...both([
-    [122.6, 26.6, 5, 1.6, 0.26],    // brow
-    [120.6, 37, 3.4, 2.2, 0.3],     // cheekbone
-    [114.4, 89, 13, 8, 0.34],       // pectoral
-    [123, 120.6, 5, 5, 0.22],       // abdominal blocks
-    [123, 134.6, 5, 5, 0.2],
-    [123, 148.6, 4.8, 5, 0.18],
-    [110, 230, 8, 22, 0.24],        // quadriceps
-    [115.4, 280, 5, 6, 0.24],       // knee
-    [107.6, 312, 3.6, 12, 0.22],    // calf
-  ], mirrorEllipse),
-  ...both([[78.4, 92, 6, 10, 0.36], [81, 124, 4.6, 11, 0.26], [79, 162, 4, 10, 0.22], [83.2, 206, 4.4, 7, 0.18]].map(arm), mirrorEllipse),
-  [CX, 19.6, 8.4, 3.4, 0.3],        // forehead
-  [CX, 35.4, 1, 5.6, 0.34],         // bridge of the nose
-  [CX, 41, 1.8, 1.4, 0.3],          // tip of the nose
-  [CX, 51.6, 4, 1.8, 0.28],         // chin
-];
 // Muscle edges on the body.
 const MUSCLES = [
   ...both([
@@ -138,11 +100,11 @@ const MUSCLES = [
 // ===== Wire grid (the main visual): rings that wrap around each part + long lines; faint on the face =====
 const TUBES = [
   { id: "arm_l", system: "immune_temp", cols: 9, stations: [[84, 76, 8], [82.4, 88, 10.4], [82.6, 100, 11], [83, 112, 10.6], [83, 124, 10.6], [83.4, 136, 9.6], [83.2, 146, 8.8], [82.6, 156, 9], [82.6, 168, 8], [83, 180, 6.4], [83, 190, 5.6], [83.6, 200, 7.6], [84.4, 212, 7.6], [85, 222, 5.6]].map(arm) },
-  { id: "leg_l", system: "immune_temp", cols: 10, stations: [[114, 204, 16.5], [114, 220, 15.5], [114.6, 236, 14], [115.4, 252, 12.6], [116, 266, 11], [116, 280, 10], [115.6, 292, 10.6], [115.4, 306, 10.8], [116.4, 322, 9.6], [116.6, 340, 7.6], [116.6, 356, 6.4], [116.4, 366, 6], [114.6, 378, 8.8], [115, 390, 8.6]] },
+  { id: "leg_l", system: "immune_temp", cols: 11, stations: [[114, 204, 16.5], [114, 220, 15.5], [114.6, 236, 14], [115.4, 252, 12.6], [116, 266, 11], [116, 280, 10], [115.6, 292, 10.6], [115.4, 306, 10.8], [116.4, 322, 9.6], [116.6, 340, 7.6], [116.6, 356, 6.4], [116.4, 366, 6], [114.6, 378, 8.8], [115, 390, 8.6]] },
   { id: "neck", system: "immune_temp", cols: 9, stations: [[CX, 55, 12.6], [CX, 60, 14.4], [CX, 66, 17]] },
   { id: "belly", system: "metabolism", cols: 17, stations: [[CX, 140, 31.5], [CX, 150, 26.6], [CX, 160, 26.8], [CX, 172, 28], [CX, 184, 29.4], [CX, 196, 29.6], [CX, 205, 26]] },
-  { id: "chest", system: "heart", cols: 17, stations: [[CX, 62, 13], [CX, 68, 24], [CX, 74, 36], [CX, 82, 43], [CX, 92, 45], [CX, 100, 42.5], [CX, 112, 40], [CX, 126, 35], [CX, 140, 31.5]] },
-  { id: "head", system: "mind_sleep", cols: 13, stations: [[CX, 2, 9], [CX, 9, 12.6], [CX, 18, 15], [CX, 26, 16.6], [CX, 34, 16.4], [CX, 42, 15.2], [CX, 48, 13.4], [CX, 53, 8.4], [CX, 55, 4]], faint: true },
+  { id: "chest", system: "heart", cols: 19, stations: [[CX, 62, 13], [CX, 68, 24], [CX, 74, 36], [CX, 82, 43], [CX, 92, 45], [CX, 100, 42.5], [CX, 112, 40], [CX, 126, 35], [CX, 140, 31.5]] },
+  { id: "head", system: "mind_sleep", cols: 13, stations: [[CX, 2, 9], [CX, 9, 12.6], [CX, 18, 15], [CX, 26, 16.6], [CX, 34, 16.4], [CX, 42, 15.2], [CX, 48, 13.4], [CX, 53, 8.4], [CX, 55, 4]] },
 ];
 const PARTS = [
   ...TUBES,
@@ -181,10 +143,7 @@ function grid(part, step) {
   const left = R.map((r) => r[0]), right = R.map((r) => r[r.length - 1]).reverse();
   return { ...part, path: part.noGrid ? "" : rings + longs, outline: [...left, ...right].map(([x, y]) => `${f(x)} ${f(y)}`).join(" ") };
 }
-const GRIDS = { fine: PARTS.map((p) => grid(p, 3.6)), light: PARTS.map((p) => grid({ ...p, cols: Math.max(7, p.cols - 4) }, 5.5)) };
-
-// ===== Joints that glow (left side, mirrored) =====
-const JOINTS = both([arm([80, 86]), arm([83.2, 148]), arm([83, 190]), [101, 190], [116, 280], [116.6, 366]], ([x, y]) => [mx(x), y]);
+const GRIDS = { fine: PARTS.map((p) => grid(p, 4.6)), light: PARTS.map((p) => grid({ ...p, cols: Math.max(7, p.cols - 4) }, 6)) };
 
 // ===== Status =====
 /** Soft organ glow when a system is away from normal: [cx, cy, rx, ry]. Immune & temperature is
@@ -218,9 +177,9 @@ export default function PolyBody({ systems, selected = null, onSelect, width = 2
           <stop offset="1" stopColor="rgb(20 120 210 / 0)" />
         </radialGradient>
         <radialGradient id={id("skin")} gradientUnits="userSpaceOnUse" cx={CX} cy="140" r="250">
-          <stop offset="0" stopColor="rgb(40 170 210 / 0.32)" />
-          <stop offset="0.5" stopColor="rgb(20 110 170 / 0.4)" />
-          <stop offset="1" stopColor="rgb(10 60 120 / 0.55)" />
+          <stop offset="0" stopColor="rgb(20 90 130 / 0.22)" />
+          <stop offset="0.6" stopColor="rgb(10 50 90 / 0.3)" />
+          <stop offset="1" stopColor="rgb(5 25 55 / 0.4)" />
         </radialGradient>
         <radialGradient id={id("platform")} cx="0.5" cy="0.5" r="0.5">
           <stop offset="0" stopColor="rgb(80 220 255 / 0.5)" />
@@ -232,10 +191,6 @@ export default function PolyBody({ systems, selected = null, onSelect, width = 2
           <stop offset="0.25" stopColor="rgb(170 245 255 / 0.85)" />
           <stop offset="1" stopColor="rgb(80 220 255 / 0)" />
         </radialGradient>
-        <radialGradient id={id("zone-fade")} cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0.35" stopColor="#fff" />
-          <stop offset="1" stopColor="#000" />
-        </radialGradient>
         <linearGradient id={id("scan")} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="rgb(170 240 255 / 0)" />
           <stop offset="0.85" stopColor="rgb(170 240 255 / 0.16)" />
@@ -244,69 +199,47 @@ export default function PolyBody({ systems, selected = null, onSelect, width = 2
         <filter id={id("bloom")} x="-40%" y="-20%" width="180%" height="140%"><feGaussianBlur stdDeviation={8 * k} /></filter>
         <filter id={id("soft")} x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation={2 * k} /></filter>
         <filter id={id("hair")} x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation={0.45 * k} /></filter>
-        {Object.entries(ZONE_GLOW).map(([system, [x, y, rx, ry]]) => (
-          <mask key={system} id={id(`zone-${system}`)} maskUnits="userSpaceOnUse" x="0" y="0" width={W} height={H}>
-            <ellipse cx={x} cy={y} rx={rx * 1.7} ry={ry * 1.7} fill={url("zone-fade")} />
-          </mask>
-        ))}
         <clipPath id={id("body")}><path d={BODY} /></clipPath>
       </defs>
 
       {/* Light behind the figure (a soft ellipse, no box) and the lit platform under the feet. */}
-      <ellipse cx={CX} cy="196" rx="128" ry="200" fill={url("halo")} />
+      <ellipse cx={CX} cy="196" rx="128" ry="200" fill={url("halo")} opacity="0.55" />
       <ellipse cx={CX} cy="396" rx="80" ry="10" fill={url("platform")} />
       <ellipse cx={CX} cy="396" rx="56" ry="6.4" fill="none" stroke="rgb(120 230 255 / 0.42)" strokeWidth={0.8 * k} />
 
       {/* Outer bloom: the figure, blurred, glowing into the background. */}
-      <path d={BODY} fill="#19b5e0" filter={url("bloom")} opacity="0.5" pointerEvents="none" />
+      <path d={BODY} fill="#19b5e0" filter={url("bloom")} opacity="0.16" pointerEvents="none" />
 
       {/* Body, then inside it only: rim light, shadows, highlights, face, hair and muscle lines. */}
       <path d={BODY} fill={url("skin")} />
       <g clipPath={url("body")} pointerEvents="none">
-        <path d={BODY} fill="none" stroke="#6fe6ff" strokeWidth={8 * k} filter={url("soft")} opacity="0.8" />
+        <path d={BODY} fill="none" stroke="#6fe6ff" strokeWidth={5 * k} filter={url("soft")} opacity="0.35" />
         <path d={BODY} fill="none" stroke="#d4f8ff" strokeWidth={1.3 * k} opacity="0.95" />
-        <g filter={url("soft")} fill="#021630">
-          {SHADE.map(([x, y, rx, ry, o], i) => <ellipse key={i} cx={x} cy={y} rx={rx} ry={ry} opacity={o} />)}
-        </g>
-        <g filter={url("soft")} fill="#c8f6ff">
-          {SHEEN.map(([x, y, rx, ry, o], i) => <ellipse key={i} cx={x} cy={y} rx={rx} ry={ry} opacity={o} />)}
-        </g>
-        <path d={MUSCLES.join("")} fill="none" stroke="#9aeeff" strokeWidth={1.1 * k} strokeLinecap="round" filter={url("hair")} opacity="0.36" />
+        <path d={MUSCLES.join("")} fill="none" stroke="#9aeeff" strokeWidth={1.1 * k} strokeLinecap="round" filter={url("hair")} opacity="0.18" />
       </g>
 
-      {/* Wire grid on the body (not on the face), clipped to the figure; status colour around an organ. */}
+      {/* Wire grid, clipped to the figure. Every part takes the colour of its body system's status:
+          head = Mind & sleep, chest = Heart & circulation, abdomen = Metabolism, neck, pelvis,
+          arms and legs = Immune & temperature. The selected system is lit and outlined. */}
       <g clipPath={url("body")} pointerEvents="none">
-        {grids.filter((g) => off(g.system) && ZONE_GLOW[g.system] && g.path).map((g) => (
-          <path key={`base-${g.id}`} d={g.path} fill="none" stroke="var(--body-wire)" strokeWidth={0.4 * k} strokeOpacity="0.34" />
-        ))}
         {grids.map((g) => {
-          const lit = off(g.system) || selected === g.system, zone = off(g.system) && ZONE_GLOW[g.system];
-          const colour = off(g.system) ? STATUS_COLOR[systems[g.system]] : "var(--body-wire)";
+          const isOff = off(g.system), isSel = selected === g.system;
+          const colour = isOff ? STATUS_COLOR[systems[g.system]] : "var(--body-wire)";
           return (
-            <g key={g.id} style={{ color: colour }} mask={zone ? url(`zone-${g.system}`) : undefined}>
-              {off(g.system) && !zone && <polygon points={g.outline} fill="currentColor" fillOpacity="0.26" />}
-              {g.path && <path d={g.path} fill="none" stroke="currentColor" strokeWidth={(lit ? 0.5 : 0.38) * k}
-                                strokeOpacity={(lit ? 0.85 : 0.62) * (g.faint ? 0.4 : 1)} />}
-              {selected === g.system && <polygon points={g.outline} fill="none" stroke="var(--color-ink)" strokeWidth={1.2 * k} strokeOpacity="0.8" />}
+            <g key={g.id} style={{ color: colour }}>
+              {(isOff || isSel) && <polygon points={g.outline} fill="currentColor" fillOpacity={isOff ? (isSel ? 0.3 : 0.2) : 0.1} />}
+              {g.path && <path d={g.path} fill="none" stroke="currentColor" strokeWidth={(isOff || isSel ? 0.6 : 0.42) * k}
+                                strokeOpacity={isOff || isSel ? 1 : 0.8} />}
+              {isSel && <polygon points={g.outline} fill="none" stroke="var(--color-ink)" strokeWidth={1.2 * k} strokeOpacity="0.85" />}
             </g>
           );
         })}
         {/* Organ glow in the status colour (head, heart, abdomen) when away from normal. */}
         <g filter={url("bloom")}>
           {Object.entries(ZONE_GLOW).map(([system, [x, y, rx, ry]]) => off(system) && (
-            <ellipse key={system} cx={x} cy={y} rx={rx} ry={ry} fill={STATUS_COLOR[systems[system]]} opacity="0.9" />
+            <ellipse key={system} cx={x} cy={y} rx={rx} ry={ry} fill={STATUS_COLOR[systems[system]]} opacity="0.55" />
           ))}
         </g>
-        {/* A slow scan line moves down the figure (off when the system asks for reduced motion). */}
-        <rect className="poly-body-scan" x="0" y="-60" width={W} height="60" fill={url("scan")} />
-      </g>
-
-      {/* Glowing joints: shoulders, elbows, wrists, hips, knees, ankles. */}
-      <g pointerEvents="none">
-        {JOINTS.map(([x, y], i) => (
-          <circle key={i} className="poly-body-joint" style={{ animationDelay: `${(i % 6) * 0.4}s` }}
-                  cx={x} cy={y} r={5.5} fill={url("joint")} />
-        ))}
       </g>
 
       {/* Tap areas, one per body part. */}

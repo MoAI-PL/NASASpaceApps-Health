@@ -1,4 +1,4 @@
-/* Baseline — NASA Space Apps Challenge 2026
+/* Astrobalance — NASA Space Apps Challenge 2026
    AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0 */
 
 @import "tailwindcss";
@@ -174,11 +174,22 @@ main .panel:nth-child(n + 5) { animation-delay: 240ms; }
   100% { transform: translateY(470px); opacity: 0; }
 }
 
-/* Large tap targets for gloves and microgravity (PLAN.md UI brief: >= 64 px). */
+/* Large tap targets for gloves and microgravity (PLAN.md UI brief: >= 64 px) on touch screens.
+   With a mouse or trackpad (precise pointer, no gloves) they shrink to 52 px, still above the
+   WCAG 2.2 minimum, so the screen looks less crowded. */
 @utility tap {
   min-height: 64px;
   min-width: 64px;
+  @media (pointer: fine) {
+    min-height: 52px;
+    min-width: 52px;
+  }
 }
+
+/* Slightly denser layout: text, spacing and panels are all sized in rem, so a 15 px root
+   (browser default 16 px) scales the whole app down by about 6 % in one place. It follows the
+   user's own browser font setting (93.75 % of it), so zoom and accessibility settings still work. */
+html { font-size: 93.75%; }
 
 /* ===== Fallbacks: never trade readability for the glass look ===== */
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
@@ -213,3 +224,22 @@ input[type="range"] {
   outline: 3px solid var(--color-model);
   outline-offset: 2px;
 }
+
+/* Mission-day slider drawn on top of the status strip: transparent track, one clear thumb. */
+.track-range { -webkit-appearance: none; appearance: none; background: transparent; cursor: pointer; }
+.track-range::-webkit-slider-runnable-track { background: transparent; height: 100%; }
+.track-range::-moz-range-track { background: transparent; }
+.track-range::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 22px; height: 22px; margin-top: 5px; border-radius: 9999px;
+  background: var(--color-ink); border: 3px solid var(--color-model); box-shadow: 0 0 10px rgb(86 180 233 / 0.7);
+}
+.track-range::-moz-range-thumb {
+  width: 18px; height: 18px; border-radius: 9999px;
+  background: var(--color-ink); border: 3px solid var(--color-model); box-shadow: 0 0 10px rgb(86 180 233 / 0.7);
+}
+
+/* Native drop-down lists (e.g. Trends "Show"): dark popup in the app's colours, so the light
+   text is never drawn on the browser's default white list. */
+select { color-scheme: dark; }
+select option { background-color: var(--color-panel); color: var(--color-ink); }
+select option:checked { background-color: #1f4f6e; color: var(--color-ink); }

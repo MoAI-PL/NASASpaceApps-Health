@@ -1,4 +1,4 @@
-// Baseline — NASA Space Apps Challenge 2026
+// Astrobalance — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 //
 // Small shared building blocks.
@@ -12,6 +12,19 @@ export function Panel({ title, children, className = "" }) {
       {title && <h2 className="text-ink-2 text-lg mb-3">{title}</h2>}
       {children}
     </section>
+  );
+}
+
+/** A folded explanation: one line closed, the text when opened. `small` for "how this works"
+ *  footnotes under a card (same look, smaller text). */
+export function Fold({ title, small = false, children }) {
+  return (
+    <details className="group rounded-2xl bg-panel-2">
+      <summary className={`tap flex items-center gap-3 px-4 cursor-pointer list-none ${small ? "text-base text-ink-2" : "text-lg"}`}>
+        <span aria-hidden="true" className="transition-transform group-open:rotate-90">▶</span> {title}
+      </summary>
+      <div className={`px-4 pb-4 ${small ? "text-base text-ink-2 grid gap-2" : "text-lg"}`}>{children}</div>
+    </details>
   );
 }
 

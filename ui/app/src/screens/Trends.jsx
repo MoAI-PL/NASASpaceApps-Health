@@ -1,4 +1,4 @@
-// Baseline — NASA Space Apps Challenge 2026
+// Astrobalance — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
 import { useEffect, useRef, useState } from "react";
@@ -9,7 +9,7 @@ import { TapButton } from "../components/ui.jsx";
 // Row 1 = model (Prevent path), row 2 = fixed clinical thresholds (B1), row 3 = personal
 // single-indicator thresholds (B2). This is where the demo shows the model alerting earlier.
 const ALERT_ROWS = [
-  { label: "Baseline model", color: "var(--color-model)", test: (r) => r.level === "yellow" || r.level === "orange" },
+  { label: "Astrobalance model", color: "var(--color-model)", test: (r) => r.level === "yellow" || r.level === "orange" },
   { label: "Clinical limits", color: "var(--color-b1)", test: (r) => r.rule_alert },
   { label: "Single-value limits", color: "var(--color-b2)", test: (r) => r.univariate_alert },
 ];
@@ -43,7 +43,7 @@ function niceTicks(lo, hi, count = 4) {
   return ticks;
 }
 
-export default function Trends({ records, day, astronaut }) {
+export default function Trends({ records, day, astronaut, onAbout }) {
   const [series, setSeries] = useState("sai");
   const [boxRef, boxWidth] = useWidth();
   const narrow = boxWidth < 600;
@@ -64,18 +64,48 @@ export default function Trends({ records, day, astronaut }) {
   const line = records.filter((r) => value(r) != null && r.day <= day).map((r) => `${X(r.day)},${Y(value(r))}`).join(" ");
   const name = isSai ? META.index.name : META.features[series].name;
   const unit = isSai ? "" : META.features[series].unit;
+  // First alert of each method so far, and the start of the simulated change (meta.crew).
+  const scenario = META.crew.find((c) => c.id === astronaut)?.scenario ?? null;
+  const firsts = ALERT_ROWS.map((row) => ({
+    ...row,
+    first: records.find((r) => r.day <= day && (!scenario || r.day >= scenario.start_day) && row.test(r))?.day ?? null,
+  }));
+  const lead = firsts[0].first && firsts[1].first ? firsts[1].first - firsts[0].first : 0; // vs clinical limits
 
   return (
     <section className="panel p-5">
-      <div className="flex gap-2 mb-3 overflow-x-auto md:flex-wrap md:overflow-visible" role="group" aria-label="Series">
-        <TapButton active={isSai} onClick={() => setSeries("sai")} className="shrink-0">Index</TapButton>
-        {INDICATORS.map((f) => (
-          <TapButton key={f} active={f === series} onClick={() => setSeries(f)} className="text-base shrink-0 whitespace-nowrap">
-            {META.features[f].name}
-          </TapButton>
+      {/* 1. The answer first: who noticed the change, and when. */}
+      <div className="flex flex-wrap items-baseline gap-x-3">
+        <h2 className="text-2xl font-semibold">Who noticed first?</h2>
+        {scenario && <span className="text-ink-2">change starts day {scenario.start_day}</span>}
+      </div>
+      <div className="grid grid-cols-3 gap-2 mt-3">
+        {firsts.map((m, i) => (
+          <div key={m.label} className={`p-3 rounded-2xl ${i === 0 ? "glass-active" : "bg-panel-2"}`}>
+            <p className="flex items-center gap-2 text-sm sm:text-base text-ink-2">
+              <span className="inline-block w-3 h-3 rounded-sm shrink-0" style={{ background: m.color }} aria-hidden="true" />{m.label}
+            </p>
+            <p className={`font-semibold mt-1 ${i === 0 ? "text-3xl" : "text-2xl"}`}>{m.first ? <><span className="text-base font-normal text-ink-2">Day </span>{m.first}</> : "—"}</p>
+          </div>
         ))}
       </div>
-      <h2 className="text-xl font-semibold">{name}{unit && <span className="text-ink-2 font-normal"> ({unit})</span>}</h2>
+      {lead > 0 && <p className="mt-2 text-lg"><span className="font-semibold text-model">{lead} days earlier</span> than clinical limits.</p>}
+
+      {/* 2. The chart: one control to pick what to show, a one-line legend. */}
+      <div className="mt-6 flex flex-wrap items-center gap-3">
+        <label htmlFor="series" className="text-xl font-semibold">Show</label>
+        <select id="series" value={series} onChange={(e) => setSeries(e.target.value)}
+                className="tap px-4 rounded-2xl bg-panel-2 glass-control text-lg text-ink">
+          <option value="sai">Index (all values together)</option>
+          {INDICATORS.map((f) => <option key={f} value={f}>{META.features[f].name} ({META.features[f].unit})</option>)}
+        </select>
+      </div>
+      <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-ink-2">
+        <span className="flex items-center gap-1"><span className="inline-block w-5 h-0.5 bg-ink" />{isSai ? "index" : "your value"}</span>
+        <span className="flex items-center gap-1"><span className="inline-block w-4 h-3 rounded-sm bg-line" />{isSai ? "watch zone" : "your normal"}</span>
+        <span className="flex items-center gap-1"><span className="inline-block w-1 h-3 bg-model" />alert day</span>
+        {scenario && <span className="flex items-center gap-1"><span className="inline-block h-3 border-l-2 border-dotted border-ink" />change starts</span>}
+      </p>
       <div ref={boxRef} className="mt-2 w-full">
         <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} className="block max-w-full" role="img"
              aria-label={`${name} trend up to day ${day}`}>
@@ -112,9 +142,16 @@ export default function Trends({ records, day, astronaut }) {
                   textAnchor={i === 0 ? "start" : i === dayTicks.length - 1 ? "end" : "middle"}>Day {d}</text>
           ))}
           <line x1={X(day)} x2={X(day)} y1={ROW_Y} y2={BOTTOM} stroke="var(--color-ink-2)" strokeDasharray="4 4" />
+          {scenario && (
+            <line x1={X(scenario.start_day)} x2={X(scenario.start_day)} y1={ROW_Y} y2={BOTTOM} stroke="var(--color-ink)" strokeDasharray="1 4" strokeWidth="2" />
+          )}
         </svg>
       </div>
-      <p className="mt-3 text-base text-ink-2">Each mark is a day on which that method raised an alert.</p>
+      {onAbout && (
+        <button type="button" onClick={onAbout} className="mt-3 text-lg underline underline-offset-4 text-ink-2 hover:text-ink">
+          Why trust this? See the evidence ▶
+        </button>
+      )}
     </section>
   );
 }

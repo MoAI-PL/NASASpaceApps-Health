@@ -1,4 +1,4 @@
-# Baseline — NASA Space Apps Challenge 2026
+# Astrobalance — NASA Space Apps Challenge 2026
 # AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 """Reference methods the autoencoder is compared against, plus the critical safety net.
 

@@ -1,4 +1,4 @@
-// Baseline — NASA Space Apps Challenge 2026
+// Astrobalance — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 
 import { META, checkinStreak, recentDirection } from "../data.js";
@@ -7,6 +7,8 @@ import Gauge from "../components/Gauge.jsx";
 import NextStep from "../components/NextStep.jsx";
 import BodyMap from "../components/BodyMap.jsx";
 import HazardStrip from "../components/HazardStrip.jsx";
+import HabitatCheck from "../components/HabitatCheck.jsx";
+import Readiness from "../components/Readiness.jsx";
 import { StatusIcon } from "../components/icons.jsx";
 import { Panel, SourceLink, Text } from "../components/ui.jsx";
 
@@ -68,6 +70,11 @@ export default function Today({ record, records, env, onOpenSystem, onOpenChecki
         )}
       </Panel>
 
+      {/* Two short checks side by side: alertness (me) and shared drift (the habitat). */}
+      <div className="md:col-span-3 grid gap-4 md:grid-cols-2 md:items-stretch">
+        <Readiness records={records} astronaut={record.astronaut} day={record.day} />
+        <HabitatCheck astronaut={record.astronaut} day={record.day} />
+      </div>
       <div className="md:col-span-3"><HazardStrip record={record} env={env} /></div>
     </div>
   );

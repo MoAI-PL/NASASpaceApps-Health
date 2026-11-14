@@ -1,4 +1,4 @@
-// Baseline — NASA Space Apps Challenge 2026
+// Astrobalance — NASA Space Apps Challenge 2026
 // AI-assisted: drafted with Claude (Anthropic), reviewed by the team. License: Apache-2.0
 //
 // Check-in logic shared by the guided and the quick-entry modes: drafts and device storage,
@@ -54,6 +54,23 @@ export function problem(f, v) {
   if (!Number.isFinite(v)) return "Enter a number.";
   const [lo, hi] = range;
   return v < lo || v > hi ? `Check the value: expected ${lo}–${hi} ${META.features[f].unit}.` : null;
+}
+
+// ===== Critical limits (Respond path, independent of the model) =====
+// meta.rules.critical comes from config/rules.yaml via the export (feature, op, value, source or
+// null when the value is a team assumption).
+const OPS = { gt: (a, b) => a > b, ge: (a, b) => a >= b, lt: (a, b) => a < b, le: (a, b) => a <= b };
+const OP_WORD = { gt: "above", ge: "at or above", lt: "below", le: "at or below" };
+
+/** Entries that cross a critical limit: [{ f, value, rule, text }]. Implausible values are ignored. */
+export function criticalBreaches(entries) {
+  return (META.rules?.critical ?? []).flatMap((rule) => {
+    const v = entries[rule.feature];
+    if (v == null || problem(rule.feature, v) || !OPS[rule.op]?.(v, rule.value)) return [];
+    const unit = META.features[rule.feature].unit;
+    return [{ f: rule.feature, value: v, rule,
+      text: `${META.features[rule.feature].name} ${fmt(rule.feature, v)} ${unit} — critical limit: ${OP_WORD[rule.op]} ${rule.value} ${unit}` }];
+  });
 }
 
 // ===== Comparison with the personal normal =====
